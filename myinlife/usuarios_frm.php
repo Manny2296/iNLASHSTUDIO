@@ -235,7 +235,7 @@ if (isset($_SESSION['id_perfil'])) {
           <tr>
 			<th>Sede:</th>
             <td><select name="p_id_sedes_reg" id="p_id_sedes_reg" onChange="document.forma.p_numero_id.value='';next_id();">
-            <option value=""></option>
+            
             <?php foreach($t_sedes_reg as $dato) { ?>
             <option value="<?php echo($dato['id_sede']); ?>" <?php if (!is_null($v_id_perf_unico) && $r_usuario['id_sede']== $dato['id_sede']) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
             <?php } ?>
