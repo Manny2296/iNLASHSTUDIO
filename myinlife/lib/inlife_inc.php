@@ -7,7 +7,7 @@
 date_default_timezone_set ('America/Bogota');
 $default_pais = 169;							// pais por defecto
 $default_ciudad = 11;							// ciudad por defecto
-$site_domain = "http://www.inlifestudio.com"; 				// dominio de la aplicacion.
+$site_domain = "http://localhost"; 				// dominio de la aplicacion.
 $url_login = "http://www.inlifestudio.com/login.php";                   // url de acceso al sistemas.
 $db_engine_lib = "mySQL_lib.php";                                       // Motor de base de datos
 $db_name = "inlifes1_myinlife";  					// Base de datos de la apliación.

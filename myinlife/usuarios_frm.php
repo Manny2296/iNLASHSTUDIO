@@ -7,6 +7,7 @@ include ($path."/lib/securityutl_lib.php");
 include ($path."/lib/layoututl_lib.php");
 include ($path."/lib/mensaje_utl.php");
 include ($path."/lib/usuarios_utl.php");
+include ($path."/lib/sedes_utl.php");
 
 $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
@@ -24,12 +25,14 @@ if (isset($_SESSION['id_perfil'])) {
 			$fecha = DateTime::createFromFormat('Y-m-d', $r_usuario['fecha_ingreso']);
 			$v_fecha_ingreso = $fecha->format('d-m-Y');
 			$v_existe = 'P';
+
 		} else {
 			$t_tipo_perfil = lista_perfil ($conn);
 			$v_genero = 'F';
 			$v_existe = 'N';
 		}
 		$t_tipo_id = lista_tipo_id ($conn);
+		$t_sedes_reg = lista_sedes ($conn);
 		$v_next_ilid = next_ilid($conn);
 ?>
 <html><!-- InstanceBegin template="/Templates/nomenu_layout.dwt.php" codeOutsideHTMLIsLocked="false" -->
@@ -213,13 +216,13 @@ if (isset($_SESSION['id_perfil'])) {
           </tr>
           <tr>
 			<th>Eps:</th>
-            <td><input type="text" name="p_eps" id="p_eps" size="50" maxlength="200" value="<?php echo($r_eps['nombre']);?>" />
-            <input type="hidden" name="p_id_eps" id="p_id_eps" value="<?php echo($r_eps['id_eps']);?>"/></td>
+            <td><input type="text" name="p_eps" id="p_eps" size="50" maxlength="200" value="<?php if(!is_null($v_id_perf_unico)){ echo($r_eps['nombre']);}?>" />
+            <input type="hidden" name="p_id_eps" id="p_id_eps" value="<?php if(!is_null($v_id_perf_unico)){echo($r_eps['id_eps']);}?>"/></td>
           </tr>
           <tr>
 			<th>Prepagada:</th>
-            <td><input type="text" name="p_prepagada" id="p_prepagada" size="50" maxlength="200" value="<?php echo($r_prepagada['nombre']);?>" />
-            <input type="hidden" name="p_id_prepagada" id="p_id_prepagada" value="<?php echo($r_prepagada['id_prepagada']);?>"/></td>
+            <td><input type="text" name="p_prepagada" id="p_prepagada" size="50" maxlength="200" value="<?php if(!is_null($v_id_perf_unico)){echo($r_prepagada['nombre']);}?>" />
+            <input type="hidden" name="p_id_prepagada" id="p_id_prepagada" value="<?php if(!is_null($v_id_perf_unico)){ echo($r_prepagada['id_prepagada']);}?>"/></td>
           </tr>
           <tr>
 			<th>Fecha de inscripci&oacute;n:</th>
@@ -228,6 +231,27 @@ if (isset($_SESSION['id_perfil'])) {
           <tr>
 			<th>Anotaciones personales:</th>
             <td><textarea name="p_descripcion" id="p_descripcion" rows="4" cols="40"><?php if(!is_null($v_id_perf_unico)){echo($r_usuario['descripcion']);} ?></textarea></td>
+          </tr>
+          <tr>
+			<th>Sede:</th>
+            <td><select name="p_id_sedes_reg" id="p_id_sedes_reg" onChange="document.forma.p_numero_id.value='';next_id();">
+            <option value=""></option>
+            <?php foreach($t_sedes_reg as $dato) { ?>
+            <option value="<?php echo($dato['id_sede']); ?>" <?php if (!is_null($v_id_perf_unico) && $r_usuario['id_sede']== $dato['id_sede']) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
+            <?php } ?>
+            </select></td>
+            
+          </tr>
+          <tr>
+          	<th>Permitir varias sedes?:</th>
+          	<td>
+          		<select name="p_multi_sede" id="p_multi_sede">
+
+          		<option value="S" <?php if (!is_null($v_id_perf_unico) && $r_usuario['multisede']== 'S') { echo("Selected"); } ?>
+          		>Si</option>
+          		<option value="N" <?php if (!is_null($v_id_perf_unico) && $r_usuario['multisede']== 'N') { echo("Selected"); } ?>>No</option>
+          		</select>
+          	</td>
           </tr>
           <tr>
               <td colspan="2" align="center"><input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Guardar" onClick="validar();" />

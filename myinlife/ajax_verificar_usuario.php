@@ -9,6 +9,7 @@ $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $v_id_perfil = $_POST['p_id_perfil'];
 $v_id_tipoid = $_POST['p_id_tipoid'];
 $v_numero_id = $_POST['p_numero_id'];
+$v_sede_reg = $_POST['p_id_sedes_reg'];
 
 $t_existe = verificar_usuario ($conn, $v_id_tipoid, $v_numero_id, $v_id_perfil);
 if ( is_null($t_existe) ){

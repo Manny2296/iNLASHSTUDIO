@@ -108,6 +108,7 @@ if (isset($_SESSION['id_perfil'])) {
               <td>Documento de Identidad</td>
               <td>Apellidos y Nombres</td>
               <td>Tipo de usuario</td>
+              <td>Sede</td>
               <td>Opciones</td>
             </tr>
             <?php
@@ -124,6 +125,7 @@ if (isset($_SESSION['id_perfil'])) {
               <td><?php echo($dato['abreviatura']." ".$dato['numero_id']); ?></td>
               <td><?php echo($dato['apellidos']." ".$dato['nombres']); ?></td>
               <td><?php echo($dato['nomperfil']); ?></td>
+              <td><?php echo($dato['nomsede']); ?></td>
               <?php  
 			    if ($v_id_perfil_usua == 3) { ?>
                <td><a href="javascript:reset_pwd(<?php echo($dato['id_usuario']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_pwd.png" alt="Restablecer contrase&ntilde;a" title="Restablecer contrase&ntilde;a" border="0" /></a>&nbsp;<a href="javascript:servicios(<?php echo($dato['id_usuario']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_service.png" alt="Asignar servicios prepagados al cliente" title="Asignar servicios prepagados al cliente" border="0" /></a></span></td>

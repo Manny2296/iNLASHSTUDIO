@@ -38,6 +38,8 @@ if (isset($_SESSION['id_perfil'])) {
 		$v_login_mod = $_SESSION['login'];
 		$v_existe = $_POST['p_existe'];
 		$v_id_usuario = null;
+		$id_sede=$_POST['p_id_sedes_reg'];
+		$multi_sede =$_POST['p_multi_sede'];
 		if(isset($_POST['p_notificar'])) {
 			$v_notificar = $_POST['p_notificar'];
 		} else {
@@ -48,7 +50,8 @@ if (isset($_SESSION['id_perfil'])) {
 			$v_id_usuario = crea_usuario ($conn,               $v_id_tipoid,    $v_numero_id,        $v_nombres,
 										  $v_apellidos,        $v_telefono,     $v_celular,          $v_email,         
 										  $v_genero,		   $v_id_eps,		$v_eps,              $v_id_prepagada, 
-										  $v_prepagada,        $v_descripcion,	$v_fecha_nacimiento, $v_fecha_ingreso);
+										  $v_prepagada,        $v_descripcion,	$v_fecha_nacimiento, $v_fecha_ingreso
+										  , $multi_sede);
 			$v_login = obtener_login($conn, $v_id_usuario);
 			$v_titulo = "Bienvenido(a) a MyInlife Studio";
 			$v_mensaje = "<p>".$v_nombres.": <p>Inlife Studio te da la bienvenida a su portal en Internet, por medio del cual podr&aacute;s mantenerte informado(a) sobre tu progreso y tendr&aacute;s la posibilidad de programar tus sesiones.";
@@ -62,14 +65,14 @@ if (isset($_SESSION['id_perfil'])) {
 					     $v_apellidos,        $v_telefono,      $v_celular,          $v_email,         
 					     $v_genero,		      $v_id_eps,		$v_eps,              $v_id_prepagada, 
 						 $v_prepagada,        $v_descripcion,	$v_fecha_nacimiento, $v_fecha_ingreso, 
-						 $v_notificar);
+						 $v_notificar, $multi_sede);
 		} 
 		
 		if ($v_existe == "N" || $v_existe == "U") {
 			if (isset($_POST['p_id_usuario']) && is_null($v_id_usuario)) {
 				$v_id_usuario = $_POST['p_id_usuario'];
 			} 
-			crea_perfil ($conn, $v_id_usuario, $v_id_perfil, $v_login_mod);
+			crea_perfil ($conn, $v_id_usuario, $v_id_perfil, $v_login_mod,$id_sede);
 		}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

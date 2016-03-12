@@ -15,11 +15,12 @@ function lista_usuarios ($connid, $tipo, $parametro) {
 	if ($tipo == "nombre") {
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
-						 pfus.id_perfil,   tppf.nombre nomperfil
+						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede
 					From segu_usuarios usua,
 						 conf_tipo_id  tpid,
 						 segu_perfil_x_usuario pfus,
-						 conf_tipo_perfil tppf
+						 conf_tipo_perfil tppf,
+						 conf_sedes sede
 				   Where usua.id_tipoid  = tpid.id_tipoid
 				     And usua.id_usuario = pfus.id_usuario
 					 And tppf.id_perfil  = pfus.id_perfil
@@ -27,37 +28,42 @@ function lista_usuarios ($connid, $tipo, $parametro) {
 					 And pfus.id_perfil != 3 
 					 And ( usua.nombres   Like '%".$parametro."%' Or
 						   usua.apellidos Like '%".$parametro."%' )
+					 And sede.id_sede = pfus.id_sede
 				   Order By usua.apellidos, usua.nombres";
 				   
 	}elseif ($tipo == "id") {
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
-						 pfus.id_perfil,   tppf.nombre nomperfil
+						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede
 					From segu_usuarios usua,
 						 conf_tipo_id  tpid,
 						 segu_perfil_x_usuario pfus,
-						 conf_tipo_perfil tppf
+						 conf_tipo_perfil tppf,
+						 conf_sedes sede
 				   Where usua.id_tipoid  = tpid.id_tipoid
 				     And usua.id_usuario = pfus.id_usuario
 					 And tppf.id_perfil  = pfus.id_perfil
 					 And pfus.estado     = 'A'
 					 And pfus.id_perfil != 3
 					 And usua.numero_id Like '%".$parametro."%'
+					 And sede.id_sede = pfus.id_sede
 				   Order By usua.apellidos, usua.nombres";
 	}elseif ($tipo == "perfil") {
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
-						 pfus.id_perfil,   tppf.nombre nomperfil
+						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede
 					From segu_usuarios usua,
 						 conf_tipo_id  tpid,
 						 segu_perfil_x_usuario pfus,
-						 conf_tipo_perfil tppf
+						 conf_tipo_perfil tppf,
+						 conf_sedes sede
 				   Where usua.id_tipoid  = tpid.id_tipoid
 				     And usua.id_usuario = pfus.id_usuario
 					 And tppf.id_perfil  = pfus.id_perfil
 					 And pfus.id_perfil  = ".$parametro."
 					 And pfus.estado     = 'A'
 					 And pfus.id_perfil != 3
+					 And sede.id_sede = pfus.id_sede
 				   Order By usua.apellidos, usua.nombres";
 	}
 	$result = dbquery ($query, $connid);
@@ -68,11 +74,12 @@ function lista_clientes ($connid, $tipo, $parametro) {
 	if ($tipo == "nombre") {
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
-						 pfus.id_perfil,   tppf.nombre nomperfil
+						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede
 					From segu_usuarios usua,
 						 conf_tipo_id  tpid,
 						 segu_perfil_x_usuario pfus,
-						 conf_tipo_perfil tppf
+						 conf_tipo_perfil tppf,
+						 conf_sedes sede
 				   Where usua.id_tipoid  = tpid.id_tipoid
 				     And usua.id_usuario = pfus.id_usuario
 					 And tppf.id_perfil  = pfus.id_perfil
@@ -80,36 +87,41 @@ function lista_clientes ($connid, $tipo, $parametro) {
 					 And pfus.id_perfil  = 3
 					 And ( usua.nombres   Like '%".$parametro."%' Or
 						   usua.apellidos Like '%".$parametro."%' )
+					 And sede.id_sede = pfus.id_sede
 				   Order By usua.apellidos, usua.nombres";
 				   
 	}elseif ($tipo == "id") {
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
-						 pfus.id_perfil,   tppf.nombre nomperfil
+						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede
 					From segu_usuarios usua,
 						 conf_tipo_id  tpid,
 						 segu_perfil_x_usuario pfus,
-						 conf_tipo_perfil tppf
+						 conf_tipo_perfil tppf,
+						 conf_sedes sede
 				   Where usua.id_tipoid  = tpid.id_tipoid
 				     And usua.id_usuario = pfus.id_usuario
 					 And tppf.id_perfil  = pfus.id_perfil
 					 And pfus.estado     = 'A'
 					 And pfus.id_perfil  = 3
 					 And usua.numero_id Like '%".$parametro."%'
+					 And sede.id_sede = pfus.id_sede
 				   Order By usua.apellidos, usua.nombres";
 	}elseif ($tipo == "perfil") {
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
-						 pfus.id_perfil,   tppf.nombre nomperfil
+						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede
 					From segu_usuarios usua,
 						 conf_tipo_id  tpid,
 						 segu_perfil_x_usuario pfus,
-						 conf_tipo_perfil tppf
+						 conf_tipo_perfil tppf,
+						 conf_sedes sede
 				   Where usua.id_tipoid  = tpid.id_tipoid
 				     And usua.id_usuario = pfus.id_usuario
 					 And tppf.id_perfil  = pfus.id_perfil
 					 And pfus.estado     = 'A'
 					 And pfus.id_perfil  = 3
+					 And sede.id_sede = pfus.id_sede
 				   Order By usua.apellidos, usua.nombres";
 	}
 	$result = dbquery ($query, $connid);
@@ -118,14 +130,17 @@ function lista_clientes ($connid, $tipo, $parametro) {
 }
 function detalle_usuario ($connid, $id_perf_unico) {
 	$query = "Select usua.*, pfus.id_perfil,
-	                 tpid.abreviatura, tppf.nombre nomperfil
+	                 tpid.abreviatura, tppf.nombre nomperfil, sede.nombre nomsede
+	                 , pfus.id_sede
 	            from segu_usuarios          usua,
 				     conf_tipo_id           tpid,
 					 segu_perfil_x_usuario  pfus,
-					 conf_tipo_perfil       tppf
+					 conf_tipo_perfil       tppf,
+					 conf_sedes sede
 	           Where usua.id_usuario    = pfus.id_usuario
 			     And usua.id_tipoid     = tpid.id_tipoid
 				 And tppf.id_perfil     = pfus.id_perfil
+				 And sede.id_sede = pfus.id_sede
 			     And pfus.id_perf_unico = ".$id_perf_unico;
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);

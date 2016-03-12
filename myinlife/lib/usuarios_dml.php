@@ -45,7 +45,8 @@ function crea_prepagada ($connid, $nombre) {
 function crea_usuario ($connid,           $id_tipoid,    $numero_id,        $nombres,
 					   $apellidos,        $telefono,     $celular,          $email,         
 					   $genero,		      $id_eps,		 $eps,              $id_prepagada, 
-					   $prepagada,	      $descripcion,	 $fecha_nacimiento, $fecha_ingreso){
+					   $prepagada,	      $descripcion,	 $fecha_nacimiento, $fecha_ingreso
+					   ,$multi_sede){
 	$query = "Select count(9) conteo
 	            From segu_usuarios usua
 			   Where usua.id_tipoid = ".$id_tipoid."
@@ -110,12 +111,12 @@ function crea_usuario ($connid,           $id_tipoid,    $numero_id,        $nom
 					(id_tipoid,        numero_id,     nombres,      apellidos,
 					 telefono,		   celular,		  genero,		email,       
 					 fecha_nacimiento, id_eps,		  id_prepagada, descripcion,
-					 fecha_ingreso,    login,         pwd)
+					 fecha_ingreso,    login,         pwd, multisede)
 					Values
 					(".$id_tipoid.",            '".$numero_id."', '".$nombres."',     '".$apellidos."',
 					 '".$telefono."',	        '".$celular."',	  '".$genero."',      ".$str_email.",
 					 ".$str_fecha_nacimiento.", ".$str_eps.",     ".$str_prepagada.", '".$descripcion."', 
-					 ".$str_fecha_ingreso.",    '".$v_login."',   '".$v_pwd."')";
+					 ".$str_fecha_ingreso.",    '".$v_login."',   '".$v_pwd."','".$multi_sede."')";
 	   $query = str_replace ("''", "Null", $query);
 	   $result = dbquery ($query, $connid);
 	}
@@ -131,7 +132,7 @@ function upd_usuario ($connid,           $id_usuario,    $id_tipoid,        $num
 					  $apellidos,        $telefono,      $celular,          $email,         
 					  $genero,		     $id_eps,		 $eps,              $id_prepagada, 
 					  $prepagada,        $descripcion,   $fecha_nacimiento, $fecha_ingreso, 
-					  $notificar){
+					  $notificar,$multi_sede){
 	if (is_null($fecha_nacimiento) || $fecha_nacimiento == "") {
 		$str_fecha_nacimiento = "Null";
 	} else {
@@ -186,13 +187,14 @@ function upd_usuario ($connid,           $id_usuario,    $id_tipoid,        $num
 				     email = ".$str_email.",       			 id_eps = ".$str_eps.",
 					 id_prepagada = ".$str_prepagada.",      descripcion = '".$descripcion."',
 				     genero = '".$genero."',				 fecha_nacimiento = ".$str_fecha_nacimiento.", 
-					 fecha_ingreso = ".$str_fecha_ingreso.", notificar = '".$notificar."'
+					 fecha_ingreso = ".$str_fecha_ingreso.", notificar = '".$notificar."' ,
+					 multisede = '".$multi_sede."'
 			   Where id_usuario = ".$id_usuario;
    $query = str_replace ("''", "Null", $query);
    $result = dbquery ($query, $connid);
    return (true);
 }
-function crea_perfil ($connid, $id_usuario, $id_perfil, $login_mod){
+function crea_perfil ($connid, $id_usuario, $id_perfil, $login_mod,$id_sede){
 	$query = "Select count(9) conteo
 	            From segu_perfil_x_usuario pfus
 			   Where pfus.id_usuario = ".$id_usuario."
@@ -202,7 +204,8 @@ function crea_perfil ($connid, $id_usuario, $id_perfil, $login_mod){
 	if ($rset[0]['conteo'] > 0) {
 		$query = "Update segu_perfil_x_usuario pfus
 		             Set pfus.fecha = Curdate(), pfus.estado = 'A',
-					     pfus.login_mod = '".$login_mod."'
+					     pfus.login_mod = '".$login_mod."',
+					     pfus.id_sede = ".$id_sede."
 				   Where pfus.id_usuario = ".$id_usuario."
 			         And pfus.id_perfil  = ".$id_perfil;
 	    $result = dbquery ($query, $connid);
@@ -210,11 +213,11 @@ function crea_perfil ($connid, $id_usuario, $id_perfil, $login_mod){
 		$query = "Insert Into segu_perfil_x_usuario 
 		             (id_usuario, id_perfil,
 					  estado,     fecha, 
-					  login_mod)
+					  login_mod,id_sede)
 					 Values
 					 (".$id_usuario.", ".$id_perfil.",
 					  'A',             Curdate(),   
-					  '".$login_mod."')";
+					  '".$login_mod."',".$id_sede.")";
 		$result = dbquery ($query, $connid);
 	}
 	$query = "Select id_perf_unico
