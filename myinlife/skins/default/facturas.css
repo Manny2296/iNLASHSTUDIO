@@ -1,0 +1,19 @@
+body {
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: normal;
+	color: #000;
+	text-decoration: none;
+}
+table {
+	border:0px;
+	width:75mm;
+	padding:2mm;
+}
+.separador{
+	border-bottom:dashed #000000 1px;
+}
+.separador_up{
+	border-top:dashed #000000 1px;
+}
