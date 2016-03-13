@@ -10,7 +10,7 @@ $v_id_perfil = $_POST['p_id_perfil'];
 $v_id_tipoid = $_POST['p_id_tipoid'];
 $v_numero_id = $_POST['p_numero_id'];
 $v_sede_reg = $_POST['p_id_sedes_reg'];
-
+$v_multi_sede = $_POST['p_multi_sede'];
 $t_existe = verificar_usuario ($conn, $v_id_tipoid, $v_numero_id, $v_id_perfil);
 if ( is_null($t_existe) ){
 ?>
@@ -34,6 +34,8 @@ else {
   <input name="p_nombres" type="hidden" id="p_nombres" value="<?php echo ($v_nombres); ?>">
   <input name="p_apellidos" type="hidden" id="p_apellidos" value="<?php echo ($v_apellidos); ?>">
   <input name="p_id_usuario" type="hidden" id="p_id_usuario" value="<?php echo ($v_id_usuario); ?>">
+  <input name="p_id_sedes_reg" type="hidden" id="p_id_sedes_reg" value="<?php echo ($v_sede_reg); ?>">
+  <input name="p_multi_sede" type="hidden" id="p_multi_sede" value="<?php echo ($v_multi_sede); ?>">
 </form>
 <?php }
 dbdisconn($conn);

@@ -8,10 +8,8 @@ include ($path."/lib/layoututl_lib.php");
 include ($path."/lib/mensaje_utl.php");
 include ($path."/lib/usuarios_utl.php");
 include ($path."/lib/sedes_utl.php");
-
 $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
-
 if (isset($_SESSION['id_perfil'])) {
 	if ( validar_permisos ($conn, 'usuarios_frm.php') ) {
 		$v_id_perf_unico = null;
@@ -25,8 +23,6 @@ if (isset($_SESSION['id_perfil'])) {
 			$fecha = DateTime::createFromFormat('Y-m-d', $r_usuario['fecha_ingreso']);
 			$v_fecha_ingreso = $fecha->format('d-m-Y');
 			$v_existe = 'P';
-			$v_id_sede = $r_usuario['id_sede'];
-
 		} else {
 			$t_tipo_perfil = lista_perfil ($conn);
 			$v_genero = 'F';
@@ -55,13 +51,13 @@ if (isset($_SESSION['id_perfil'])) {
 	   var p_perfil = myForm.p_id_perfil[myForm.p_id_perfil.selectedIndex].value;
 	   <?php } else { ?>
 	   var p_perfil = <?php echo ($v_id_perfil); ?>;
-	   
 	   <?php } ?>
 	   var p_id_tipoid = myForm.p_id_tipoid.options[myForm.p_id_tipoid.selectedIndex].value;
 	   var p_numero_id = myForm.p_numero_id.value;
-
+	   var p_id_sedes_reg = myForm.p_id_sedes_reg.options[myForm.p_id_sedes_reg.selectedIndex].value;
+	   var p_multi_sede = myForm.p_multi_sede.options[myForm.p_multi_sede.selectedIndex].value;
 	   var rUrl = "ajax_verificar_usuario.php";
-	   var rBody = "p_id_perfil="+p_perfil+"&p_id_tipoid="+p_id_tipoid+"&p_numero_id="+p_numero_id+"&p_id_sedes_reg="+null;
+	   var rBody = "p_id_perfil="+p_perfil+"&p_id_tipoid="+p_id_tipoid+"&p_numero_id="+p_numero_id+"&p_id_sedes_reg="+p_id_sedes_reg+"&p_multi_sede="+p_multi_sede;
 	   oDiv = document.getElementById ("fakefrmdiv");
 	   oDiv.innerHTML = "<img src=\"skins/<?php echo($skin); ?>/loader.gif\"><b>Consultando...</b>";
 	   var oXmlHttp = zXmlHttp.createRequest();
@@ -78,6 +74,18 @@ if (isset($_SESSION['id_perfil'])) {
 				   myForm.p_id_tipoid.selectedIndex = 0;
 				   myForm.p_numero_id.value = "";
 				}
+				else if ( myFake.p_existe.value == "U" ) {
+				   nombre = myFake.p_nombres.value +" "+ myFake.p_apellidos.value;
+				   docid = myForm.p_numero_id.value;
+				   
+				   if (confirm ("El usuario "+nombre+" identificado con documento de identidad No. "+docid+" ya existe.\n\nDesea agregarle el este perfil ?") ){
+					  myForm.p_id_usuario.value = myFake.p_id_usuario.value;
+					  myForm.p_existe.value = "U";
+					  myForm.p_id_sedes_reg.value=myFake.p_id_sedes_reg.value;
+					  myForm.p_multi_sede.value=myFake.p_multi_sede.value;
+					  myForm.submit();
+				   }
+				}
 				else {
 				   myForm.p_nombres.focus();
 				   myForm.p_existe.value = "N";
@@ -92,19 +100,7 @@ if (isset($_SESSION['id_perfil'])) {
 	}
 	function validar() {
 		myForm = document.forma;
-		myFake = document.frmfake;
 		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-		if ( myFake.p_existe.value == "U" ) {
-				   nombre = myFake.p_nombres.value +" "+ myFake.p_apellidos.value;
-				   docid = myForm.p_numero_id.value;
-				   
-				   if (confirm ("El usuario "+nombre+" identificado con documento de identidad No. "+docid+" ya existe.\n\nDesea agregarle el este perfil ?") ){
-					  myForm.p_id_usuario.value = myFake.p_id_usuario.value;
-					  myForm.p_existe.value = "U";
-					  myForm.submit();
-				   }
-				   return;
-				}
 		if (myForm.p_numero_id.value == "") {
 			alert("Por favor ingrese el número de documento de identidad");
 			myForm.p_numero_id.focus();
@@ -140,7 +136,6 @@ if (isset($_SESSION['id_perfil'])) {
 			myForm.p_fecha_ingreso.focus();
 			return;
 		}
-		
 		myForm.submit();
 	}
 	function next_id() {
@@ -163,7 +158,6 @@ if (isset($_SESSION['id_perfil'])) {
         <form id="forma" name="forma" method="post" action="exec_upd_usuario.php">
         <?php if (!is_null($v_id_perf_unico)) { ?>
         <input type="hidden" name="p_id_perfil" id="p_id_perfil" value="<?php echo($r_usuario['id_perfil']); ?>" />
-        <input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($r_usuario['id_sede']); ?>" />
         <?php } ?>
         <input type="hidden" name="p_existe" id="p_existe" value="<?php echo($v_existe); ?>" />
         <input type="hidden" name="p_id_usuario" id="p_id_usuario" value="<?php if (!is_null($v_id_perf_unico)) { echo($r_usuario['id_usuario']); } ?>" />
@@ -181,6 +175,25 @@ if (isset($_SESSION['id_perfil'])) {
             <?php } ?>
           </tr>
           <tr>
+          <tr>
+			<th>Sede:</th>
+            <td><select name="p_id_sedes_reg" id="p_id_sedes_reg" onChange="next_id();">
+            <?php foreach($t_sedes_reg as $dato) { ?>
+            <option value="<?php echo($dato['id_sede']); ?>" <?php if (!is_null($v_id_perf_unico) && $r_usuario['id_sede']== $dato['id_sede']) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
+            <?php } ?>
+            </select></td>
+          <tr>
+          	<th>Permitir varias sedes?:</th>
+          	<td>
+          		<select name="p_multi_sede" id="p_multi_sede">
+
+          		<option value="S" <?php if (!is_null($v_id_perf_unico) && $r_usuario['multisede']== 'S') { echo("Selected"); } ?>
+          		>Si</option>
+          		<option value="N" <?php if (!is_null($v_id_perf_unico) && $r_usuario['multisede']== 'N') { echo("Selected"); } ?>>No</option>
+          		</select>
+          	</td>
+          </tr>  
+          </tr>
 			<th>Tipo de documento de identidad:</th>
             <td><select name="p_id_tipoid" id="p_id_tipoid" onChange="document.forma.p_numero_id.value='';next_id();">
             <option value=""></option>
@@ -239,27 +252,8 @@ if (isset($_SESSION['id_perfil'])) {
 			<th>Anotaciones personales:</th>
             <td><textarea name="p_descripcion" id="p_descripcion" rows="4" cols="40"><?php if(!is_null($v_id_perf_unico)){echo($r_usuario['descripcion']);} ?></textarea></td>
           </tr>
-          <tr>
-			<th>Sede:</th>
-            <td><select name="p_id_sedes_reg" id="p_id_sedes_reg" onChange="document.forma.p_numero_id.value='';next_id();">
-            
-            <?php foreach($t_sedes_reg as $dato) { ?>
-            <option value="<?php echo($dato['id_sede']); ?>" <?php if (!is_null($v_id_perf_unico) && $r_usuario['id_sede']== $dato['id_sede']) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
-            <?php } ?>
-            </select></td>
-            
-          </tr>
-          <tr>
-          	<th>Permitir varias sedes?:</th>
-          	<td>
-          		<select name="p_multi_sede" id="p_multi_sede">
-
-          		<option value="S" <?php if (!is_null($v_id_perf_unico) && $r_usuario['multisede']== 'S') { echo("Selected"); } ?>
-          		>Si</option>
-          		<option value="N" <?php if (!is_null($v_id_perf_unico) && $r_usuario['multisede']== 'N') { echo("Selected"); } ?>>No</option>
-          		</select>
-          	</td>
-          </tr>
+          
+          
           <tr>
               <td colspan="2" align="center"><input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Guardar" onClick="validar();" />
               &nbsp; <input type="button" name="btn_regresar" id="btn_regresar" class="button white" value="Regresar" onClick="javascript:top.GB_hide();" /> </td>

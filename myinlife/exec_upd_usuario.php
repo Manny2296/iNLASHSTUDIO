@@ -66,6 +66,7 @@ if (isset($_SESSION['id_perfil'])) {
 					     $v_genero,		      $v_id_eps,		$v_eps,              $v_id_prepagada, 
 						 $v_prepagada,        $v_descripcion,	$v_fecha_nacimiento, $v_fecha_ingreso, 
 						 $v_notificar, $multi_sede);
+			crea_perfil ($conn, $v_id_usuario, $v_id_perfil, $v_login_mod,$id_sede);
 		} 
 		
 		if ($v_existe == "N" || $v_existe == "U") {
