@@ -25,6 +25,7 @@ if (isset($_SESSION['id_perfil'])) {
 			$fecha = DateTime::createFromFormat('Y-m-d', $r_usuario['fecha_ingreso']);
 			$v_fecha_ingreso = $fecha->format('d-m-Y');
 			$v_existe = 'P';
+			$v_id_sede = $r_usuario['id_sede'];
 
 		} else {
 			$t_tipo_perfil = lista_perfil ($conn);
@@ -54,11 +55,13 @@ if (isset($_SESSION['id_perfil'])) {
 	   var p_perfil = myForm.p_id_perfil[myForm.p_id_perfil.selectedIndex].value;
 	   <?php } else { ?>
 	   var p_perfil = <?php echo ($v_id_perfil); ?>;
+	   
 	   <?php } ?>
 	   var p_id_tipoid = myForm.p_id_tipoid.options[myForm.p_id_tipoid.selectedIndex].value;
 	   var p_numero_id = myForm.p_numero_id.value;
+
 	   var rUrl = "ajax_verificar_usuario.php";
-	   var rBody = "p_id_perfil="+p_perfil+"&p_id_tipoid="+p_id_tipoid+"&p_numero_id="+p_numero_id;
+	   var rBody = "p_id_perfil="+p_perfil+"&p_id_tipoid="+p_id_tipoid+"&p_numero_id="+p_numero_id+"&p_id_sedes_reg="+null;
 	   oDiv = document.getElementById ("fakefrmdiv");
 	   oDiv.innerHTML = "<img src=\"skins/<?php echo($skin); ?>/loader.gif\"><b>Consultando...</b>";
 	   var oXmlHttp = zXmlHttp.createRequest();
@@ -75,16 +78,6 @@ if (isset($_SESSION['id_perfil'])) {
 				   myForm.p_id_tipoid.selectedIndex = 0;
 				   myForm.p_numero_id.value = "";
 				}
-				else if ( myFake.p_existe.value == "U" ) {
-				   nombre = myFake.p_nombres.value +" "+ myFake.p_apellidos.value;
-				   docid = myForm.p_numero_id.value;
-				   
-				   if (confirm ("El usuario "+nombre+" identificado con documento de identidad No. "+docid+" ya existe.\n\nDesea agregarle el este perfil ?") ){
-					  myForm.p_id_usuario.value = myFake.p_id_usuario.value;
-					  myForm.p_existe.value = "U";
-					  myForm.submit();
-				   }
-				}
 				else {
 				   myForm.p_nombres.focus();
 				   myForm.p_existe.value = "N";
@@ -99,7 +92,19 @@ if (isset($_SESSION['id_perfil'])) {
 	}
 	function validar() {
 		myForm = document.forma;
+		myFake = document.frmfake;
 		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if ( myFake.p_existe.value == "U" ) {
+				   nombre = myFake.p_nombres.value +" "+ myFake.p_apellidos.value;
+				   docid = myForm.p_numero_id.value;
+				   
+				   if (confirm ("El usuario "+nombre+" identificado con documento de identidad No. "+docid+" ya existe.\n\nDesea agregarle el este perfil ?") ){
+					  myForm.p_id_usuario.value = myFake.p_id_usuario.value;
+					  myForm.p_existe.value = "U";
+					  myForm.submit();
+				   }
+				   return;
+				}
 		if (myForm.p_numero_id.value == "") {
 			alert("Por favor ingrese el número de documento de identidad");
 			myForm.p_numero_id.focus();
@@ -135,6 +140,7 @@ if (isset($_SESSION['id_perfil'])) {
 			myForm.p_fecha_ingreso.focus();
 			return;
 		}
+		
 		myForm.submit();
 	}
 	function next_id() {
@@ -157,6 +163,7 @@ if (isset($_SESSION['id_perfil'])) {
         <form id="forma" name="forma" method="post" action="exec_upd_usuario.php">
         <?php if (!is_null($v_id_perf_unico)) { ?>
         <input type="hidden" name="p_id_perfil" id="p_id_perfil" value="<?php echo($r_usuario['id_perfil']); ?>" />
+        <input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($r_usuario['id_sede']); ?>" />
         <?php } ?>
         <input type="hidden" name="p_existe" id="p_existe" value="<?php echo($v_existe); ?>" />
         <input type="hidden" name="p_id_usuario" id="p_id_usuario" value="<?php if (!is_null($v_id_perf_unico)) { echo($r_usuario['id_usuario']); } ?>" />
