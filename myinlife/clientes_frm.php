@@ -46,7 +46,7 @@ if (isset($_SESSION['id_perfil'])) {
 			$r_prepagada['nombre'] = null;
 		}
 		$t_tipo_id = lista_tipo_id ($conn);
-		$t_sedes_reg = lista_sedes ($conn);
+		$t_sedes_reg = lista_sedes ($conn,'S');
 		$v_next_ilid = next_ilid($conn);
 			
 ?>
