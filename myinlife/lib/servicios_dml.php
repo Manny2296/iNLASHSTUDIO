@@ -9,14 +9,12 @@
 function crea_servicio ($connid,               $nombre,       $descripcion, 
 						$precio_base, 	       $impuesto,     $prepagado,
 						$programable, 		   $ficha_antrop, $sesion_minima,
-						$sesiones_simultaneas, $pestanas,     $dias_venc,
+						$pestanas,     $dias_venc,
 						$dias_mant) {
 	if (is_null($sesion_minima) || $sesion_minima =="" ) {
 		$sesion_minima = 'Null';
 	}
-	if (is_null($sesiones_simultaneas) || $sesiones_simultaneas =="" ) {
-		$sesiones_simultaneas = 'Null';
-	}
+	
 	if (is_null($dias_venc) || $dias_venc == "" ) {
 		$dias_venc = 'Null';
 	}
@@ -27,26 +25,24 @@ function crea_servicio ($connid,               $nombre,       $descripcion,
 	$query = "Insert Into conf_servicios 
 	             (nombre,       descripcion,   precio_base,
 				  impuesto,     prepagado,     programable,
-				  ficha_antrop, sesion_minima, sesiones_simultaneas,
+				  ficha_antrop, sesion_minima,
 				  modulo_pestanas, dias_vencimiento, dias_mantenimiento)
 				 Values
 				 ('".$nombre."', '".$descripcion."', ".$precio_base.",
 				  ".$impuesto.", '".$prepagado."', '".$programable."',
-				  '".$ficha_antrop."', ".$sesion_minima.", ".$sesiones_simultaneas.",
+				  '".$ficha_antrop."', ".$sesion_minima.",
 				  '".$pestanas."', ".$dias_venc.", ".$dias_mant.")";
 	$result = dbquery ($query, $connid);
 	return (true);
 }
 function upd_servicio ($connid,       $id_servicio,   $nombre,    $descripcion, 
 					   $precio_base,  $impuesto,      $prepagado, $programable,
-					   $ficha_antrop, $sesion_minima, $sesiones_simultaneas,
+					   $ficha_antrop, $sesion_minima, 
 					   $pestanas,     $dias_venc,	  $dias_mant) {
 	if (is_null($sesion_minima) || $sesion_minima =="" ) {
 		$sesion_minima = 'Null';
 	}
-	if (is_null($sesiones_simultaneas) || $sesiones_simultaneas =="" ) {
-		$sesiones_simultaneas = 'Null';
-	}
+	
 	if (is_null($dias_venc) || $dias_venc == "" ) {
 		$dias_venc = 'Null';
 	}
@@ -59,7 +55,7 @@ function upd_servicio ($connid,       $id_servicio,   $nombre,    $descripcion,
 				     serv.precio_base = ".$precio_base.",     serv.impuesto = ".$impuesto.", 
 					 serv.prepagado = '".$prepagado."',       serv.programable = '".$programable."',
 					 serv.ficha_antrop = '".$ficha_antrop."', serv.sesion_minima = ".$sesion_minima.", 
-					 serv.sesiones_simultaneas = ".$sesiones_simultaneas.", serv.modulo_pestanas = '".$pestanas."',
+					 serv.modulo_pestanas = '".$pestanas."',
 					 serv.dias_vencimiento = ".$dias_venc.",  serv.dias_mantenimiento = ".$dias_mant."
 			   Where serv.id_servicio = ".$id_servicio;
 	$result = dbquery ($query, $connid);
@@ -83,9 +79,37 @@ function del_servicio ($connid, $id_servicio) {
 	if ($rset[0]['conteo'] > 0) {
 		return (false);
 	} 
+	$query = "Select count(9) conteo
+	            From conf_servicios_x_sede 
+			   Where id_servicio = ".$id_servicio;
+	$result = dbquery ($query, $connid);
+	$rset = dbresult($result);
+	if ($rset[0]['conteo'] > 0) {
+		return (false);
+	} 
 	
 	$query = "Delete from conf_servicios
 		           Where id_servicio = ".$id_servicio;
+	$result = dbquery ($query, $connid);
+	return (true);
+}
+function del_servicio_sede ($connid, $id_servicio, $id_sede) {
+	
+	
+	$query = "Select count(9) conteo
+	            From spa_programacion
+			   Where id_servicio = ".$id_servicio."
+		       And id_sede = ".$id_sede;
+	$result = dbquery ($query, $connid);
+	$rset = dbresult($result);
+	if ($rset[0]['conteo'] > 0) {
+		return (false);
+	} 
+	
+	
+	$query = "Delete from conf_servicios_x_sede  
+		           Where id_servicio = ".$id_servicio."
+		           And id_sede = ".$id_sede;
 	$result = dbquery ($query, $connid);
 	return (true);
 }

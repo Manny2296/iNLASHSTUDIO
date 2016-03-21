@@ -1,8 +1,9 @@
 <?php
-function list_estacion_sin_bloqueo($connid, $id_servicio, $fecha, $hora_ini, $hora_fin){
+function list_estacion_sin_bloqueo($connid, $id_servicio, $fecha, $hora_ini, $hora_fin,$id_sede){
 	$query = "Select sesiones_simultaneas maquinas
-	            From conf_servicios serv
-			   Where serv.id_servicio = ".$id_servicio;
+	            From conf_servicios_x_sede serv
+			   Where serv.id_servicio = ".$id_servicio."
+			   And   serv.id_sede =".$id_sede;
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
 	$v_maquinas = $rset[0]['maquinas'];
@@ -295,14 +296,25 @@ function lista_horas ($connid, $id_servicio) {
 	}
 	return ($rset);
 }
-function lista_servicios_prog ($connid, $tipo, $id_usuario) {
-	if ($tipo == "all") {
-		$query = "Select id_servicio, nombre
-		            From conf_servicios
-				   Where sesion_minima is not null
-				     And sesion_minima > 0
+function lista_servicios_prog ($connid, $tipo, $id_usuario, $id_sede) {
+	if ($tipo == "all" && is_null($id_sede)) {
+		$query = "Select serv.id_servicio, serv.nombre, csps.id_sede, csps.id_servicio, csps.sesiones_simultaneas
+		            From conf_servicios serv,
+		            	 conf_servicios_x_sede csps 
+				   Where serv.sesion_minima is not null
+				     And serv.sesion_minima > 0
+				     And csps.id_servicio = serv.id_servicio
 				   Order By nombre";
-	} else {
+	} else if($tipo == "all" ){
+		$query = "Select serv.id_servicio, serv.nombre, csps.id_sede, csps.id_servicio, csps.sesiones_simultaneas
+		            From conf_servicios serv,
+		            	 conf_servicios_x_sede csps 
+				   Where serv.sesion_minima is not null
+				     And serv.sesion_minima > 0
+				     And csps.id_servicio = serv.id_servicio
+				     And csps.id_sede =".$id_sede."
+				   Order By nombre";
+	}else{
 		$query = "Select serv.id_servicio, serv.nombre
 		            From conf_servicios serv
 				   Where serv.programable   = 'S'
@@ -340,19 +352,23 @@ function horario_usuario ($connid, $id_usuario, $fecha) {
     $rset = dbresult($result);
 	return ($rset);
 }
-function lista_horas_prog($connid, $tipo, $id_servicio, $maquina, $fecha, $id_usuario) {
+function lista_horas_prog($connid, $tipo, $id_servicio, $maquina, $fecha, $id_usuario, $id_sede) {
 	$v_fecha = DateTime::createFromFormat('d-m-Y', $fecha);
 	if ($tipo == "servicio") {
 		$query = "Select prog.id_programacion, prog.id_usuario, prog.hora_ini, prog.hora_fin,
 						 prog.maquina,         serv.nombre,     usua.nombres,  usua.apellidos
 					From spa_programacion prog,
 					     conf_servicios   serv,
-						 segu_usuarios    usua
+						 segu_usuarios    usua,
+						 conf_servicios_x_sede csps
 				   Where prog.id_servicio = serv.id_servicio
 				     And prog.id_usuario  = usua.id_usuario
 				     And prog.fecha       = str_to_date('".$fecha."', '%d-%m-%Y')
 					 And prog.id_servicio = ".$id_servicio."
 					 And prog.maquina      = ".$maquina."
+					 And csps.id_sede	   = ".$id_sede."
+					 And prog.id_servicio = csps.id_servicio
+					 And prog.id_sede = csps.id_sede
 				  Union All
 				  Select Null id_programacion, Null id_usuario, reho.hora_inicio hora_ini, reho.hora_final hora_fin,
 						 0 maquina,            Null nombre,     null nombres,              null apellidos
@@ -365,18 +381,23 @@ function lista_horas_prog($connid, $tipo, $id_servicio, $maquina, $fecha, $id_us
 					From spa_programacion      prog,
 					     conf_servicios        serv,
 						 segu_usuarios         usua,
-						 spa_bloqueo_estacion  bles
+						 spa_bloqueo_estacion  bles,
+						 conf_servicios_x_sede csps
 				   Where prog.id_servicio     = serv.id_servicio
 				     And prog.id_usuario      = usua.id_usuario
 					 And prog.id_programacion = bles.id_programacion
 				     And prog.fecha           = str_to_date('".$fecha."', '%d-%m-%Y')
 					 And prog.id_servicio     = ".$id_servicio."
 					 And bles.maquina         = ".$maquina."
+					 And csps.id_sede	   = ".$id_sede."
+					 And prog.id_servicio = csps.id_servicio
+					 And prog.id_sede = csps.id_sede
 					 And bles.id_programacion Not In (Select id_programacion
 					                                    From spa_programacion
 													   Where id_servicio = ".$id_servicio."
 													     And fecha   = str_to_date('".$fecha."', '%d-%m-%Y')
-														 And maquina = ".$maquina.")
+														 And maquina = ".$maquina."
+														 And id_sede	   = ".$id_sede.")
 			       Order By hora_ini, maquina";
 	} else {
 		$query = "Select prog.id_programacion, prog.id_usuario, prog.hora_ini, prog.hora_fin,
@@ -424,10 +445,11 @@ function lista_horas_prog($connid, $tipo, $id_servicio, $maquina, $fecha, $id_us
     $rset = dbresult($result);
 	return ($rset);
 }
-function numero_maquinas ($connid, $id_servicio) {
+function numero_maquinas ($connid, $id_servicio, $id_sede) {
 	$query = "Select sesiones_simultaneas cant
-	            From conf_servicios
-			   Where id_servicio = ".$id_servicio;
+	            From conf_servicios_x_sede
+			   Where id_servicio = ".$id_servicio."
+			   And   id_sede = ".$id_sede;
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
 	return ($rset[0]['cant']);

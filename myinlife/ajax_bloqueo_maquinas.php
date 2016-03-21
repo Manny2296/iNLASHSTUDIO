@@ -11,7 +11,8 @@ $v_fecha = $_POST['p_fecha'];
 $v_maquina = $_POST['p_maquina'];
 $v_hora_ini = $_POST['p_hora_ini'];
 $v_hora_fin = $_POST['p_hora_fin'];
-$t_maquinas = list_estacion_sin_bloqueo($conn, $v_id_servicio, $v_fecha, $v_hora_ini, $v_hora_fin); 
+$v_id_sede =  $_POST['p_id_sede'];
+$t_maquinas = list_estacion_sin_bloqueo($conn, $v_id_servicio, $v_fecha, $v_hora_ini, $v_hora_fin,$v_id_sede); 
 dbdisconn($conn);
 
 if (is_array($t_maquinas) && count($t_maquinas) > 1) {

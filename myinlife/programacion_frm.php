@@ -15,6 +15,7 @@ $skin  = obtener_skin ($conn);
 if (isset($_SESSION['id_perfil'])) {
 	if ( validar_permisos ($conn, 'programacion_frm.php') ) {
 		$v_id_servicio = $_REQUEST['p_id_servicio'];
+		$v_id_sede = $_REQUEST['p_id_sede'];
 		$v_hora = DateTime::createFromFormat('d-m-Y H:i', '01-01-2001 '.$_REQUEST['p_hora']);
 		$v_fecha = $_REQUEST['p_fecha'];
 		$v_maquina = $_REQUEST['p_maquina'];
@@ -47,6 +48,7 @@ function validar(){
 	myForm.submit();
 }
 function verificar_ficha(id_usuario){
+
 	myForm = document.forma;
 	var fecha = myForm.p_fecha.value;
 	var servicio = myForm.p_id_servicio.value;
@@ -77,9 +79,10 @@ function get_bloqueo(){
 	var servicio = myForm.p_id_servicio.value;
 	var hora_ini = myForm.p_hora.value;
 	var hora_fin = myForm.p_hora_fin.value;
+	var sede = myForm.p_id_sede.value;
 	
 	var rUrl = "ajax_bloqueo_maquinas.php";
-	var rBody = "p_id_servicio="+servicio+"&p_fecha="+fecha+"&p_hora_ini="+hora_ini+"&p_hora_fin="+hora_fin+"&p_maquina="+maquina;
+	var rBody = "p_id_servicio="+servicio+"&p_fecha="+fecha+"&p_hora_ini="+hora_ini+"&p_hora_fin="+hora_fin+"&p_maquina="+maquina+"&p_id_sede="+sede;
 	oDiv = document.getElementById ("maquinasdiv");
 	oDiv.innerHTML = "<img src=\"skins/<?php echo($skin); ?>/loader.gif\"><b>Consultando...</b>";
 	var oXmlHttp = zXmlHttp.createRequest();
@@ -112,6 +115,7 @@ function get_bloqueo(){
         <input type="hidden" name="p_hora" id="p_hora" value="<?php echo($v_hora->format('H:i')); ?>" />
         <input type="hidden" name="p_id_servicio" id="p_id_servicio" value="<?php echo($v_id_servicio); ?>" />
         <input type="hidden" name="p_maquina" id="p_maquina" value="<?php echo($v_maquina); ?>" />
+         <input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($v_id_sede); ?>" />
         <table width="90%" border="0" cellpadding="0" cellspacing="0">
           <tr>
 			<th width="45%">Cliente:</th>
@@ -163,11 +167,18 @@ function get_bloqueo(){
   </div>
 <script type="text/javascript">
 	        //implementacion de autosuggest
+
 			var options = {
-				script:"ajax_lista_clientes.php?",
+				
+				script:"ajax_lista_clientes.php?p_id_sede=<?php echo($v_id_sede); ?>&" ,
 				varname:"p_letras",
+				
 				json:true,
-				callback: function (obj) { document.getElementById('p_id_usuario').value = obj.id; verificar_ficha(obj.id); }
+				callback: function (obj) { 
+
+					document.getElementById('p_id_usuario').value = obj.id;
+					
+					verificar_ficha(obj.id); }
 			};
 			var as_json = new AutoSuggest('p_usuario', options);
 		</script>

@@ -15,6 +15,7 @@ $skin  = obtener_skin ($conn);
 if (isset($_SESSION['id_perfil'])) {
 	if ( validar_permisos ($conn, 'cliente_servicios_lst.php') ) {
 		$v_id_usuario = $_REQUEST["p_id_usuario"];
+    $v_id_perf_unico = $_REQUEST["p_id_perf_unico"];
 		$t_servicios = lista_servicios_cliente($conn, $v_id_usuario);
 		$v_cont = 0;
 		$r_usuario = nombres_usua($conn, $v_id_usuario);
@@ -63,6 +64,7 @@ if (isset($_SESSION['id_perfil'])) {
      <div id="contiene_tabla">
         <form action="#" name="forma" id="forma" method="post">
         <input type="hidden" name="p_id_usuario" id="p_id_usuario" value="<?php echo($v_id_usuario); ?>" />
+        <input type="hidden" name="p_id_perf_unico" id="p_id_perf_unico" value="<?php echo($v_id_perf_unico); ?>" />
         <input type="hidden" name="p_accion" id="p_accion" /> 
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr>

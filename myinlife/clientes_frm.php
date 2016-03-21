@@ -7,6 +7,7 @@ include ($path."/lib/securityutl_lib.php");
 include ($path."/lib/layoututl_lib.php");
 include ($path."/lib/mensaje_utl.php");
 include ($path."/lib/usuarios_utl.php");
+include ($path."/lib/sedes_utl.php");
 
 $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
@@ -45,6 +46,7 @@ if (isset($_SESSION['id_perfil'])) {
 			$r_prepagada['nombre'] = null;
 		}
 		$t_tipo_id = lista_tipo_id ($conn);
+		$t_sedes_reg = lista_sedes ($conn);
 		$v_next_ilid = next_ilid($conn);
 			
 ?>
@@ -67,8 +69,10 @@ if (isset($_SESSION['id_perfil'])) {
 	   var p_perfil = 3;
 	   var p_id_tipoid = myForm.p_id_tipoid.options[myForm.p_id_tipoid.selectedIndex].value;
 	   var p_numero_id = myForm.p_numero_id.value;
+	   var p_id_sedes_reg = myForm.p_id_sedes_reg.options[myForm.p_id_sedes_reg.selectedIndex].value;
+	   var p_multi_sede = myForm.p_multi_sede.options[myForm.p_multi_sede.selectedIndex].value;
 	   var rUrl = "ajax_verificar_usuario.php";
-	   var rBody = "p_id_perfil="+p_perfil+"&p_id_tipoid="+p_id_tipoid+"&p_numero_id="+p_numero_id;
+	   var rBody = "p_id_perfil="+p_perfil+"&p_id_tipoid="+p_id_tipoid+"&p_numero_id="+p_numero_id+"&p_id_sedes_reg="+p_id_sedes_reg+"&p_multi_sede="+p_multi_sede;
 	   oDiv = document.getElementById ("fakefrmdiv");
 	   oDiv.innerHTML = "<img src=\"skins/<?php echo($skin); ?>/loader.gif\"><b>Consultando...</b>";
 	   var oXmlHttp = zXmlHttp.createRequest();
@@ -93,6 +97,8 @@ if (isset($_SESSION['id_perfil'])) {
 				   if (confirm ("El usuario "+nombre+" identificado con documento de identidad No. "+docid+" ya existe.\n\nDesea agregarle el este perfil ?") ){
 					  myForm.p_id_usuario.value = myFake.p_id_usuario.value;
 					  myForm.p_existe.value = "U";
+					  myForm.p_id_sedes_reg.value=myFake.p_id_sedes_reg.value;
+					  myForm.p_multi_sede.value=myFake.p_multi_sede.value;
 					  myForm.submit();
 				   }
 				}
@@ -169,6 +175,27 @@ if (isset($_SESSION['id_perfil'])) {
 			<th>Perfil del usuario:</th>
             <td>Cliente</td>
           </tr>
+          <?php if ($_SESSION['id_perfil'] == 1){?>
+          <tr>
+			<th>Sede:</th>
+            <td><select name="p_id_sedes_reg" id="p_id_sedes_reg" onChange="next_id();">
+            <?php foreach($t_sedes_reg as $dato) { ?>
+            <option value="<?php echo($dato['id_sede']); ?>" <?php if (!is_null($v_id_perf_unico) && $r_usuario['id_sede']== $dato['id_sede']) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
+            <?php } ?>
+            </select></td>
+          </tr>
+          <tr>
+          	<th>Permitir varias sedes?:</th>
+          	<td>
+          		<select name="p_multi_sede" id="p_multi_sede">
+
+          		<option value="S" <?php if (!is_null($v_id_perf_unico) && $r_usuario['multisede']== 'S') { echo("Selected"); } ?>
+          		>Si</option>
+          		<option value="N" <?php if (!is_null($v_id_perf_unico) && $r_usuario['multisede']== 'N') { echo("Selected"); } ?>>No</option>
+          		</select>
+          	</td>
+          </tr>  
+          <?php }?>
           <tr>
 			<th>Tipo de documento de identidad:</th>
             <td><select name="p_id_tipoid" id="p_id_tipoid" onChange="document.forma.p_numero_id.value='';next_id();">
@@ -180,7 +207,7 @@ if (isset($_SESSION['id_perfil'])) {
           </tr>
           <tr>
 			<th>N&uacute;mero de documento:</th>
-            <td><input type="text" name="p_numero_id" id="p_nombre" size="30" maxlength="45" value="<?php if(!is_null($v_id_perf_unico)){echo($r_usuario['numero_id']);} ?>" onChange="setTimeout('validar_usr();', 0);"/></td>
+            <td><input type="text" name="p_numero_id" id="p_numero_id" size="30" maxlength="45" value="<?php if(!is_null($v_id_perf_unico)){echo($r_usuario['numero_id']);} ?>" onChange="setTimeout('validar_usr();', 0);"/></td>
           </tr>
           <tr>
 			<th>Nombres:</th>

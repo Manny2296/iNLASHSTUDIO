@@ -22,22 +22,23 @@ if (isset($_SESSION['id_perfil'])) {
 		$v_programable = $_POST['p_programable'];
 		$v_ficha_antrop = $_POST['p_ficha_antrop'];
 		$v_sesion_minima = $_POST['p_sesion_minima'];
-		$v_sesiones_simultaneas = $_POST['p_sesiones_simultaneas'];
+		
 		$v_pestanas = $_POST['p_pestanas'];
 		$v_dias_venc = $_POST['p_dias_venc'];
 		$v_dias_mant = $_POST['p_dias_mant'];
+		
 		
 		if (isset($_POST['p_id_servicio'])) {
 			$v_id_servicio = $_POST['p_id_servicio'];
 			upd_servicio ($conn,           $v_id_servicio,   $v_nombre,    $v_descripcion, 
 					      $v_precio_base,  $v_impuesto,      $v_prepagado, $v_programable,
-					      $v_ficha_antrop, $v_sesion_minima, $v_sesiones_simultaneas,
+					      $v_ficha_antrop, $v_sesion_minima, 
 						  $v_pestanas,	   $v_dias_venc,     $v_dias_mant);
 		} else {
 			crea_servicio ($conn,              $v_nombre,       $v_descripcion, 
 						   $v_precio_base, 	   $v_impuesto,     $v_prepagado,
 						   $v_programable, 	   $v_ficha_antrop, $v_sesion_minima,
-						   $v_sesiones_simultaneas, $v_pestanas, $v_dias_venc,
+						    $v_pestanas, $v_dias_venc,
 						   $v_dias_mant);
 		}
 ?>

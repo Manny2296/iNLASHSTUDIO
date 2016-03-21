@@ -22,6 +22,7 @@ if (isset($_SESSION['id_perfil'])) {
 		$v_maquina = $_POST['p_maquina'];
 		$v_hora_fin = $_POST['p_hora_fin'];
 		$v_login_mod = $_SESSION['login'];
+		$v_id_sede = $_POST['p_id_sede'];
 		if (isset($_POST['p_cortesia']) && $_POST['p_cortesia'] == "S"){
 			$v_cortesia = "S";
 		} else {
@@ -52,7 +53,7 @@ if (isset($_SESSION['id_perfil'])) {
 		$t_result = crea_programacion ($conn,       $v_id_usuario,      $v_id_servicio,
 							   		   $v_fecha,    $v_hora,		    $v_hora_fin,
 									   $v_maquina,  $v_sesion_especial, $v_login_mod,
-									   $v_cortesia, $v_comentarios,     $t_maquinas);
+									   $v_cortesia, $v_comentarios,     $t_maquinas, $v_id_sede);
 		
 		$v_diff = $hoy->diff($v_fecha_cita);
 		if ($t_result[0] && ($v_diff->format('%a') == 0 || $v_diff->format('%R%a') == 1 )){

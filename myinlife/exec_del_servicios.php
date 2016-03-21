@@ -14,6 +14,7 @@ $skin  = obtener_skin ($conn);
 if (isset($_SESSION['id_perfil'])) {	
 	if ( validar_permisos ($conn, 'exec_del_servicios.php') ) {
 		$v_id_servicio = $_POST['p_id_servicio'];
+		
 		$v_result = del_servicio ($conn, $v_id_servicio);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -39,7 +40,7 @@ if (isset($_SESSION['id_perfil'])) {
     if($v_result) {
   		mensaje(1, 'El servicio fue eliminado correctamente', 'servicios_lst.php', '_self'); 
 	} else {
-		mensaje(2, 'El servicio no pudo ser eliminado pues alg&uacute;n usuario lo tiene asignado', 'servicios_lst.php', '_self'); 
+		mensaje(2, 'El servicio no pudo ser eliminado pues alg&uacute;n usuario o sede lo tiene asignado', 'servicios_lst.php', '_self'); 
 	}
 	?>
 	 <!-- InstanceEndEditable -->

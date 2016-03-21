@@ -8,8 +8,9 @@ include ($path."/lib/usuarios_utl.php");
 $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 if(isset($_REQUEST['p_letras'])){
 	$v_letras = $_REQUEST['p_letras'];
+	$v_id_sede = $_REQUEST['p_id_sede'];
 	$v_letras = preg_replace("/[^a-z0-9 ]/si","",$v_letras);
-	$t_usuarios = lista_clientes ($conn, 'nombre', $v_letras);
+	$t_usuarios = lista_clientes ($conn, 'nombre', $v_letras,$v_id_sede);
 	
 	header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 	header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // always modified

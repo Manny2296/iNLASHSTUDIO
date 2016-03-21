@@ -2,7 +2,7 @@
 function crea_programacion ($connid,   $id_usuario,      $id_servicio,
 							$fecha,    $hora_ini,        $hora_fin,
 							$maquina,  $sesion_especial, $login_mod,
-							$cortesia, $comentarios,     $maquinas_bloqueo) {
+							$cortesia, $comentarios,     $maquinas_bloqueo, $v_id_sede) {
 	if (is_null($sesion_especial)) {
 		$sesion_especial = 'N';
 	}
@@ -28,7 +28,8 @@ function crea_programacion ($connid,   $id_usuario,      $id_servicio,
 				        ".$v_hini."  < ".$v_db_hfin." ) Or
 					  ( ".$v_hfin." > ".$v_db_hini." And
 				        ".$v_hfin." <= ".$v_db_hfin." ))
-				 And maquina        = ".$maquina;
+				 And maquina        = ".$maquina."
+				 And id_sede = ".$v_id_sede;
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
 	if ($rset[0]['conteo'] > 0) {
@@ -63,7 +64,8 @@ function crea_programacion ($connid,   $id_usuario,      $id_servicio,
 	            From spa_programacion
 			   Where id_usuario = ".$id_usuario."
 			     And fecha      = str_to_date('".$fecha."', '%d-%m-%Y')
-				 And hora_ini   = '".$hora_ini."'";
+				 And hora_ini   = '".$hora_ini."'
+				 And id_sede = ".$v_id_sede;
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
 	if ($rset[0]['conteo'] > 0) {
@@ -88,12 +90,12 @@ function crea_programacion ($connid,   $id_usuario,      $id_servicio,
 	             (id_servicio, id_usuario, fecha,
 				  hora_ini,    hora_fin,   maquina,
 				  login_mod,   asistencia, sesion_especial, 
-				  cortesia,    comentarios)
+				  cortesia,    comentarios, id_sede)
 				 Values
 				 (".$id_servicio.", ".$id_usuario.", str_to_date('".$fecha."', '%d-%m-%Y'),
 				  '".$hora_ini."',  '".$hora_fin."', ".$maquina.",
 				  '".$login_mod."', Null, '".$sesion_especial."',
-				  '".$cortesia."', '".$comentarios."')";
+				  '".$cortesia."', '".$comentarios."',".$v_id_sede.")";
 	$result = dbquery ($query, $connid);
 	$query = "select Last_Insert_Id() id
 	            From spa_programacion";

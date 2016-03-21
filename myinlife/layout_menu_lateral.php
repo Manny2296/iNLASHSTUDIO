@@ -19,6 +19,8 @@ if (isset($_SESSION['id_perfil'])) {
 				$t_opciones[5]['url'] = 'programacion_lst.php';
 				$t_opciones[6]['texto'] = 'Facturaci&oacute;n';
 				$t_opciones[6]['url'] = 'facturacion_lst.php';
+				$t_opciones[7]['texto'] = 'Sedes';
+				$t_opciones[7]['url'] = 'sedes_lst.php';
 				break;	
 		}
 		//dibujar menu lateral

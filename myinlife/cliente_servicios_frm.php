@@ -16,9 +16,12 @@ $skin  = obtener_skin ($conn);
 if (isset($_SESSION['id_perfil'])) {
 	if ( validar_permisos ($conn, 'cliente_servicios_frm.php') ) {
 		$v_id_usuario = $_POST["p_id_usuario"];
+		$v_id_perf_unico = $_POST["p_id_perf_unico"];
 		$r_usuario = nombres_usua($conn, $v_id_usuario);
+		
+		$r_datos_usuario = detalle_usuario ($conn, $v_id_perf_unico);
 		$v_nombre = $r_usuario['nombres']." ".$r_usuario['apellidos'];
-		$t_servicios = lista_servicios_prep ($conn, $v_id_usuario);
+		$t_servicios =  lista_servicios_prep ($conn, $v_id_perf_unico,$r_datos_usuario['id_sede']);
 		$v_accion = $_POST['p_accion'];
 		if ($v_accion == "editar") {
 			$v_codigo = explode("|", $_POST['p_id_servicio']);
@@ -89,6 +92,7 @@ if (isset($_SESSION['id_perfil'])) {
      <div class="capa_form_sf">
         <form id="forma" name="forma" method="post" action="exec_upd_servcliente.php">
         <input type="hidden" name="p_id_usuario" id="p_id_usuario" value="<?php echo($v_id_usuario); ?>" />
+        <input type="hidden" name="p_id_perf_unico" id="p_id_perf_unico" value="<?php echo($v_id_perf_unico); ?>" />
         <table width="90%" border="0" cellpadding="0" cellspacing="0">
           <tr>
 			<th>Cliente:</th>
@@ -134,6 +138,7 @@ if (isset($_SESSION['id_perfil'])) {
       </div>
       <form id="frmback" name="frmback" action="cliente_servicios_lst.php" method="post">
       <input type="hidden" name="p_id_usuario" id="p_id_usuario" value="<?php echo($v_id_usuario); ?>" />
+      <input type="hidden" name="p_id_perf_unico" id="p_id_perf_unico" value="<?php echo($v_id_perf_unico); ?>" />
       </form>
   <!-- InstanceEndEditable -->
   </div>
