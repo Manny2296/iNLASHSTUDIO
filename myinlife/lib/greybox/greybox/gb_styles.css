@@ -1,6 +1,6 @@
 /* Last-Modified: 28/06/06 00:08:22 */
 #GB_overlay {
-    background-color: #CCCCCC;
+    background-color:  #FF0066;
     position: absolute;
     margin: auto;
     top: 0;
@@ -37,7 +37,7 @@
 }
 
 .GB_Gallery .content {
-    background-color: #fff;
+    background-color:#FF0066;
     border: 3px solid #ddd;
 }
 
@@ -108,7 +108,7 @@
 
 
 .GB_Window .content {
-    background-color: #fff;
+    background-color: #FF0066;
     border: 3px solid #ccc;
     border-top: none;
 }

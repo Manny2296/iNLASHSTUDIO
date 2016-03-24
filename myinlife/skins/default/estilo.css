@@ -215,7 +215,7 @@ div.autosuggest ul em
 	height:130px;
 	float:none;
 	border: solid 1px #999;
-	background-color:#000000;
+	background-color:#d71a54;
 	font-family:Tahoma;
 	color:#FFF;
 	float:none;
@@ -232,6 +232,7 @@ div.autosuggest ul em
 	clear:left;
 	float:left;
 	padding-left:5px;
+	background-color:  #d71a54;
 	padding-top:10px;
 	}
 #salir{
@@ -263,13 +264,13 @@ div.autosuggest ul em
 	float:left;
 	width:230px;
 	height:1540px;
-	background-image:url(menu_bg.png);
+ background-color: #d71a54; 
 	background-repeat:repeat-y;
 	margin-left:5px;
 	margin-right:5px;
 	padding-top:0px;
 	font-family:Tahoma;
-	color:#666;
+	color:#FF0066;
 	}
 #calendario{
 	margin:5px auto 5px 5px;

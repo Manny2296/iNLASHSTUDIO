@@ -26,7 +26,7 @@ if (isset($_SESSION['id_perfil'])) {
 		//dibujar menu lateral
 ?>
 	<div id="menu_lateral">
-    <img src="skins/<?php echo($skin); ?>/power_bg.png" />
+    
 	  <div id="botones">
 <?php
 		foreach($t_opciones as $menu) {
