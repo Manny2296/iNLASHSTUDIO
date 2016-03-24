@@ -234,7 +234,9 @@ if (isset($_SESSION['id_perfil'])) {
 			<th>Fecha de nacimiento:</th>
             <td><input type="text" name="p_fecha_nacimiento" id="p_fecha_nacimiento" maxlength="12" size="12" value="<?php if(!is_null($v_id_perf_unico)) {echo($v_fecha_nacimiento);}?>" onClick="popUpCalendar(this, forma.p_fecha_nacimiento);" readonly/></td>
           </tr>
+            /*
           <tr>
+ <!--
 			<th>Eps:</th>
             <td><input type="text" name="p_eps" id="p_eps" size="50" maxlength="200" value="<?php if(!is_null($v_id_perf_unico)){ echo($r_eps['nombre']);}?>" />
             <input type="hidden" name="p_id_eps" id="p_id_eps" value="<?php if(!is_null($v_id_perf_unico)){echo($r_eps['id_eps']);}?>"/></td>
@@ -244,6 +246,7 @@ if (isset($_SESSION['id_perfil'])) {
             <td><input type="text" name="p_prepagada" id="p_prepagada" size="50" maxlength="200" value="<?php if(!is_null($v_id_perf_unico)){echo($r_prepagada['nombre']);}?>" />
             <input type="hidden" name="p_id_prepagada" id="p_id_prepagada" value="<?php if(!is_null($v_id_perf_unico)){ echo($r_prepagada['id_prepagada']);}?>"/></td>
           </tr>
+     -->
           <tr>
 			<th>Fecha de inscripci&oacute;n:</th>
             <td><input type="text" name="p_fecha_ingreso" id="p_fecha_ingreso" maxlength="12" size="12" value="<?php if(!is_null($v_id_perf_unico)) {echo($v_fecha_ingreso);}?>" onClick="popUpCalendar(this, forma.p_fecha_ingreso);" readonly/></td>
