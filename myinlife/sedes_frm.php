@@ -92,9 +92,9 @@ if (isset($_SESSION['id_perfil'])) {
      <div class="capa_form_sf">
         <form id="forma" name="forma" method="post" action="exec_upd_sede.php">
         <input type="hidden" name="p_existe" id="p_existe" value="<?php echo($v_id_sede); ?>"/>
-       
+       <?php if (!is_null($v_id_sede)){?>
         <input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($v_id_sede); ?>" />
-        
+        <?php } ?>
         <table width="80%" border="0" cellpadding="0" cellspacing="0">
           <tr>
 			<th>Nombre:</th>
