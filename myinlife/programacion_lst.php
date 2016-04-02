@@ -21,15 +21,20 @@ if (isset($_SESSION['id_perfil'])) {
 			if(isset($_POST['p_id_sede'])){
 				$t_servicios = lista_servicios_prog ($conn, 'all', null, $_POST['p_id_sede']);
 			}else{
-				
+					if(is_array($t_sede))
+					{
+						$v_id_sede = $t_sede[0]['id_sede'];
+						$t_servicios = lista_servicios_prog ($conn, 'all', null,$v_id_sede);
+					}else
+					{
+						$v_id_sede = null;
+						$t_servicios = null;
+					}
 					
+				
 
-				if(is_array($t_sede) ){
-					$v_id_sede = $t_sede[0]['id_sede'];
-					$t_servicios = lista_servicios_prog ($conn, 'all', null,$v_id_sede);
-				}else{
-					$t_servicios = null;
-				}
+				
+				
 			}
 			
 			
@@ -38,7 +43,13 @@ if (isset($_SESSION['id_perfil'])) {
 		if (isset($_POST['p_id_servicio'])) {
 			$v_id_servicio = $_POST['p_id_servicio'];
 		} else {
-			$v_id_servicio = $t_servicios[0]['id_servicio'];
+			if(!is_null($t_servicios)){
+				$v_id_servicio = $t_servicios[0]['id_servicio'];
+			}else
+			{
+				$v_id_servicio = null;
+			}
+			
 		}
 		if (isset($_POST['p_fecha'])) {
 			$v_fecha = DateTime::createFromFormat('d-m-Y', $_POST['p_fecha']);
@@ -48,17 +59,29 @@ if (isset($_SESSION['id_perfil'])) {
 		if (isset($_POST['p_id_sede'])) {
 			$v_id_sede = $_POST['p_id_sede'];
 		}
-		if(is_array($t_sede) ){
-		$t_horas = lista_horas ($conn, $v_id_servicio);
-		$r_detalle_sede = detalle_sede ($conn,$v_id_sede);
-		$v_cant_maquinas = numero_maquinas ($conn, $v_id_servicio,$v_id_sede);
-		}else{
-			$t_horas=null;
-
-			$r_detalle_sede = null;
+		if(!is_null($v_id_sede))
+		{
+			$r_detalle_sede = detalle_sede ($conn,$v_id_sede);
+				if(!is_null($v_id_servicio))
+			{
+				$t_horas = lista_horas ($conn, $v_id_servicio);
+				$v_cant_maquinas = numero_maquinas ($conn, $v_id_servicio,$v_id_sede);
+			}else
+			{
+				$t_horas = null;
+				$v_cant_maquinas = null;
+			}
+		}else
+		{
+			$r_detalle_sede =null;
+			$t_horas = null;
 			$v_cant_maquinas = null;
+
 		}
+		
 		//$r_detalle_serv = detalle_servicio ($conn, $v_id_servicio);
+		
+		
 		$v_maquina_act = 1;
 		$v_interval = new DateInterval('P1D');
 		$v_ayer = clone $v_fecha;
@@ -164,32 +187,24 @@ if (isset($_SESSION['id_perfil'])) {
         <form name="forma" id="forma" action="#" method="post">
         <?php  if($_SESSION['id_perfil']==1){ ?>
          Sede: <select name="p_id_sede" id="p_id_sede" onChange="refrescar();">
-         <option value=""></option>
-          <?php 
-          if(is_array($t_sedes)){
-          foreach($t_sede as $dato) { ?>
+         <option value=""><?php if(!is_array($t_sede)){echo ("No hay Sedes Registradas");}else{echo ("");}?></option>
+          <?php foreach($t_sede as $dato) { ?>
             <option value="<?php echo($dato['id_sede']); ?>" <?php if($dato['id_sede'] == $v_id_sede) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
-          <?php }
-		  }?>
+          <?php } ?>
           </select>
           <?php }?>
           Servicio a programar: <select name="p_id_servicio" id="p_id_servicio" onChange="refrescar();">
-          <option value=""></option>
-          <?php 
-          if(is_array($t_servicios)){
-          foreach($t_servicios as $dato) { ?>
+          <option value=""><?php if(!is_array($t_servicios)){echo ("No hay Servicios Registrados para la Sede");}else{echo ("");}?></option>
+          <?php foreach($t_servicios as $dato) { ?>
             <option value="<?php echo($dato['id_servicio']); ?>" <?php if($dato['id_servicio'] == $v_id_servicio) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
-          <?php }
-          }?>
-
-          
+          <?php } ?>
           </select>
           <input type="hidden" name="p_fecha" id="p_fecha" value="<?php echo($v_fecha->format('d-m-Y')); ?>" />
           <input type="hidden" name="p_id_programacion" id="p_id_programacion" />
         </form>
 	 <?php 
-	 if(is_array($t_sede)&&is_array($t_servicios)){
-	 while ($v_maquina_act <= $v_cant_maquinas) {
+	 
+	 while (!is_null($v_maquina_act)&&!is_null($v_cant_maquinas)&&$v_maquina_act <= $v_cant_maquinas) {
 		 $t_programacion = lista_horas_prog($conn, 'servicio', $v_id_servicio, $v_maquina_act, $v_fecha->format('d-m-Y'), null,$v_id_sede);
 	 ?>
      <div class="ventana_maquina">
@@ -257,11 +272,7 @@ if (isset($_SESSION['id_perfil'])) {
      <?php
 	    $v_maquina_act++;
 	 }
-	}else{
 	 ?>
-	 	<br>
-	 	<h1>No hay sedes registradas</h1>
-	 <?php }?>
 	 <!-- InstanceEndEditable -->
      </div>
   </div>
