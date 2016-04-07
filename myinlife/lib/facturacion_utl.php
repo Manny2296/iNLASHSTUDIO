@@ -7,11 +7,12 @@ function nombre_cliente($connid, $p_id_usuario) {
     $rset = dbresult($result);
 	return($rset[0]['nomcliente']);
 }
-function lista_clientes($connid) {
+function lista_clientes($connid,$v_id_sede) {
 	$query = "Select Distinct usua.id_usuario, concat(usua.apellidos,' ',usua.nombres) nomcliente
 	            From segu_usuarios usua,
 				     fact_facturacion fact
 			   Where usua.id_usuario = fact.id_usuario
+			   And   fact.id_sede = ".$v_id_sede."
 			   Order By usua.apellidos, usua.nombres";
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
@@ -33,9 +34,12 @@ function detalle_producto($connid, $p_id_producto){
     $rset = dbresult($result);
 	return($rset);
 }
-function lista_servicios ($connid){
-	$query = "Select id_servicio, nombre, descripcion
-	            From conf_servicios serv
+function lista_servicios ($connid,$v_id_sede){
+	$query = "Select serv.id_servicio, serv.nombre, serv.descripcion
+	            From conf_servicios serv,
+	            	 conf_servicios_x_sede csps
+	            Where serv.id_servicio = csps.id_servicio
+	            And   csps.id_sede = ".$v_id_sede."
 			   Order By nombre";
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
@@ -48,15 +52,15 @@ function detalle_servicio ($connid, $id_servicio) {
     $rset = dbresult($result);
 	return ($rset[0]);
 }
-function obtener_numfactura($connid){
-	$query = "Select valor
-	            From conf_parametros
-			   Where codigo = 'COFA'";
+function obtener_numfactura($connid,$v_id_sede){
+	$query = "Select num_factura
+	            From conf_sedes
+			   Where id_sede =".$v_id_sede;
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
 	return ($rset[0]['valor']);
 }
-function listar_facturas($connid, $tipo, $param, $fecha_ini, $fecha_fin) {
+function listar_facturas($connid, $tipo, $param, $fecha_ini, $fecha_fin,$v_id_sede) {
 	$v_where = null;
 	if($tipo == "all") {
 		$query = "Select fact.id_factura, fact.num_factura, Concat(usua.nombres,' ', usua.apellidos) nomcliente,
@@ -65,6 +69,7 @@ function listar_facturas($connid, $tipo, $param, $fecha_ini, $fecha_fin) {
 				    From fact_facturacion fact,
 					     segu_usuarios    usua
 				   Where fact.id_usuario = usua.id_usuario
+				   	 And fact.id_sede = ".$v_id_sede."
 				     And fact.fecha      Between str_to_date('".$fecha_ini." 00:00', '%d-%m-%Y %H:%i') And str_to_date('".$fecha_fin." 23:59', '%d-%m-%Y %H:%i')
 				   Order By fact.fecha Desc";
 	} elseif ($tipo == "estado") {
@@ -77,6 +82,7 @@ function listar_facturas($connid, $tipo, $param, $fecha_ini, $fecha_fin) {
 				    From fact_facturacion fact,
 					     segu_usuarios    usua
 				   Where fact.id_usuario = usua.id_usuario
+				   And fact.id_sede = ".$v_id_sede."
 				     ".$v_where."
 					 And fact.fecha      Between str_to_date('".$fecha_ini." 00:00', '%d-%m-%Y %H:%i') And str_to_date('".$fecha_fin." 23:59', '%d-%m-%Y %H:%i')
 				   Order By fact.fecha Desc";
@@ -90,6 +96,7 @@ function listar_facturas($connid, $tipo, $param, $fecha_ini, $fecha_fin) {
 				    From fact_facturacion fact,
 					     segu_usuarios    usua
 				   Where fact.id_usuario  = usua.id_usuario
+				   And fact.id_sede = ".$v_id_sede."
 				     ".$v_where."
 				   Order By fact.fecha Desc";
 	} elseif ($tipo == "cartera") {
@@ -99,6 +106,7 @@ function listar_facturas($connid, $tipo, $param, $fecha_ini, $fecha_fin) {
 				    From fact_facturacion fact,
 					     segu_usuarios    usua
 				   Where fact.id_usuario = usua.id_usuario
+				     And fact.id_sede = ".$v_id_sede."
 				     And fact.estado     = 'PPA'
 				   Order By fact.fecha Desc";
 	} elseif ($tipo == "cliente") {
@@ -111,6 +119,7 @@ function listar_facturas($connid, $tipo, $param, $fecha_ini, $fecha_fin) {
 				    From fact_facturacion fact,
 					     segu_usuarios    usua
 				   Where fact.id_usuario = usua.id_usuario
+				   And fact.id_sede = ".$v_id_sede."
 				     ".$v_where."
 					 And fact.fecha      Between str_to_date('".$fecha_ini." 00:00', '%d-%m-%Y %H:%i') And str_to_date('".$fecha_fin." 23:59', '%d-%m-%Y %H:%i')
 				   Order By fact.fecha desc";
@@ -126,6 +135,7 @@ function listar_facturas($connid, $tipo, $param, $fecha_ini, $fecha_fin) {
 						 fact_detalle     deta
 				   Where fact.id_usuario  = usua.id_usuario
 				     And fact.id_factura  = deta.id_factura
+				     And fact.id_sede = ".$v_id_sede."
 					 And fact.estado      Not In ('PRC', 'ANL')
 				     ".$v_where."
 					 And fact.fecha      Between str_to_date('".$fecha_ini." 00:00', '%d-%m-%Y %H:%i') And str_to_date('".$fecha_fin." 23:59', '%d-%m-%Y %H:%i')
@@ -142,6 +152,7 @@ function listar_facturas($connid, $tipo, $param, $fecha_ini, $fecha_fin) {
 						 fact_detalle     deta
 				   Where fact.id_usuario  = usua.id_usuario
 				     And fact.id_factura  = deta.id_factura
+				     And fact.id_sede = ".$v_id_sede."
 					 And fact.estado      Not In ('PRC', 'ANL')
 				     ".$v_where."
 					 And fact.fecha      Between str_to_date('".$fecha_ini." 00:00', '%d-%m-%Y %H:%i') And str_to_date('".$fecha_fin." 23:59', '%d-%m-%Y %H:%i')
@@ -221,10 +232,11 @@ function get_detalle($connid, $id_detalle) {
     $rset = dbresult($result);
 	return ($rset[0]);
 }
-function get_factura_proc($connid){
+function get_factura_proc($connid,$v_id_sede){
 	$query = "Select id_factura
 	            From fact_facturacion
-			   Where estado = 'PRC'";
+			   Where estado = 'PRC'
+			   And id_sede = ".$v_id_sede;
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
 	if (is_array($rset) && !is_null($rset[0]['id_factura'])) {

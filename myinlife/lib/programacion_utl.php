@@ -467,13 +467,18 @@ function detalle_programacion($connid, $id_programacion) {
 	                 usua.id_usuario, Concat(usua.nombres,' ',usua.apellidos) nomcliente,
 					 prog.hora_ini, prog.hora_fin,
 					 ifNull(prog.asistencia, 'S') asistencia,
-					 prog.comentarios, prog.cortesia
+					 prog.comentarios, prog.cortesia,sede.nombre snom, sede.direccion,
+					 sede.pais, sede.ciudad, sede.telefono
 	            From spa_programacion prog,
 				     segu_usuarios    usua,
-					 conf_servicios   serv
+					 conf_servicios   serv,
+					 conf_sedes       sede,
+					 segu_perfil_x_usuario cpfu
 			   Where prog.id_servicio = serv.id_servicio
 			     And prog.id_usuario  = usua.id_usuario
-				 And prog.id_programacion = ".$id_programacion;
+				 And prog.id_programacion = ".$id_programacion."
+				 And usua.id_usuario = cpfu.id_usuario
+				 And sede.id_sede = cpfu.id_sede";
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
 	return ($rset[0]);

@@ -7,12 +7,15 @@ include ($path."/lib/securityutl_lib.php");
 include ($path."/lib/layoututl_lib.php");
 include ($path."/lib/mensaje_utl.php");
 include ($path."/lib/facturacion_utl.php");
+include ($path."/lib/sedes_utl.php");
 
 $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
 
 if (isset($_SESSION['id_perfil'])) {
 	if ( validar_permisos ($conn, 'facturacion_lst.php') ) {
+		
+		
 ?>
 <html><!-- InstanceBegin template="/Templates/main_layout.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
@@ -43,8 +46,15 @@ function getParams(){
 	}catch(e){
 	  var tipo = "cliente";
 	}
+	try {
+		var id_sede = myForm.p_id_sede.value;
+		
+	}catch(e){
+		var id_sede = null;
+		
+	}
 	var rUrl = "ajax_filtro_facturas.php";
-	var rBody = "p_tipo="+tipo;
+	var rBody = "p_tipo="+tipo+"&p_id_sede="+id_sede;
 	oDiv = document.getElementById ("filtrodiv");
 	oDiv.innerHTML = "<img src=\"skins/<?php echo($skin); ?>/loader.gif\"><b>Consultando...</b>";
 	var oXmlHttp = zXmlHttp.createRequest();
@@ -82,8 +92,15 @@ function getResults(){
 		var fecha_ini = null;
 		var fecha_fin = null;
 	}
+	try {
+		var id_sede = myForm.p_id_sede.value;
+		
+	}catch(e){
+		var id_sede = null;
+		
+	}
 	var rUrl = "ajax_resultado_facturas.php";
-	var rBody = "p_tipo="+tipo+"&p_param="+params+"&p_fecha_ini="+fecha_ini+"&p_fecha_fin="+fecha_fin;
+	var rBody = "p_tipo="+tipo+"&p_param="+params+"&p_fecha_ini="+fecha_ini+"&p_fecha_fin="+fecha_fin+"&p_id_sede="+id_sede;
 	oDiv = document.getElementById ("contiene_tabla");
 	oDiv.innerHTML = "<img src=\"skins/<?php echo($skin); ?>/loader.gif\"><b>Consultando...</b>";
 	var oXmlHttp = zXmlHttp.createRequest();
@@ -108,15 +125,18 @@ function getResults(){
 	function facturar(){
 		try {
 		   myForm = document.forma;
+		   var id_sede = myForm.p_id_sede.value;
 		   var tipo = myForm.p_tipo.options[myForm.p_tipo.selectedIndex].value;
+		   
 		   if (tipo == "cliente" && myForm.p_param.selectedIndex != 0) {
 			   var id_usuario = myForm.p_param.options[myForm.p_param.selectedIndex].value;
-			   var url = "<?php echo ("/".$instdir); ?>/factura_frm.php?p_id_usuario="+id_usuario;
+			   var url = "<?php echo ("/".$instdir); ?>/factura_frm.php?p_id_usuario="+id_usuario+"?p_id_sede="+id_sede;
 		   } else {
-			   var url = "<?php echo ("/".$instdir); ?>/factura_frm.php";
+			   var url = "<?php echo ("/".$instdir); ?>/factura_frm.php?p_id_sede="+id_sede;
 		   }
 		}catch(e){
-			var url = "<?php echo ("/".$instdir); ?>/factura_frm.php";
+			var id_sede = null;
+			var url = "<?php echo ("/".$instdir); ?>/factura_frm.php?p_id_sede="+id_sede;
 		}
 		GB_showCenter("Factura", url, 500, 780);	  
 	}

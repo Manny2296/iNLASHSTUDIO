@@ -63,10 +63,11 @@ function crea_factura($connid, $id_usuario, $fecha, $cajero) {
 	$result = dbquery ($query, $connid);
 	return(true);
 }
-function upd_estado_factura ($connid, $id_factura, $estado, $medio_pago, $fecha){
+function upd_estado_factura ($connid, $id_factura, $estado, $medio_pago, $fecha,$v_id_sede){
 	$query = "Select count(9) conteo
 	            From fact_facturacion fact
 			   Where fact.id_factura = ".$id_factura."
+			     And fact.id_sede=".$v_id_sede."
 			     And fact.estado     = 'PRC'";
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
@@ -75,24 +76,26 @@ function upd_estado_factura ($connid, $id_factura, $estado, $medio_pago, $fecha)
 	}
 	$query = "Update fact_facturacion
 	             Set estado = '".$estado."'
-			   Where id_factura = ".$id_factura; 
+			   Where id_factura = ".$id_factura."
+			     And fact.id_sede=".$v_id_sede; 
 	$result = dbquery ($query, $connid);
 	if ($estado == 'FAC') {
-		$query = "Select valor
-		            From conf_parametros para
-				   Where para.codigo = 'COFA'";
+		$query = "Select num_factura
+	            From conf_sedes
+			   Where id_sede =".$v_id_sede;
 		$result = dbquery ($query, $connid);
     	$rset = dbresult($result);
 		$v_num_factura = $rset[0]['valor'];
 		$query = "Update fact_facturacion
 		             Set num_factura = '".$v_num_factura."', tipo_pago='".$medio_pago."',
 					     fecha = str_to_date('".$fecha."', '%d-%m-%Y %H:%i')
-				   Where id_factura = ".$id_factura; 
+				   Where id_factura = ".$id_factura."
+				   And fact.id_sede=".$v_id_sede; 
 		$result = dbquery ($query, $connid);
 		$v_num_factura++;
-		$query = "Update conf_parametros
-		             Set valor = '".$v_num_factura."'
-				   Where codigo = 'COFA'";
+		$query = "Update conf_sedes
+		             Set num_factura = '".$v_num_factura."'
+				   Where id_sede =".$v_id_sede;
 		$result = dbquery ($query, $connid);
 	}
 	return(true);

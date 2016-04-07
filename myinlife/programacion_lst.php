@@ -42,6 +42,10 @@ if (isset($_SESSION['id_perfil'])) {
 		
 		if (isset($_POST['p_id_servicio'])) {
 			$v_id_servicio = $_POST['p_id_servicio'];
+			if ($v_id_servicio == 'n')
+			{
+				$v_id_servicio = null;
+			}
 		} else {
 			if(!is_null($t_servicios)){
 				$v_id_servicio = $t_servicios[0]['id_servicio'];
@@ -178,12 +182,14 @@ if (isset($_SESSION['id_perfil'])) {
      <?php include ($path."/layout_menu_lateral.php"); ?>
      <div id="contenido">
 	 <!-- InstanceBeginEditable name="contenido" -->
+	 <?php if(is_array($t_servicios)){?>
      <div id="contiene_barra">
         <div id="buscafecha"><a href="#" onClick="popUpCalendar(this, frmfecha.p_fecha);"><img src="skins/<?php echo($skin); ?>/calendar_search.png" alt="Buscar Fecha" title="Buscar Fecha" border="0" align="absmiddle" /></a>&nbsp;<a href="javascript:facturar();"><img src="skins/<?php echo($skin); ?>/icon_factura.png" alt="Crear una factura" title="Crear una factura" border="0" /></a></div>
-      	<a href="javascript:ir_fecha('<?php echo($v_ayer->format('d-m-Y')); ?>');"><img src="skins/<?php echo($skin); ?>/atras.png" alt="Una fecha atr&aacute;s" border="0" align="absmiddle" /></a> <?php echo($v_fecha_txt); ?> <a href="javascript:ir_fecha('<?php echo($v_manana->format('d-m-Y')); ?>');"><img src="skins/<?php echo($skin); ?>/adelante.png" alt="Una fecha adelante" border="0" align="absmiddle" /></a></div><br />
+      	<a href="javascript:ir_fecha('<?php echo($v_ayer->format('d-m-Y')); ?>');"><img src="skins/<?php echo($skin); ?>/atras.png" alt="Una fecha atr&aacute;s" border="0" align="absmiddle" /></a> <?php echo($v_fecha_txt); ?> <a href="javascript:ir_fecha('<?php echo($v_manana->format('d-m-Y')); ?>');"><img src="skins/<?php echo($skin); ?>/adelante.png" alt="Una fecha adelante" border="0" align="absmiddle" /></a></div> <br />
         <form name="frmfecha" id="frmfecha" action="programacion_lst.php" method="post">
            <input type="hidden" name="p_fecha" id="p_fecha" />
         </form>  
+        <?php } ?>
         <form name="forma" id="forma" action="#" method="post">
         <?php  if($_SESSION['id_perfil']==1){ ?>
          Sede: <select name="p_id_sede" id="p_id_sede" onChange="refrescar();">
@@ -193,12 +199,14 @@ if (isset($_SESSION['id_perfil'])) {
           <?php } ?>
           </select>
           <?php }?>
+      
           Servicio a programar: <select name="p_id_servicio" id="p_id_servicio" onChange="refrescar();">
-          <option value=""><?php if(!is_array($t_servicios)){echo ("No hay Servicios Registrados para la Sede");}else{echo ("");}?></option>
+          <option value="n"><?php if(!is_array($t_servicios)){echo ("No hay Servicios Registrados para la Sede");}else{echo ("");}?></option>
           <?php foreach($t_servicios as $dato) { ?>
             <option value="<?php echo($dato['id_servicio']); ?>" <?php if($dato['id_servicio'] == $v_id_servicio) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
           <?php } ?>
           </select>
+
           <input type="hidden" name="p_fecha" id="p_fecha" value="<?php echo($v_fecha->format('d-m-Y')); ?>" />
           <input type="hidden" name="p_id_programacion" id="p_id_programacion" />
         </form>

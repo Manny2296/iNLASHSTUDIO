@@ -15,12 +15,21 @@ if (!is_null($_POST['p_param']) && $_POST['p_param'] != "") {
 $v_fecha_ini = $_POST['p_fecha_ini'];
 $v_fecha_fin = $_POST['p_fecha_fin'];
 $v_total = 0;
+if(isset($_POST['p_id_sede'])){
+  $v_id_sede = $_POST['p_id_sede'];
+  $t_consulta = listar_facturas($conn, $v_tipo, $v_param, $v_fecha_ini, $v_fecha_fin,$v_id_sede);
+}else{
+  $t_consulta = null;
+  $v_id_sede = null;
+}
 
-$t_consulta = listar_facturas($conn, $v_tipo, $v_param, $v_fecha_ini, $v_fecha_fin);
+
+
 dbdisconn($conn);
 ?>
 <table width="75%" border="0" cellpadding="0" cellspacing="0">
   <tr class="t_texto">
+
     <td colspan="4"><div id="barra_botones"><a href="javascript:facturar();" class="button"><span>Crear Factura</span></a></div></td>
   </tr>
   <tr class="t_header">

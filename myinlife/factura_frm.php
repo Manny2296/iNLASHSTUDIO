@@ -7,12 +7,22 @@ include ($path."/lib/securityutl_lib.php");
 include ($path."/lib/layoututl_lib.php");
 include ($path."/lib/mensaje_utl.php");
 include ($path."/lib/facturacion_utl.php");
+include ($path."/lib/sedes_utl.php");
 
 $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
 
 if (isset($_SESSION['id_perfil'])) {
 	if ( validar_permisos ($conn, 'factura_frm.php') ) {
+		if(isset($_POST['p_id_sede']))
+		{
+			$id_sede = $_POST['p_id_sede'];
+		}else
+		{
+			$id_sede = null;
+
+		}
+
 		$v_editar = 'S';
 		$v_estado = null;
 		$v_numero_fact = null;
@@ -21,7 +31,7 @@ if (isset($_SESSION['id_perfil'])) {
 		if (isset($_REQUEST['p_id_factura'])) {
 			$v_id_factura = $_REQUEST['p_id_factura'];
 		} else {
-			$v_id_factura = get_factura_proc($conn);
+			$v_id_factura = get_factura_proc($conn,$id_sede);
 		}
 		$v_nomusuario = null;
 		$v_hoy = new DateTime();
@@ -38,7 +48,7 @@ if (isset($_SESSION['id_perfil'])) {
 			$v_nomusuario = $r_factura['nomcliente'];
 			$v_estado = $r_factura['estado'];
             $v_fecha = $r_factura['fecha'];
-		
+			
 			if ($v_estado != 'PRC') {
 				$v_editar = 'N';
 			}
@@ -58,7 +68,7 @@ if (isset($_SESSION['id_perfil'])) {
 			}
 		}
 		if (is_null($v_numero_fact)) {
-			$v_numero_fact = obtener_numfactura($conn);
+			$v_numero_fact = obtener_numfactura($conn,$id_sede);
 		}	
 ?>
 <html><!-- InstanceBegin template="/Templates/nomenu_layout.dwt.php" codeOutsideHTMLIsLocked="false" -->

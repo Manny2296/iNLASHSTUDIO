@@ -71,8 +71,8 @@ if (isset($_SESSION['id_perfil'])) {
 			$v_msg .= '<tr><td>Hora de finalizaci&oacute;n:</td><td>'.$v_hora_fin->format('h:i a').'</td></tr></table></p>';
 			$v_msg .= "<p>Te esperamos!</p>";
 			$v_msg .= '<p>Horario de atención: lunes a viernes de 6:00 a.m. a 8:30 p.m.&nbsp;&nbsp;-&nbsp;&nbsp;Sábado de 8:00am a 2:00p.m.</p>';
-			$v_msg .= 'In Life Studio<br>Carrera 17A # 122-45, Bogotá';
-			$v_msg .= '<br>Tels: 4785349 - 3004553566<br><a href="www.inlifestudio.com">www.inlifestudio.com</a>';
+			$v_msg .= 'In Life Studio Sede '.$r_cita['snom'].'<br>'.$r_cita['direccion'].', '.$r_cita['ciudad'].'-'.$r_cita['pais'].'';
+			$v_msg .= '<br>Tel: '.$r_cita['telefono'].'<br><a href="www.inlifestudio.com">www.inlifestudio.com</a>';
 			$v_msg .= 'email: <a href="mailto:contacto@inlifestudio.com">contacto@inlifestudio.com</a></p>';
 		
 			notificar_email_usuario ($conn, $v_id_usuario, $v_subject, $v_msg, 'N');
