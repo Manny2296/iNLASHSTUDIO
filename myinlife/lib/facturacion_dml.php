@@ -43,10 +43,11 @@ function del_producto ($connid, $id_producto) {
 	$result = dbquery ($query, $connid);
     return(true);
 }
-function crea_factura($connid, $id_usuario, $fecha, $cajero) {
+function crea_factura($connid, $id_usuario, $fecha, $cajero,$v_id_sede) {
 	$query = "Select count(9) conteo
 	            From fact_facturacion fact
-			   Where fact.estado = 'PRC'";
+			   Where fact.estado = 'PRC'
+			   And fact.id_sede =".$v_id_sede;
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
 	if ($rset[0]['conteo'] > 0) {
@@ -55,11 +56,11 @@ function crea_factura($connid, $id_usuario, $fecha, $cajero) {
 	$query = "Insert Into fact_facturacion 
 	             (num_factura, id_usuario, fecha,
 				  descuento, total, pagado,
-				  fecha_ult_pago, estado, cajero)
+				  fecha_ult_pago, estado, cajero, id_sede)
 				 Values
 				 (null, ".$id_usuario.", str_to_date('".$fecha."', '%d-%m-%Y %H:%i'),
 				  0, 0, 0,
-				  null, 'PRC', ".$cajero.")";
+				  null, 'PRC', ".$cajero.",".$v_id_sede.")";
 	$result = dbquery ($query, $connid);
 	return(true);
 }
@@ -77,20 +78,20 @@ function upd_estado_factura ($connid, $id_factura, $estado, $medio_pago, $fecha,
 	$query = "Update fact_facturacion
 	             Set estado = '".$estado."'
 			   Where id_factura = ".$id_factura."
-			     And fact.id_sede=".$v_id_sede; 
+			     And id_sede=".$v_id_sede; 
 	$result = dbquery ($query, $connid);
 	if ($estado == 'FAC') {
-		$query = "Select num_factura
+		$query = "Select num_factura, pref_factura
 	            From conf_sedes
 			   Where id_sede =".$v_id_sede;
 		$result = dbquery ($query, $connid);
     	$rset = dbresult($result);
-		$v_num_factura = $rset[0]['valor'];
+		$v_num_factura = $rset[0]['num_factura'];
 		$query = "Update fact_facturacion
-		             Set num_factura = '".$v_num_factura."', tipo_pago='".$medio_pago."',
+		             Set num_factura = '".$rset[0]['pref_factura'].$v_num_factura."', tipo_pago='".$medio_pago."',
 					     fecha = str_to_date('".$fecha."', '%d-%m-%Y %H:%i')
 				   Where id_factura = ".$id_factura."
-				   And fact.id_sede=".$v_id_sede; 
+				   And id_sede=".$v_id_sede; 
 		$result = dbquery ($query, $connid);
 		$v_num_factura++;
 		$query = "Update conf_sedes
@@ -122,7 +123,7 @@ function del_factura($connid, $id_factura) {
 	}
 	return(true);
 }
-function crea_detalle($connid, $id_factura, $id_servicio, $id_producto, $cantidad, $pordto, $valor_unitario) {
+function crea_detalle($connid, $id_factura, $id_servicio, $id_producto, $cantidad, $pordto, $valor_unitario,$v_id_sede) {
 	$v_valor_unitario = $valor_unitario;
 	if(!is_null($id_producto)) {
 		$v_id_producto = $id_producto;

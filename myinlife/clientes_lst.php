@@ -14,12 +14,13 @@ $skin  = obtener_skin ($conn);
 if (isset($_SESSION['id_perfil'])) {
 	if ( validar_permisos ($conn, 'clientes_lst.php') ) {
 		$v_tipo = $_POST['p_tipo'];
+		$v_id_sede = $_POST['p_id_sede'];
 		if (isset($_POST['p_param'])) {
 			$v_param = $_POST['p_param'];
 		} else {
 			$v_param = null;
 		}
-		$t_usuarios = lista_clientes ($conn, $v_tipo, $v_param,null);
+		$t_usuarios = lista_clientes ($conn, $v_tipo, $v_param,$v_id_sede);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/tabla_layout.dwt.php" codeOutsideHTMLIsLocked="false" -->
@@ -89,8 +90,8 @@ if (isset($_SESSION['id_perfil'])) {
 		var url = "<?php echo ("/".$instdir); ?>/cliente_pestanas_frm.php?p_id_usuario="+id_cliente;
 		GB_showCenter("Pestañas del cliente", url, 500, 720);	  
 	}
-	function facturar(id_cliente){
-		var url = "<?php echo ("/".$instdir); ?>/factura_frm.php?p_id_usuario="+id_cliente;
+	function facturar(id_cliente,id_sede){
+		var url = "<?php echo ("/".$instdir); ?>/factura_frm.php?p_id_usuario="+id_cliente+"&p_id_sede="+id_sede;
 		GB_showCenter("Factura", url, 500, 780);	  
 	}
 	function ver_notifs(id_cliente){
@@ -146,7 +147,7 @@ if (isset($_SESSION['id_perfil'])) {
               <td><?php echo($dato['abreviatura']." ".$dato['numero_id']); ?></td>
               <td><a href="javascript:ver(<?php echo($dato['id_perf_unico']); ?>);"><?php echo($dato['apellidos']." ".$dato['nombres']); ?></a></td>
               <td><?php echo($dato['nomsede']); ?></td>
-              <td><a href="javascript:reset_pwd(<?php echo($dato['id_usuario']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_pwd.png" alt="Restablecer contrase&ntilde;a" title="Restablecer contrase&ntilde;a" border="0" /></a>&nbsp;<a href="javascript:ver_notifs(<?php echo($dato['id_usuario']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_email.png" alt="Seguimiento de notificaciones del cliente" title="Seguimiento de notificaciones del cliente" border="0" /></a>&nbsp;<a href="javascript:facturar(<?php echo($dato['id_usuario']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_factura.png" alt="Crear una factura" title="Crear una factura" border="0" /></a></span>&nbsp;<a href="javascript:servicios(<?php echo($dato['id_usuario']);?>, <?php echo($dato['id_perf_unico']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_service.png" alt="Asignar servicios prepagados al cliente" title="Asignar servicios prepagados al cliente" border="0" /></a></span>&nbsp;<a href="javascript:ver_ficha(<?php echo($dato['id_usuario']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_ficha.png" alt="Consultar ficha antropom&eacute;trica" title="Consultar ficha antropom&eacute;trica" border="0" /></a><?php if ($v_pestanas) { ?>&nbsp;<a href="javascript:ver_pestanas(<?php echo($dato['id_usuario']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_eye.png" alt="Consultar pesta&ntilde;as del cliente" title="Consultar pesta&ntilde;as del cliente" border="0" /></a><?php }  ?></td>
+              <td><a href="javascript:reset_pwd(<?php echo($dato['id_usuario']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_pwd.png" alt="Restablecer contrase&ntilde;a" title="Restablecer contrase&ntilde;a" border="0" /></a>&nbsp;<a href="javascript:ver_notifs(<?php echo($dato['id_usuario']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_email.png" alt="Seguimiento de notificaciones del cliente" title="Seguimiento de notificaciones del cliente" border="0" /></a>&nbsp;<a href="javascript:facturar(<?php echo($dato['id_usuario']); ?>,<?php echo($dato['id_sede']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_factura.png" alt="Crear una factura" title="Crear una factura" border="0" /></a></span>&nbsp;<a href="javascript:servicios(<?php echo($dato['id_usuario']);?>, <?php echo($dato['id_perf_unico']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_service.png" alt="Asignar servicios prepagados al cliente" title="Asignar servicios prepagados al cliente" border="0" /></a></span>&nbsp;<a href="javascript:ver_ficha(<?php echo($dato['id_usuario']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_ficha.png" alt="Consultar ficha antropom&eacute;trica" title="Consultar ficha antropom&eacute;trica" border="0" /></a><?php if ($v_pestanas) { ?>&nbsp;<a href="javascript:ver_pestanas(<?php echo($dato['id_usuario']); ?>);" class="button"><span><img src="skins/<?php echo($skin); ?>/icon_eye.png" alt="Consultar pesta&ntilde;as del cliente" title="Consultar pesta&ntilde;as del cliente" border="0" /></a><?php }  ?></td>
             </tr>
             <?php
 					$v_cont++;

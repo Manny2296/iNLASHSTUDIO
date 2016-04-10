@@ -12,17 +12,16 @@ include ($path."/lib/sedes_utl.php");
 $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
 
-if (isset($_SESSION['id_perfil'])) {
+if (isset($_SESSION['id_perfil'])) { 
 	if ( validar_permisos ($conn, 'factura_frm.php') ) {
-		if(isset($_POST['p_id_sede']))
-		{
-			$id_sede = $_POST['p_id_sede'];
-		}else
-		{
-			$id_sede = null;
+		
 
+		if (isset($_REQUEST['p_id_sede'])) {
+			$v_id_sede = $_REQUEST['p_id_sede'];
+			
+		}else{
+			$v_id_sede = null;
 		}
-
 		$v_editar = 'S';
 		$v_estado = null;
 		$v_numero_fact = null;
@@ -31,7 +30,7 @@ if (isset($_SESSION['id_perfil'])) {
 		if (isset($_REQUEST['p_id_factura'])) {
 			$v_id_factura = $_REQUEST['p_id_factura'];
 		} else {
-			$v_id_factura = get_factura_proc($conn,$id_sede);
+			$v_id_factura = get_factura_proc($conn,$v_id_sede);
 		}
 		$v_nomusuario = null;
 		$v_hoy = new DateTime();
@@ -68,7 +67,7 @@ if (isset($_SESSION['id_perfil'])) {
 			}
 		}
 		if (is_null($v_numero_fact)) {
-			$v_numero_fact = obtener_numfactura($conn,$id_sede);
+			$v_numero_fact = obtener_numfactura($conn,$v_id_sede);
 		}	
 ?>
 <html><!-- InstanceBegin template="/Templates/nomenu_layout.dwt.php" codeOutsideHTMLIsLocked="false" -->
@@ -102,7 +101,7 @@ function getDetalle(){
 	myForm = document.frmfactura;
 	var rUrl = "ajax_detalle_factura.php";
 	var tipo = "<?php if($v_editar == 'S') { echo ("editar"); } else { echo("consultar"); } ?>";
-	var rBody = "p_tipo="+tipo+"&p_id_factura="+myForm.p_id_factura.value;
+	var rBody = "p_tipo="+tipo+"&p_id_factura="+myForm.p_id_factura.value+"&p_id_sede="+myForm.p_id_sede.value;
 	oDiv = document.getElementById ("detallediv");
 	oDiv.innerHTML = "<img src=\"skins/<?php echo($skin); ?>/loader.gif\"><b>Consultando...</b>";
 	var oXmlHttp = zXmlHttp.createRequest();
@@ -124,8 +123,10 @@ function autoguardar(){
 	myForm = document.frmfactura;
 	var rUrl = "ajax_upd_factura.php";
 	var id_usuario = myForm.p_id_usuario.value;
+	var id_sede = myForm.p_id_sede.value;
+	
 	var fecha = myForm.p_fecha.value;
-	var rBody = "p_fecha="+fecha+"&p_id_usuario="+id_usuario;
+	var rBody = "p_fecha="+fecha+"&p_id_usuario="+id_usuario+"&p_id_sede="+id_sede;
 	var oXmlHttp = zXmlHttp.createRequest();
 	
 	oXmlHttp.open("post", rUrl, true);
@@ -169,8 +170,10 @@ function getListaItem(objChk) {
 	} else {
 		return;
 	}
+	myForm = document.frmfactura;
+	var id_sede = myForm.p_id_sede.value;
 	var rUrl = "ajax_lista_productos.php";
-	var rBody = "p_tipo="+valor;
+	var rBody = "p_tipo="+valor+"&p_id_sede="+id_sede;
 	var oXmlHttp = zXmlHttp.createRequest();
 	oDiv = document.getElementById ("productosdiv");
 	oDiv.innerHTML = "<img src=\"skins/<?php echo($skin); ?>/loader.gif\"><b>Consultando...</b>";
@@ -196,8 +199,10 @@ function addItem(){
 	
 	if(tipoItem == "servicio") {
 		var valor = myForm.p_id_servicio[myForm.p_id_servicio.selectedIndex].value;
+		var id_sede = myForm.p_id_sede.value;
 	} else {
 		var valor = myForm.p_id_producto[myForm.p_id_producto.selectedIndex].value;
+		var id_sede = null;
 	}
 	var cantidad = myForm.p_cantidad.value;
 	var pordto   = myForm.p_pordto.value;
@@ -205,7 +210,7 @@ function addItem(){
 	var id_factura = myForm.p_id_factura.value;
 	
 	var rUrl = "ajax_upd_detalle.php";
-	var rBody = "p_tipo="+tipoItem+"&p_valor="+valor+"&p_pordto="+pordto+"&p_cantidad="+cantidad+"&p_id_factura="+id_factura+"&p_valor_unitario="+valor_unitario;
+	var rBody = "p_tipo="+tipoItem+"&p_valor="+valor+"&p_pordto="+pordto+"&p_cantidad="+cantidad+"&p_id_factura="+id_factura+"&p_valor_unitario="+valor_unitario+"&p_id_sede="+id_sede;
 	var oXmlHttp = zXmlHttp.createRequest();
 	oDiv = document.getElementById ("detallediv");
 	oDiv.innerHTML = "<img src=\"skins/<?php echo($skin); ?>/loader.gif\"><b>Consultando...</b>";
@@ -276,10 +281,13 @@ function liquidar(){
 	myForm = document.frmfactura;
 	var rUrl = "ajax_upd_factura.php";
 	var id_factura = myForm.p_id_factura.value;
+	var id_sede = myForm.p_id_sede.value;
+
 	var estado = "FAC";
 	var fecha = myForm.p_fecha.value;
 	var medio = myForm.p_tipo_pago.options[myForm.p_tipo_pago.selectedIndex].value;
-	var rBody = "p_id_factura="+id_factura+"&p_estado="+estado+"&p_tipo_pago="+medio+"&p_fecha="+fecha;
+	var rBody = "p_id_factura="+id_factura+"&p_estado="+estado+"&p_tipo_pago="+medio+"&p_fecha="+fecha+"&p_id_sede="+id_sede;
+
 	var oXmlHttp = zXmlHttp.createRequest();
 	
 	oXmlHttp.open("post", rUrl, true);
@@ -315,6 +323,7 @@ function imprimir() {
         <?php if (!is_null($v_id_factura)) { ?>
         <input type="hidden" name="p_id_factura" id="p_id_factura" value="<?php echo($v_id_factura); ?>" />
         <?php } ?>
+        <input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($v_id_sede); ?>" />
         <table width="80%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <tr>
@@ -361,20 +370,21 @@ function imprimir() {
         <?php if (!is_null($v_id_factura)) { ?>
         <input type="hidden" name="p_id_factura" id="p_id_factura" value="<?php echo($v_id_factura); ?>" />
         <?php } ?>
-        
+        <input  type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($v_id_sede); ?>" />
         <div id="detallediv"></div>
         </form>
         <form action="factura_frm.php" name="frmrefresh" id="frmrefresh" method="post">
+        <input  type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($v_id_sede); ?>" />
         <input type="hidden" name="p_id_usuario" id="p_id_usuario" value="<?php echo($v_id_usuario); ?>" />
         <?php if (!is_null($v_id_factura)) { ?>
-        <input type="hidden" name="p_id_factura" id="p_id_factura" value="<?php echo($v_id_factura); ?>" />
+        <input  type="hidden" name="p_id_factura" id="p_id_factura" value="<?php echo($v_id_factura); ?>" />
         <?php } ?>
         </form>
      </div>
      <script type="text/javascript">
 	        //implementacion de autosuggest
 			var options = {
-				script:"ajax_lista_clientes.php?",
+				script:"ajax_lista_clientes.php?p_id_sede=<?php echo($v_id_sede); ?>&" ,
 				varname:"p_letras",
 				json:true,
 				callback: function (obj) { document.getElementById('p_id_usuario').value = obj.id; autoguardar(); }

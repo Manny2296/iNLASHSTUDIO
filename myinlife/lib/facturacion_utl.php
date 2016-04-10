@@ -45,6 +45,21 @@ function lista_servicios ($connid,$v_id_sede){
     $rset = dbresult($result);
 	return ($rset);
 }
+function lista_servicios_x_sede ($connid, $id_sede)
+{
+	$query = "Select serv.id_servicio, serv.nombre, serv.descripcion, csps.id_sede,
+					 csps.id_servicio, csps.sesiones_simultaneas, sede.id_sede sidsede, sede.nombre nomsede
+	            From conf_servicios serv, 
+	            	 conf_servicios_x_sede csps,
+	            	 conf_sedes sede
+	            Where serv.id_servicio = csps.id_servicio
+	            And   sede.id_sede = csps.id_sede
+	            And   sede.id_sede = ".$id_sede."
+			   Order By nombre";
+	$result = dbquery ($query, $connid);
+    $rset = dbresult($result);
+	return ($rset);
+}
 function detalle_servicio ($connid, $id_servicio) {
 	$query = "Select * from conf_servicios serv
 	           Where serv.id_servicio = ".$id_servicio;
@@ -58,7 +73,7 @@ function obtener_numfactura($connid,$v_id_sede){
 			   Where id_sede =".$v_id_sede;
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
-	return ($rset[0]['valor']);
+	return ($rset[0]['num_factura']);
 }
 function listar_facturas($connid, $tipo, $param, $fecha_ini, $fecha_fin,$v_id_sede) {
 	$v_where = null;
@@ -168,12 +183,14 @@ function datos_factura($connid, $id_factura) {
 				     fact.id_usuario, fact.descuento,   date_format(fact.fecha, '%d-%m-%Y') fecha,
 					 fact.total,      fact.pagado,      date_format(fact.fecha_ult_pago, '%d-%m-%Y') ult_pago,
 					 fact.estado,     date_format(fact.fecha, '%h:%i %p') hora, Concat(usua1.nombres,' ',usua1.apellidos) cajero,
-					 fact.tipo_pago
+					 fact.tipo_pago, fact.id_sede , sede.nombre nomsede, sede.direccion, sede.telefono
 				From fact_facturacion fact,
 				     segu_usuarios    usua,
-					 segu_usuarios    usua1
+					 segu_usuarios    usua1,
+					 conf_sedes       sede
 			   Where fact.id_usuario = usua.id_usuario
 			     And fact.cajero     = usua1.id_usuario
+			     And fact.id_sede    = sede.id_sede
 			     And fact.id_factura = ".$id_factura;
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
@@ -232,11 +249,11 @@ function get_detalle($connid, $id_detalle) {
     $rset = dbresult($result);
 	return ($rset[0]);
 }
-function get_factura_proc($connid,$v_id_sede){
-	$query = "Select id_factura
+function get_factura_proc($connid, $v_id_sede){
+	$query = "Select id_factura 
 	            From fact_facturacion
 			   Where estado = 'PRC'
-			   And id_sede = ".$v_id_sede;
+			   And id_sede =".$v_id_sede;
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
 	if (is_array($rset) && !is_null($rset[0]['id_factura'])) {

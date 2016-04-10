@@ -2,7 +2,7 @@
 function lista_sedes ($connid, $v_activa) {
 	$query = "Select sede.*
 	            From conf_sedes sede
-	            Where Activa = '".$v_activa."'
+	            
 			   Order By sede.nombre";
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);

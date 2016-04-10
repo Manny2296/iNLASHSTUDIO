@@ -11,6 +11,7 @@ $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
 if (isset($_SESSION['id_perfil'])) {
 	$v_id_factura = $_POST['p_id_factura'];
+	$v_id_sede = $_POST['p_id_sede'];
 	$v_cantidad = $_POST['p_cantidad'];
 	$v_pordto = $_POST['p_pordto'];
 	$v_tipo = $_POST['p_tipo'];

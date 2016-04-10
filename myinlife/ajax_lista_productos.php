@@ -11,9 +11,10 @@ $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
 if (isset($_SESSION['id_perfil'])) {
 	$v_tipo = $_POST['p_tipo'];
+	$v_id_sede = $_POST['p_id_sede'];
 	if ($v_tipo == "servicio") {
 		$v_id_campo = "p_id_servicio";
-		$t_lista = lista_servicios($conn);
+		$t_lista = lista_servicios_x_sede ($conn, $v_id_sede);
 	} else {
 		$v_id_campo = "p_id_producto";
 		$t_lista = lista_productos($conn);

@@ -6,7 +6,7 @@ include ($path."/lib/".$db_engine_lib);
 include ($path."/lib/securityutl_lib.php");
 include ($path."/lib/layoututl_lib.php");
 include ($path."/lib/mensaje_utl.php");
-
+include ($path."/lib/sedes_utl.php");
 $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
 
@@ -16,6 +16,11 @@ if (isset($_SESSION['id_perfil'])) {
 		$t_tipo[0]['valor'] = "id";
 		$t_tipo[1]['texto'] = "Apellidos o nombres";
 		$t_tipo[1]['valor'] = "nombre";
+		if (!isset($_SESSION['id_sede'])){
+      		$t_sede = lista_sedes ($conn,'S');
+    	}else{
+      		$t_sede = $_SESSION['id_sede'];
+    	}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/main_layout.dwt.php" codeOutsideHTMLIsLocked="false" -->
@@ -68,6 +73,23 @@ if (isset($_SESSION['id_perfil'])) {
      <div class="capa_form">
         <form id="forma" name="forma" method="post" action="clientes_lst.php">
         <table width="80%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>Sede:</th>
+            <td>
+            <?php if(!isset($_SESSION['id_sede'])) { ?>
+              <select name="p_id_sede" id="p_id_sede" >
+         <?php if(!is_array($t_sede)){echo ("<option value='No hay Sedes Registradas'>No hay sedes Registradas</option>");}else{echo ("");}?>
+          <?php foreach($t_sede as $dato) { ?>
+            <option value="<?php echo($dato['id_sede']); ?>" ><?php echo($dato['nombre']); ?></option>
+          <?php } ?>
+          </select>
+            <?php } else {?>
+            <?php echo($t_sede); ?><input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($t_sede); ?>" />
+            <?php }?>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
           <tr>
 			<th>Tipo de consulta:</th>
             <td><select name="p_tipo" id="p_tipo" onchange="setTimeout('getParams()', 0);">
@@ -81,7 +103,10 @@ if (isset($_SESSION['id_perfil'])) {
             <td><div id="pardiv"></div></td>
           </tr>
           <tr>
-            <td colspan="2" align="center"><input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Consultar" onclick="document.forma.submit();" />
+            <td colspan="2" align="center">
+            <?php if(is_array($t_sede)){ ?>
+            <input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Consultar" onclick="document.forma.submit();" />
+            <?php } ?>
               &nbsp;<input type="button" name="btn_regresar" id="btn_regresar" class="button white" value="Regresar" onclick="location.replace('mainsite.php');" /></td>
           </tr>
         </table>

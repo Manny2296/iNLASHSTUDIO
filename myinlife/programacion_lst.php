@@ -38,6 +38,8 @@ if (isset($_SESSION['id_perfil'])) {
 			}
 			
 			
+		}else{
+			$v_id_sede = $_SESSION['id_sede'];
 		}
 		
 		if (isset($_POST['p_id_servicio'])) {
@@ -169,7 +171,9 @@ if (isset($_SESSION['id_perfil'])) {
 		GB_showCenter("Pestañas del cliente", url, 500, 720);	  
 	}
 	function facturar(){
-		var url = "<?php echo ("/".$instdir); ?>/factura_frm.php";
+		myForm = document.forma;
+		var id_sede = myForm.p_id_sede_fact.value;
+		var url = "<?php echo ("/".$instdir); ?>/factura_frm.php?p_id_sede="+id_sede;
 		GB_showCenter("Factura", url, 500, 780);	  
 	}
 </script>
@@ -198,8 +202,10 @@ if (isset($_SESSION['id_perfil'])) {
             <option value="<?php echo($dato['id_sede']); ?>" <?php if($dato['id_sede'] == $v_id_sede) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
           <?php } ?>
           </select>
-          <?php }?>
-      
+
+          <?php }else{ ?>
+      	  <?php echo($v_id_sede); ?><input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($v_id_sede); ?>" />
+            <?php }?>
           Servicio a programar: <select name="p_id_servicio" id="p_id_servicio" onChange="refrescar();">
           <option value="n"><?php if(!is_array($t_servicios)){echo ("No hay Servicios Registrados para la Sede");}else{echo ("");}?></option>
           <?php foreach($t_servicios as $dato) { ?>
@@ -208,6 +214,7 @@ if (isset($_SESSION['id_perfil'])) {
           </select>
 
           <input type="hidden" name="p_fecha" id="p_fecha" value="<?php echo($v_fecha->format('d-m-Y')); ?>" />
+          <input type="hidden" name="p_id_sede_fact" id="p_id_sede_fact" value="<?php echo($v_id_sede); ?>"  />
           <input type="hidden" name="p_id_programacion" id="p_id_programacion" />
         </form>
 	 <?php 

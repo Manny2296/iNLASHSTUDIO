@@ -7,7 +7,7 @@ include ($path."/lib/facturacion_utl.php");
 include ($path."/lib/sedes_utl.php");
 
 $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
-if (!isset($_SESSION['id_sede'])){
+if ($_SESSION['id_perfil']==1){
       $t_sede = lista_sedes ($conn,'S');
     }else{
       $t_sede = $_SESSION['id_sede'];
@@ -21,6 +21,7 @@ if(isset($_POST['p_id_sede'])) {
   $v_id_sede = $_POST['p_id_sede'];
 } else if(is_array($t_sede)){
   $v_id_sede = $t_sede[0]['id_sede'];
+
 }else{
   $v_id_sede=null;
 }
@@ -60,13 +61,15 @@ dbdisconn($conn);
           <tr>
             <th>Sede:</th>
             <td>
-            <?php if(!isset($_SESSION['id_sede'])) { ?>
+            <?php if($_SESSION['id_perfil']==1) { ?>
               <select name="p_id_sede" id="p_id_sede" onchange="setTimeout('getParams();',0);">
-         <?php if(!is_array($t_sede)){echo ("<option value='No hay Sedes Registradas'></option>");}else{echo ("");}?>
+         ?php if(!is_array($t_sede)){echo ("<option value='No hay Sedes Registradas'>No hay sedes Registradas</option>");}else{echo ("");}?>
           <?php foreach($t_sede as $dato) { ?>
             <option value="<?php echo($dato['id_sede']); ?>" <?php if($dato['id_sede'] == $v_id_sede) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
           <?php } ?>
           </select>
+            <?php } else {?>
+            <?php echo($t_sede); ?><input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($t_sede); ?>" />
             <?php }?>
             </td>
             <td></td>

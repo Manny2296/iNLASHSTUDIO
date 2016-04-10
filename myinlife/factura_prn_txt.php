@@ -22,10 +22,10 @@ dbdisconn($conn);
 header('Content-Type: plain/text; charset=iso-8859-2');
 header('Content-Disposition: attachment; filename=factura_'.$r_factura['num_factura'].'.txt');
 ?>
-Inlife Studio S.A.S<?php echo("\r\n"); ?>
+Inlife Studio S.A.S Sede: <?php echo($r_factura['nomsede']);  ?><?php echo("\r\n"); ?>
 Nit. 900805347-0<?php echo("\r\n"); ?>
-Dir. Cra 17A#122-45<?php echo("\r\n"); ?>
-Tel. 3108001209<?php echo("\r\n"); ?>
+Dir. <?php echo($r_factura['direccion']);  ?><?php echo("\r\n"); ?>
+Tel. <?php echo($r_factura['telefono']);  ?><?php echo("\r\n"); ?>
 ---------------------------------------<?php echo("\r\n"); ?>
 RES 320001223737<?php echo("\r\n"); ?>
 <?php echo("\r\n"); ?>

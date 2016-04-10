@@ -47,7 +47,7 @@ function getParams(){
 	  var tipo = "cliente";
 	}
 	try {
-		var id_sede = myForm.p_id_sede.value;
+		var id_sede = myForm.p_id_sede.options[myForm.p_id_sede.selectedIndex].value;
 		
 	}catch(e){
 		var id_sede = null;
@@ -93,7 +93,7 @@ function getResults(){
 		var fecha_fin = null;
 	}
 	try {
-		var id_sede = myForm.p_id_sede.value;
+		var id_sede =  myForm.p_id_sede.options[myForm.p_id_sede.selectedIndex].value;
 		
 	}catch(e){
 		var id_sede = null;
@@ -125,19 +125,23 @@ function getResults(){
 	function facturar(){
 		try {
 		   myForm = document.forma;
-		   var id_sede = myForm.p_id_sede.value;
+		   var id_sede = myForm.p_id_sede.options[myForm.p_id_sede.selectedIndex].value;
 		   var tipo = myForm.p_tipo.options[myForm.p_tipo.selectedIndex].value;
 		   
 		   if (tipo == "cliente" && myForm.p_param.selectedIndex != 0) {
 			   var id_usuario = myForm.p_param.options[myForm.p_param.selectedIndex].value;
-			   var url = "<?php echo ("/".$instdir); ?>/factura_frm.php?p_id_usuario="+id_usuario+"?p_id_sede="+id_sede;
+			   var url = "<?php echo ("/".$instdir); ?>/factura_frm.php?p_id_usuario="+id_usuario+"&p_id_sede="+id_sede;
+
 		   } else {
 			   var url = "<?php echo ("/".$instdir); ?>/factura_frm.php?p_id_sede="+id_sede;
+
 		   }
 		}catch(e){
-			var id_sede = null;
-			var url = "<?php echo ("/".$instdir); ?>/factura_frm.php?p_id_sede="+id_sede;
+			
+			var url = "<?php echo ("/".$instdir); ?>/factura_frm.php";
+			
 		}
+		
 		GB_showCenter("Factura", url, 500, 780);	  
 	}
 </script>
