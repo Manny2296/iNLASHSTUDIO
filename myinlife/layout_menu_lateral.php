@@ -22,6 +22,40 @@ if (isset($_SESSION['id_perfil'])) {
 				$t_opciones[7]['texto'] = 'Sedes';
 				$t_opciones[7]['url'] = 'sedes_lst.php';
 				break;	
+				//Layout lateral para Entrenador
+			case 2:
+			$t_opciones[0]['texto'] = 'Parametrizaci&oacute;n';
+				$t_opciones[0]['url'] = 'sysconfig_frm.php';
+				$t_opciones[1]['texto'] = 'Servicios';
+				$t_opciones[1]['url'] = 'servicios_lst.php';
+				$t_opciones[2]['texto'] = 'Productos';
+				$t_opciones[2]['url'] = 'productos_lst.php';
+				$t_opciones[3]['texto'] = 'Usuarios del sistema';
+				$t_opciones[3]['url'] = 'usuarios_consulta_frm.php';
+				$t_opciones[4]['texto'] = 'Clientes';
+				$t_opciones[4]['url'] = 'clientes_consulta_frm.php';
+				$t_opciones[5]['texto'] = 'Programaci&oacute;n';
+				$t_opciones[5]['url'] = 'programacion_lst.php';
+				$t_opciones[6]['texto'] = 'Facturaci&oacute;n';
+				$t_opciones[6]['url'] = 'facturacion_lst.php';
+				//Layout lateral Cliente 
+		 case 3:
+		 $t_opciones[0]['texto'] = 'Parametrizaci&oacute;n';
+				$t_opciones[0]['url'] = 'sysconfig_frm.php';
+				$t_opciones[1]['texto'] = 'Servicios';
+				$t_opciones[1]['url'] = 'servicios_lst.php';
+				$t_opciones[2]['texto'] = 'Productos';
+				$t_opciones[2]['url'] = 'productos_lst.php';
+				$t_opciones[3]['texto'] = 'Usuarios del sistema';
+				$t_opciones[3]['url'] = 'usuarios_consulta_frm.php';
+				$t_opciones[4]['texto'] = 'Clientes';
+				$t_opciones[4]['url'] = 'clientes_consulta_frm.php';
+				$t_opciones[5]['texto'] = 'Programaci&oacute;n';
+				$t_opciones[5]['url'] = 'programacion_lst.php';
+				$t_opciones[6]['texto'] = 'Facturaci&oacute;n';
+				$t_opciones[6]['url'] = 'facturacion_lst.php';
+
+				
 		}
 		//dibujar menu lateral
 ?>

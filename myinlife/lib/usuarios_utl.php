@@ -32,6 +32,7 @@ function lista_usuarios ($connid, $tipo, $parametro) {
 				   Order By usua.apellidos, usua.nombres";
 				   
 	}elseif ($tipo == "id") {
+
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
 						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede
@@ -49,6 +50,27 @@ function lista_usuarios ($connid, $tipo, $parametro) {
 					 And sede.id_sede = pfus.id_sede
 				   Order By usua.apellidos, usua.nombres";
 	}elseif ($tipo == "perfil") {
+		if($parametro ==0){
+			$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
+						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
+						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede
+					From segu_usuarios usua,
+						 conf_tipo_id  tpid,
+						 segu_perfil_x_usuario pfus,
+						 conf_tipo_perfil tppf,
+						 conf_sedes sede
+				   Where usua.id_tipoid  = tpid.id_tipoid
+				     And usua.id_usuario = pfus.id_usuario
+					 And tppf.id_perfil  = pfus.id_perfil
+					 
+					 And pfus.estado     = 'A'
+					 And pfus.id_perfil != 3
+					 And sede.id_sede = pfus.id_sede
+				   Order By usua.apellidos, usua.nombres";
+
+		}
+		else
+
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
 						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede
@@ -66,6 +88,7 @@ function lista_usuarios ($connid, $tipo, $parametro) {
 					 And sede.id_sede = pfus.id_sede
 				   Order By usua.apellidos, usua.nombres";
 	}
+
 	$result = dbquery ($query, $connid);
     $rset = dbresult($result);
 	return ($rset);
@@ -123,6 +146,7 @@ function lista_clientes ($connid, $tipo, $parametro,$id_sede) {
 					   Where usua.id_tipoid  = tpid.id_tipoid
 					     And usua.id_usuario = pfus.id_usuario
 						 And tppf.id_perfil  = pfus.id_perfil
+						 And 
 						 And pfus.estado     = 'A'
 						 And pfus.id_perfil  = 3
 						 And sede.id_sede = pfus.id_sede
