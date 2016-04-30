@@ -33,7 +33,7 @@ function cantidad_perfil ($connid, $login) {
 }
 function obtener_perfil ($connid, $login) {
    $query = "Select tppf.nombre nomperfil, uspf.id_perfil,  uspf.id_usuario,
-   					uspf.id_perf_unico,    usua.nombres,	usua.apellidos
+   					uspf.id_perf_unico,    usua.nombres,	usua.apellidos, uspf.id_sede
                From segu_perfil_x_usuario uspf,
                     segu_usuarios         usua,
                     conf_tipo_perfil      tppf 

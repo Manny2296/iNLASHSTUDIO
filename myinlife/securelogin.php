@@ -121,6 +121,9 @@ function validar() {
 	$_SESSION['id_usuario'] = $v_usuario[0]['id_usuario'];
 	$_SESSION['id_perfil'] = $v_usuario[0]['id_perfil'];
 	$_SESSION['id_perf_unico'] = $v_usuario[0]['id_perf_unico'];
+	/*if($_SESSION['id_perf_unico'] != 1){
+		$_SESSION['id_sede'] = $v_usuario[0]['id_sede'];
+	}*/
 	$_SESSION['nombre'] = $v_usuario[0]['nombres'].' '.$v_usuario[0]['apellidos'];
 	$_SESSION['login'] = $v_login;
 	if($v_usuario[0]['id_perfil'] == 3){
@@ -150,6 +153,10 @@ function validar() {
 	$_SESSION['id_usuario'] = $t_usuario[0]['id_usuario'];
 	$_SESSION['nombre'] = $t_usuario[0]['nombres'].' '.$t_usuario[0]['apellidos'];
 	$_SESSION['login'] = $v_login;
+	/*$_SESSION['id_perf_unico'] = $t_usuario[0]['id_perf_unico'];
+	if($_SESSION['id_perf_unico'] != 1){
+		$_SESSION['id_sede'] = $t_usuario[0]['id_sede'];
+	}*/
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/nosecurity.dwt.php" codeOutsideHTMLIsLocked="false" --><head>

@@ -16,10 +16,12 @@ if (isset($_SESSION['id_perfil'])) {
 		$t_tipo[0]['valor'] = "id";
 		$t_tipo[1]['texto'] = "Apellidos o nombres";
 		$t_tipo[1]['valor'] = "nombre";
+    $inf_sede=null;
 		if (!isset($_SESSION['id_sede'])){
       		$t_sede = lista_sedes ($conn,'S');
     	}else{
-      		$t_sede = $_SESSION['id_sede'];
+          $inf_sede = detalle_sede ($conn, $_SESSION['id_sede']);
+      		$t_sede = $inf_sede['nombre'];
     	}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -76,7 +78,7 @@ if (isset($_SESSION['id_perfil'])) {
         <tr>
             <th>Sede:</th>
             <td>
-            <?php if(!isset($_SESSION['id_sede'])) { ?>
+            <?php if(!isset($_SESSION['id_sede'])) {?>
               <select name="p_id_sede" id="p_id_sede" >
          <?php if(!is_array($t_sede)){echo ("<option value='No hay Sedes Registradas'>No hay sedes Registradas</option>");}else{echo ("");}?>
           <?php foreach($t_sede as $dato) { ?>
@@ -84,7 +86,7 @@ if (isset($_SESSION['id_perfil'])) {
           <?php } ?>
           </select>
             <?php } else {?>
-            <?php echo($t_sede); ?><input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($t_sede); ?>" />
+            <?php echo($t_sede); ?><input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($inf_sede['id_sede']); ?>" />
             <?php }?>
             </td>
             <td></td>
@@ -104,7 +106,7 @@ if (isset($_SESSION['id_perfil'])) {
           </tr>
           <tr>
             <td colspan="2" align="center">
-            <?php if(is_array($t_sede)){ ?>
+            <?php if(is_array($t_sede)|| !is_null($inf_sede)){ ?>
             <input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Consultar" onclick="document.forma.submit();" />
             <?php } ?>
               &nbsp;<input type="button" name="btn_regresar" id="btn_regresar" class="button white" value="Regresar" onclick="location.replace('mainsite.php');" /></td>
