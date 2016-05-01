@@ -12,7 +12,7 @@ $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
 
 if (isset($_SESSION['id_perfil'])) {
-	if ( validar_permisos ($conn, 'productos_frm.php') ) {
+	if ( validar_permisos ($conn, 'servicios_frm.php') ) {
 		$v_id_sede = null;
 		if (isset($_REQUEST['p_id_sede'])) {
 			$v_id_sede = $_REQUEST['p_id_sede'];
@@ -134,11 +134,15 @@ if (isset($_SESSION['id_perfil'])) {
           </tr>
           <tr>
       <th>Activa:</th>
+      <?php if($_SESSION['id_perfil']== 1) { ?>
             <td><select name="p_activa" id="p_activa">
               <option value=""></option>
               <option value="S" <?php if (!is_null($v_id_sede) && $r_sede['Activa'] == "S") {echo("Selected"); } ?>>S</option>
               <option value="N" <?php if (!is_null($v_id_sede) && $r_sede['Activa'] == "N") {echo("Selected"); } ?>>N</option>
               </select></td>
+      <?php } else { ?>
+        <td>  <?php if (!is_null($v_id_sede)) { ?>  <?php echo($r_sede['Activa']); ?>  <input type="hidden" name="p_activa" id="p_activa" value="<?php echo($r_sede['Activa']); ?>"/> <?php } ?></td>
+      <?php } ?>
           </tr>
           <tr>
               <td colspan="2" align="center"><input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Guardar" onclick="document.forma.submit();" />

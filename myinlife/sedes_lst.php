@@ -12,8 +12,16 @@ $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
 
 if (isset($_SESSION['id_perfil'])) {
-	if ( validar_permisos ($conn, 'productos_lst.php') ) {
-		$t_sedes = lista_sedes($conn,'S');
+	if ( validar_permisos ($conn, 'servicios_lst.php') ) {
+    if($_SESSION['id_perfil']== 4){
+      $t_sedes = sede_admin ($conn, $_SESSION['id_sede']) ;
+    }else if($_SESSION['id_perfil']== 1){
+      $t_sedes = lista_sedes($conn,'S');
+    }else
+    {
+      $t_sedes = null;
+    }
+		
 		$v_cont = 0;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -104,10 +112,14 @@ if (isset($_SESSION['id_perfil'])) {
           <table border="0" cellpadding="0" cellspacing="0" width="80%">
             <tr>
               <td colspan="3"><div id="barra_botones">
+                <?php if($_SESSION['id_perfil']== 1) { ?>
                 <a href="javascript:agregar();" class="button"><span>Agregar Sede</span></a>&nbsp;
+                <?php } ?>
                 <a href="javascript:agregar_serv();" class="button"><span>Agregar Servicio</span></a>&nbsp;
                 <a href="javascript:editar();" class="button"><span>Modificar</span></a>&nbsp;
+                 <?php if($_SESSION['id_perfil']== 1) { ?>
                 <a href="javascript:eliminar();" class="button"><span>Eliminar</span></a>&nbsp;
+                <?php } ?>
                 <a href="mainsite.php" class="button"><span>Regresar</span></a>
               </div></td>
             
@@ -139,10 +151,14 @@ if (isset($_SESSION['id_perfil'])) {
 			?>
             <tr>
               <td colspan="3"><div id="barra_botones">
+                 <?php if($_SESSION['id_perfil']== 1) { ?>
                 <a href="javascript:agregar();" class="button"><span>Agregar Sede</span></a>&nbsp;
+                <?php } ?>
                 <a href="javascript:agregar_serv();" class="button"><span>Agregar Servicio</span></a>&nbsp;
                 <a href="javascript:editar();" class="button"><span>Modificar</span></a>&nbsp;
+                 <?php if($_SESSION['id_perfil']== 1) { ?>
                 <a href="javascript:eliminar();" class="button"><span>Eliminar</span></a>&nbsp;
+                <?php } ?>
                 <a href="mainsite.php" class="button"><span>Regresar</span></a>
               </div></td>
             </tr>

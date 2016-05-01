@@ -11,7 +11,7 @@ function lista_perfil ($connid) {
     $rset = dbresult($result);
 	return ($rset);
 }
-function lista_usuarios ($connid, $tipo, $parametro) {
+function lista_usuarios ($connid, $tipo, $parametro,$id_sede,$filtro) {
 	if ($tipo == "nombre") {
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
@@ -29,6 +29,8 @@ function lista_usuarios ($connid, $tipo, $parametro) {
 					 And ( usua.nombres   Like '%".$parametro."%' Or
 						   usua.apellidos Like '%".$parametro."%' )
 					 And sede.id_sede = pfus.id_sede
+					  And pfus.id_sede = ".$id_sede." "
+					  .$filtro."
 				   Order By usua.apellidos, usua.nombres";
 				   
 	}elseif ($tipo == "id") {
@@ -48,6 +50,8 @@ function lista_usuarios ($connid, $tipo, $parametro) {
 					 And pfus.id_perfil != 3
 					 And usua.numero_id Like '%".$parametro."%'
 					 And sede.id_sede = pfus.id_sede
+					  And pfus.id_sede = ".$id_sede." "
+					  .$filtro."
 				   Order By usua.apellidos, usua.nombres";
 	}elseif ($tipo == "perfil") {
 		if($parametro ==0){
@@ -66,6 +70,8 @@ function lista_usuarios ($connid, $tipo, $parametro) {
 					 And pfus.estado     = 'A'
 					 And pfus.id_perfil != 3
 					 And sede.id_sede = pfus.id_sede
+					  And pfus.id_sede = ".$id_sede." "
+					  .$filtro."
 				   Order By usua.apellidos, usua.nombres";
 
 		}
@@ -86,6 +92,8 @@ function lista_usuarios ($connid, $tipo, $parametro) {
 					 And pfus.estado     = 'A'
 					 And pfus.id_perfil != 3
 					 And sede.id_sede = pfus.id_sede
+					  And pfus.id_sede = ".$id_sede." "
+					  .$filtro."
 				   Order By usua.apellidos, usua.nombres";
 	}
 

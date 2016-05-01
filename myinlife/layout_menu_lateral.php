@@ -24,20 +24,15 @@ if (isset($_SESSION['id_perfil'])) {
 				break;	
 				//Layout lateral para Entrenador
 			case 2:
-			$t_opciones[0]['texto'] = 'Parametrizaci&oacute;n';
-				$t_opciones[0]['url'] = 'sysconfig_frm.php';
-				$t_opciones[1]['texto'] = 'Servicios';
-				$t_opciones[1]['url'] = 'servicios_lst.php';
-				$t_opciones[2]['texto'] = 'Productos';
-				$t_opciones[2]['url'] = 'productos_lst.php';
-				$t_opciones[3]['texto'] = 'Usuarios del sistema';
-				$t_opciones[3]['url'] = 'usuarios_consulta_frm.php';
-				$t_opciones[4]['texto'] = 'Clientes';
-				$t_opciones[4]['url'] = 'clientes_consulta_frm.php';
-				$t_opciones[5]['texto'] = 'Programaci&oacute;n';
-				$t_opciones[5]['url'] = 'programacion_lst.php';
-				$t_opciones[6]['texto'] = 'Facturaci&oacute;n';
-				$t_opciones[6]['url'] = 'facturacion_lst.php';
+			
+				
+				$t_opciones[0]['texto'] = 'Clientes';
+				$t_opciones[0]['url'] = 'clientes_consulta_frm.php';
+				$t_opciones[1]['texto'] = 'Programaci&oacute;n';
+				$t_opciones[1]['url'] = 'programacion_lst.php';
+				$t_opciones[2]['texto'] = 'Facturaci&oacute;n';
+				$t_opciones[2]['url'] = 'facturacion_lst.php';
+				break;
 				//Layout lateral Cliente 
 		 case 3:
 		 $t_opciones[0]['texto'] = 'Parametrizaci&oacute;n';
@@ -55,7 +50,21 @@ if (isset($_SESSION['id_perfil'])) {
 				$t_opciones[6]['texto'] = 'Facturaci&oacute;n';
 				$t_opciones[6]['url'] = 'facturacion_lst.php';
 
+		case 4:
 				
+				$t_opciones[0]['texto'] = 'Servicios';
+				$t_opciones[0]['url'] = 'servicios_lst.php';
+				$t_opciones[1]['texto'] = 'Usuarios del sistema';
+				$t_opciones[1]['url'] = 'usuarios_consulta_frm.php';
+				$t_opciones[2]['texto'] = 'Clientes';
+				$t_opciones[2]['url'] = 'clientes_consulta_frm.php';
+				$t_opciones[3]['texto'] = 'Programaci&oacute;n';
+				$t_opciones[3]['url'] = 'programacion_lst.php';
+				$t_opciones[4]['texto'] = 'Facturaci&oacute;n';
+				$t_opciones[4]['url'] = 'facturacion_lst.php';
+				$t_opciones[5]['texto'] = 'Mi sede';
+				$t_opciones[5]['url'] = 'sedes_lst.php';
+				break;	
 		}
 		//dibujar menu lateral
 ?>

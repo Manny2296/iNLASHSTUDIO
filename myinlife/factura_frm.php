@@ -156,6 +156,7 @@ function delFactura() {
 		if (oXmlHttp.readyState == 4) {
 			 if (oXmlHttp.status == 200) {
 				top.GB_hide();
+				top.refrescar();
 			 } else {
 				alert("La factura no pudo ser eliminada");
 			 }
@@ -362,7 +363,7 @@ function imprimir() {
           <?php } ?>
           </tr>
           <tr>
-              <td colspan="2" align="center"><?php if($v_estado=="PRC"){?><input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Liquidar e Imprimir" onClick="liquidar();" />&nbsp;<input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Eliminar" onClick="delFactura();" /><?php } elseif($v_estado != "ANL") {?><input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Anular" onClick="delFactura();" /><?php } ?>&nbsp;<input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Imprimir" onClick="imprimir();" />&nbsp;<input type="button" name="btn_regresar" id="btn_regresar" class="button white" value="Regresar" onClick="javascript:top.GB_hide();" /> </td>
+              <td colspan="2" align="center"><?php if($v_estado=="PRC"){?><input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Liquidar e Imprimir" onClick="liquidar();" />&nbsp;<input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Eliminar" onClick="delFactura();" /><?php } elseif($v_estado != "ANL") {?><input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Anular" onClick="delFactura();" /><?php } ?>&nbsp;<input type="button" name="btn_enviar" id="btn_enviar" class="button white" value="Imprimir" onClick="imprimir();" />&nbsp;<input type="button" name="btn_regresar" id="btn_regresar" class="button white" value="Regresar" onClick="javascript:top.GB_hide();javascript:top.refrescar();" /> </td>
           </tr>
         </table>
         </form>

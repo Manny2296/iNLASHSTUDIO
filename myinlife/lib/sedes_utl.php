@@ -8,6 +8,15 @@ function lista_sedes ($connid, $v_activa) {
     $rset = dbresult($result);
 	return ($rset);
 }
+function sede_admin ($connid, $v_id_sede) {
+	$query = "Select sede.*
+	            From conf_sedes sede
+	            where id_sede = ".$v_id_sede."
+			   Order By sede.nombre";
+	$result = dbquery ($query, $connid);
+    $rset = dbresult($result);
+	return ($rset);
+}
 function detalle_sede ($connid, $id_sede){
 	$query = "Select sede.* 
 			  from conf_sedes sede

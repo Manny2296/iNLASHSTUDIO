@@ -13,7 +13,7 @@ $skin  = obtener_skin ($conn);
 
 if (isset($_SESSION['id_perfil'])) {
 	
-	if ( validar_permisos ($conn, 'exec_upd_productos.php') ) {
+	if ( validar_permisos ($conn, 'exec_upd_servicios.php') ) {
 		$v_nombre = $_POST['p_nombre'];
 		$v_pais = $_POST['p_pais'];
 		$v_ciudad = $_POST['p_ciudad'];

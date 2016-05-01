@@ -13,11 +13,13 @@ $skin  = obtener_skin ($conn);
 if (isset($_SESSION['id_perfil'])) {
 	if ( validar_permisos ($conn, 'usuarios_frm.php') ) {
 		$v_id_perf_unico = null;
+		$v_id_sede = NULL;
 		if (isset($_REQUEST['p_id_perf_unico'])) {
 			$v_id_perf_unico = $_REQUEST['p_id_perf_unico'];
 			$r_usuario = detalle_usuario ($conn, $v_id_perf_unico);
 			$v_id_perfil = $r_usuario['id_perfil'];
 			$v_genero = $r_usuario['genero'];
+			
 			$fecha = DateTime::createFromFormat('Y-m-d', $r_usuario['fecha_nacimiento']);
 			$v_fecha_nacimiento = $fecha->format('d-m-Y');
 			$fecha = DateTime::createFromFormat('Y-m-d', $r_usuario['fecha_ingreso']);
@@ -29,7 +31,11 @@ if (isset($_SESSION['id_perfil'])) {
 			$v_existe = 'N';
 		}
 		$t_tipo_id = lista_tipo_id ($conn);
-		$t_sedes_reg = lista_sedes ($conn,'S');
+		if ($_SESSION['id_perfil']==1){
+      		$t_sedes_reg = lista_sedes ($conn,'S');
+    	}else{
+      		$t_sedes_reg = detalle_sede ($conn, $_SESSION['id_sede']);
+    	}
 		$v_next_ilid = next_ilid($conn);
 ?>
 <html><!-- InstanceBegin template="/Templates/nomenu_layout.dwt.php" codeOutsideHTMLIsLocked="false" -->
@@ -54,7 +60,12 @@ if (isset($_SESSION['id_perfil'])) {
 	   <?php } ?>
 	   var p_id_tipoid = myForm.p_id_tipoid.options[myForm.p_id_tipoid.selectedIndex].value;
 	   var p_numero_id = myForm.p_numero_id.value;
-	   var p_id_sedes_reg = myForm.p_id_sedes_reg.options[myForm.p_id_sedes_reg.selectedIndex].value;
+	   var p_id_sedes_reg;
+	   <?php  if ($_SESSION['id_perfil'] != 1 ){?> 
+	   		p_id_sedes_reg = myForm.p_id_sedes_reg.value; 
+	   	<?php }else{ ?> 
+	   		p_id_sedes_reg = myForm.p_id_sedes_reg.options[myForm.p_id_sedes_reg.selectedIndex].value;
+	   	<?php } ?>
 	   var p_multi_sede = myForm.p_multi_sede.options[myForm.p_multi_sede.selectedIndex].value;
 	   var rUrl = "ajax_verificar_usuario.php";
 	   var rBody = "p_id_perfil="+p_perfil+"&p_id_tipoid="+p_id_tipoid+"&p_numero_id="+p_numero_id+"&p_id_sedes_reg="+p_id_sedes_reg+"&p_multi_sede="+p_multi_sede;
@@ -100,6 +111,7 @@ if (isset($_SESSION['id_perfil'])) {
 	}
 	function validar() {
 		myForm = document.forma;
+
 		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 		if (myForm.p_numero_id.value == "") {
 			alert("Por favor ingrese el número de documento de identidad");
@@ -167,7 +179,11 @@ if (isset($_SESSION['id_perfil'])) {
             <?php if (is_null($v_id_perf_unico)) { ?>
             <td><select name="p_id_perfil" id="p_id_perfil">
             <?php foreach($t_tipo_perfil as $dato) { ?>
-            <option value="<?php echo($dato['id_perfil']); ?>"><?php echo($dato['nombre']); ?></option>
+	            <?php if($_SESSION['id_perfil'] ==1) { ?>
+	            	<option value="<?php echo($dato['id_perfil']); ?>"><?php echo($dato['nombre']); ?></option>
+	            <?php }else if ($dato['nombre'] != "WebMaster") { ?>
+	           		<option value="<?php echo($dato['id_perfil']); ?>"><?php echo($dato['nombre']); ?></option>
+	            <?php } ?>
             <?php } ?>
             </select></td>
             <?php } else { ?>
@@ -175,14 +191,21 @@ if (isset($_SESSION['id_perfil'])) {
             <?php } ?>
           </tr>
           <tr>
-          <tr>
+         <tr>
+          <?php if ($_SESSION['id_perfil'] == 1){?>
 			<th>Sede:</th>
             <td><select name="p_id_sedes_reg" id="p_id_sedes_reg" onChange="next_id();">
             <?php foreach($t_sedes_reg as $dato) { ?>
-            <option value="<?php echo($dato['id_sede']); ?>" <?php if (!is_null($v_id_perf_unico) && $r_usuario['id_sede']== $dato['id_sede']) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
+            <option value="<?php echo($dato['id_sede']); ?>" <?php if (!is_null($v_id_perf_unico) && $r_usuario['id_sede']== $dato['id_sede']) { echo("Selected");}else if (isset($_REQUEST['p_id_sede']) && $_REQUEST['p_id_sede'] == $dato['id_sede']) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
             <?php } ?>
             </select></td>
-          <tr>
+           <?php } else {?>
+           	<th>Sede:</th>
+           	<td>
+            <?php echo($t_sedes_reg ['nombre']); ?><input type="hidden" name="p_id_sedes_reg" id="p_id_sedes_reg" value="<?php echo($t_sedes_reg ['id_sede']); ?>" />
+            </td>
+            <?php }?>
+          </tr>
           	<th>Permitir varias sedes?:</th>
           	<td>
           		<select name="p_multi_sede" id="p_multi_sede">

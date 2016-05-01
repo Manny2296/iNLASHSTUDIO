@@ -13,7 +13,7 @@ $skin  = obtener_skin ($conn);
 
 if (isset($_SESSION['id_perfil'])) {
 	
-	if ( validar_permisos ($conn, 'exec_upd_productos.php') ) {
+	if ( validar_permisos ($conn, 'exec_upd_servicios.php') ) {
 		$v_id_sede = $_POST['p_id_sede'];
 		$v_id_servicio = $_POST['p_id_servicio'];
 		$v_sesiones_simultaneas = $_POST['p_sesiones_simultaneas'];

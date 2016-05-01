@@ -14,12 +14,17 @@ $skin  = obtener_skin ($conn);
 if (isset($_SESSION['id_perfil'])) {
 	if ( validar_permisos ($conn, 'usuarios_lst.php') ) {
 		$v_tipo = $_POST['p_tipo'];
+		$v_id_sede = $_POST['p_id_sede'];
 		if (isset($_POST['p_param'])) {
 			$v_param = $_POST['p_param'];
 		} else {
 			$v_param = null;
 		}
-		$t_usuarios = lista_usuarios ($conn, $v_tipo, $v_param);
+		$filtro = "";
+		if($_SESSION['id_perfil']!=1){
+			$filtro = $filtro."And pfus.id_perfil != 1";
+		}
+		$t_usuarios = lista_usuarios ($conn, $v_tipo, $v_param,$v_id_sede,$filtro);
 		if ($v_tipo == "perfil") {
 			$v_id_perfil_usua = $v_param;
 		}
@@ -48,7 +53,9 @@ if (isset($_SESSION['id_perfil'])) {
 		myForm.submit();
 	}
 	function agregar(){
-		var url = "<?php echo ("/".$instdir); ?>/usuarios_frm.php";
+		myForm = document.forma;
+		var p_id_sede = myForm.p_id_sede.value;
+		var url = "<?php echo ("/".$instdir); ?>/usuarios_frm.php?p_id_sede="+p_id_sede;
 		GB_showCenter("Crear usuarios", url, 430, 720);	  
 	}
 	function editar() {
@@ -94,6 +101,7 @@ if (isset($_SESSION['id_perfil'])) {
         <form action="#" name="forma" id="forma" method="post">
           <input type="hidden" name="p_tipo" id="p_tipo" value="<?php echo($v_tipo); ?>" />
           <input type="hidden" name="p_param" id="p_param" value="<?php echo($v_param); ?>" />
+          <input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($v_id_sede); ?>" />
           <table border="0" cellpadding="0" cellspacing="0" width="80%">
             <tr>
               <td colspan="5"><div id="barra_botones">

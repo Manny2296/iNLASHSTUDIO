@@ -46,7 +46,12 @@ if (isset($_SESSION['id_perfil'])) {
 			$r_prepagada['nombre'] = null;
 		}
 		$t_tipo_id = lista_tipo_id ($conn);
-		$t_sedes_reg = lista_sedes ($conn,'S');
+		if ($_SESSION['id_perfil']==1){
+      		$t_sedes_reg = lista_sedes ($conn,'S');
+    	}else{
+      		$t_sedes_reg = detalle_sede ($conn, $_SESSION['id_sede']);
+    	}
+		
 		$v_next_ilid = next_ilid($conn);
 			
 ?>
@@ -69,7 +74,12 @@ if (isset($_SESSION['id_perfil'])) {
 	   var p_perfil = 3;
 	   var p_id_tipoid = myForm.p_id_tipoid.options[myForm.p_id_tipoid.selectedIndex].value;
 	   var p_numero_id = myForm.p_numero_id.value;
-	   var p_id_sedes_reg = myForm.p_id_sedes_reg.options[myForm.p_id_sedes_reg.selectedIndex].value;
+	   var p_id_sedes_reg;
+	   <?php  if ($_SESSION['id_perfil'] != 1 ){?> 
+	   		p_id_sedes_reg = myForm.p_id_sedes_reg.value; 
+	   	<?php }else{ ?> 
+	   		p_id_sedes_reg = myForm.p_id_sedes_reg.options[myForm.p_id_sedes_reg.selectedIndex].value;
+	   	<?php } ?>
 	   var p_multi_sede = myForm.p_multi_sede.options[myForm.p_multi_sede.selectedIndex].value;
 	   var rUrl = "ajax_verificar_usuario.php";
 	   var rBody = "p_id_perfil="+p_perfil+"&p_id_tipoid="+p_id_tipoid+"&p_numero_id="+p_numero_id+"&p_id_sedes_reg="+p_id_sedes_reg+"&p_multi_sede="+p_multi_sede;
@@ -175,14 +185,21 @@ if (isset($_SESSION['id_perfil'])) {
 			<th>Perfil del usuario:</th>
             <td>Cliente</td>
           </tr>
-          <?php if ($_SESSION['id_perfil'] == 1){?>
+          
           <tr>
+          <?php if ($_SESSION['id_perfil'] == 1){?>
 			<th>Sede:</th>
             <td><select name="p_id_sedes_reg" id="p_id_sedes_reg" onChange="next_id();">
             <?php foreach($t_sedes_reg as $dato) { ?>
-            <option value="<?php echo($dato['id_sede']); ?>" <?php if (!is_null($v_id_perf_unico) && $r_usuario['id_sede']== $dato['id_sede']) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
+            <option value="<?php echo($dato['id_sede']); ?>" <?php if (!is_null($v_id_perf_unico) && $r_usuario['id_sede']== $dato['id_sede']) { echo("Selected");}else if (isset($_REQUEST['p_id_sede']) && $_REQUEST['p_id_sede'] == $dato['id_sede']) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
             <?php } ?>
             </select></td>
+           <?php } else {?>
+           	<th>Sede:</th>
+           	<td>
+            <?php echo($t_sedes_reg ['nombre']); ?><input type="hidden" name="p_id_sedes_reg" id="p_id_sedes_reg" value="<?php echo($t_sedes_reg ['id_sede']); ?>" />
+            </td>
+            <?php }?>
           </tr>
           <tr>
           	<th>Permitir varias sedes?:</th>
@@ -195,7 +212,7 @@ if (isset($_SESSION['id_perfil'])) {
           		</select>
           	</td>
           </tr>  
-          <?php }?>
+          
           <tr>
 			<th>Tipo de documento de identidad:</th>
             <td><select name="p_id_tipoid" id="p_id_tipoid" onChange="document.forma.p_numero_id.value='';next_id();">

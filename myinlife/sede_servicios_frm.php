@@ -12,7 +12,7 @@ $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
 
 if (isset($_SESSION['id_perfil'])) {
-	if ( validar_permisos ($conn, 'productos_frm.php') ) {
+	if ( validar_permisos ($conn, 'servicios_frm.php') ) {
 		$v_id_servicio = null;
 		$v_id_sede = $_REQUEST['p_id_sede'];
 		$t_servicios = lista_servicios ($conn);

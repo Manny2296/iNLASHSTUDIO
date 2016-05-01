@@ -10,7 +10,8 @@ $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 if ($_SESSION['id_perfil']==1){
       $t_sede = lista_sedes ($conn,'S');
     }else{
-      $t_sede = $_SESSION['id_sede'];
+     $v_id_sede = $_SESSION['id_sede'];
+     $t_sede = detalle_sede ($conn,$v_id_sede);
     }
 if(isset($_POST['p_tipo'])) {
 	$v_tipo = $_POST['p_tipo'];
@@ -63,13 +64,13 @@ dbdisconn($conn);
             <td>
             <?php if($_SESSION['id_perfil']==1) { ?>
               <select name="p_id_sede" id="p_id_sede" onchange="setTimeout('getParams();',0);">
-         ?php if(!is_array($t_sede)){echo ("<option value='No hay Sedes Registradas'>No hay sedes Registradas</option>");}else{echo ("");}?>
+         <?php if(!is_array($t_sede)){echo ("<option value='No hay Sedes Registradas'>No hay sedes Registradas</option>");}else{echo ("");}?>
           <?php foreach($t_sede as $dato) { ?>
             <option value="<?php echo($dato['id_sede']); ?>" <?php if($dato['id_sede'] == $v_id_sede) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
           <?php } ?>
           </select>
             <?php } else {?>
-            <?php echo($t_sede); ?><input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($t_sede); ?>" />
+            <?php echo($t_sede['nombre']); ?><input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($t_sede['id_sede']); ?>" />
             <?php }?>
             </td>
             <td></td>

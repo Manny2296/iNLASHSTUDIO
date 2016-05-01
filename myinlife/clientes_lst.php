@@ -46,7 +46,9 @@ if (isset($_SESSION['id_perfil'])) {
 		myForm.submit();
 	}
 	function agregar(){
-		var url = "<?php echo ("/".$instdir); ?>/clientes_frm.php";
+		myForm = document.forma;
+		var p_id_sede = myForm.p_id_sede.value;
+		var url = "<?php echo ("/".$instdir); ?>/clientes_frm.php?p_id_sede="+p_id_sede;
 		GB_showCenter("Crear clientes", url, 430, 720);	  
 	}
 	function editar() {
@@ -116,6 +118,7 @@ if (isset($_SESSION['id_perfil'])) {
         <form action="#" name="forma" id="forma" method="post">
           <input type="hidden" name="p_tipo" id="p_tipo" value="<?php echo($v_tipo); ?>" />
           <input type="hidden" name="p_param" id="p_param" value="<?php echo($v_param); ?>" />
+          <input type="hidden" name="p_id_sede" id="p_id_sede" value="<?php echo($v_id_sede); ?>" />
           <table border="0" cellpadding="0" cellspacing="0" width="80%">
             <tr>
               <td colspan="4"><div id="barra_botones">

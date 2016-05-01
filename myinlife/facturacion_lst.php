@@ -39,6 +39,10 @@ if (isset($_SESSION['id_perfil'])) {
 window.onload = function(){
 	getParams();
 }
+function refrescar(){
+	
+	getResults();
+}
 function getParams(){
 	try{
 	  myForm = document.forma;
@@ -47,7 +51,9 @@ function getParams(){
 	  var tipo = "cliente";
 	}
 	try {
-		var id_sede = myForm.p_id_sede.options[myForm.p_id_sede.selectedIndex].value;
+		var id_sede;
+		<?php if ($_SESSION['id_perfil'] != 1 ){?> id_sede = myForm.p_id_sede.value; <?php }else{ ?> id_sede = myForm.p_id_sede.options[p_id_sede.selectedIndex].value; <?php } ?>
+		
 		
 	}catch(e){
 		var id_sede = null;
@@ -74,8 +80,12 @@ function getParams(){
 	   return;
 }
 function getResults(){
-	myForm = document.forma;
-	var tipo = myForm.p_tipo.options[myForm.p_tipo.selectedIndex].value;
+	try{
+		myForm = document.forma;
+		var tipo = myForm.p_tipo.options[myForm.p_tipo.selectedIndex].value;
+	}catch(e){
+	  var tipo = "cliente";
+	}
 	try{
 		if (myForm.p_param.type == "text") { 
 		    var params = myForm.p_param.value;
@@ -93,7 +103,8 @@ function getResults(){
 		var fecha_fin = null;
 	}
 	try {
-		var id_sede =  myForm.p_id_sede.options[myForm.p_id_sede.selectedIndex].value;
+		var id_sede;
+		<?php if ($_SESSION['id_perfil'] != 1 ){?> id_sede = myForm.p_id_sede.value; <?php }else{ ?> id_sede = myForm.p_id_sede.options[p_id_sede.selectedIndex].value; <?php } ?>
 		
 	}catch(e){
 		var id_sede = null;
@@ -125,7 +136,9 @@ function getResults(){
 	function facturar(){
 		try {
 		   myForm = document.forma;
-		   var id_sede = myForm.p_id_sede.options[myForm.p_id_sede.selectedIndex].value;
+		   var id_sede;
+			<?php if ($_SESSION['id_perfil'] != 1 ){?> id_sede = myForm.p_id_sede.value; <?php }else{ ?> id_sede = myForm.p_id_sede.options[p_id_sede.selectedIndex].value; <?php } ?>
+		
 		   var tipo = myForm.p_tipo.options[myForm.p_tipo.selectedIndex].value;
 		   
 		   if (tipo == "cliente" && myForm.p_param.selectedIndex != 0) {

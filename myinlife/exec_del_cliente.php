@@ -14,9 +14,10 @@ $skin  = obtener_skin ($conn);
 if (isset($_SESSION['id_perfil'])) {	
 	if ( validar_permisos ($conn, 'exec_del_cliente.php') ) {
 		$v_id_perf_unico = $_POST['p_id_perf_unico'];
+		$v_id_sede = $_POST['p_id_sede'];
 		$v_login_mod = $_SESSION['login'];
-		$t_campos = array("p_tipo", "p_param");
-		$t_valores = array($_POST['p_tipo'], $_POST['p_param']);
+		$t_campos = array("p_tipo", "p_param","p_id_sede");
+		$t_valores = array($_POST['p_tipo'], $_POST['p_param'], $_POST['p_id_sede']);
 		
 		$v_result = del_usuario ($conn, $v_id_perf_unico, $v_login_mod);
 ?>

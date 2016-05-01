@@ -5,6 +5,7 @@ include ($path."/lib/inlife_inc.php");
 include ($path."/lib/".$db_engine_lib);
 include ($path."/lib/securityutl_lib.php");
 include ($path."/lib/layoututl_lib.php");
+include ($path."/lib/usuarios_utl.php");
 
 $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
@@ -32,6 +33,10 @@ if (isset($_SESSION['id_usuario']) && isset($_POST['p_id_perfil'])) {
 	$_SESSION['login'] = $v_login;
 	$_SESSION['id_perfil'] = $_POST['p_id_perfil'];
 	$_SESSION['id_perf_unico'] = $_POST['p_id_perf_unico'];
+	$infoUser=detalle_usuario ($conn, $_POST['p_id_perf_unico']); 
+	$_SESSION['id_sede'] = $infoUser['id_sede'];
+	
+	
 	if($_POST['p_id_perfil'] == 3){
 		$v_url = "myinlife.php";
 	} else {
@@ -121,11 +126,10 @@ function validar() {
 	$_SESSION['id_usuario'] = $v_usuario[0]['id_usuario'];
 	$_SESSION['id_perfil'] = $v_usuario[0]['id_perfil'];
 	$_SESSION['id_perf_unico'] = $v_usuario[0]['id_perf_unico'];
-	/*if($_SESSION['id_perf_unico'] != 1){
-		$_SESSION['id_sede'] = $v_usuario[0]['id_sede'];
-	}*/
 	$_SESSION['nombre'] = $v_usuario[0]['nombres'].' '.$v_usuario[0]['apellidos'];
 	$_SESSION['login'] = $v_login;
+	$_SESSION['id_sede'] = $v_usuario[0]['id_sede'];
+	
 	if($v_usuario[0]['id_perfil'] == 3){
 		$v_url = "myinlife.php";
 	} else {
@@ -153,10 +157,8 @@ function validar() {
 	$_SESSION['id_usuario'] = $t_usuario[0]['id_usuario'];
 	$_SESSION['nombre'] = $t_usuario[0]['nombres'].' '.$t_usuario[0]['apellidos'];
 	$_SESSION['login'] = $v_login;
-	/*$_SESSION['id_perf_unico'] = $t_usuario[0]['id_perf_unico'];
-	if($_SESSION['id_perf_unico'] != 1){
-		$_SESSION['id_sede'] = $t_usuario[0]['id_sede'];
-	}*/
+	$_SESSION['id_sede'] = $t_usuario[0]['id_sede'];
+	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/nosecurity.dwt.php" codeOutsideHTMLIsLocked="false" --><head>
