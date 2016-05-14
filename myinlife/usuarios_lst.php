@@ -136,6 +136,7 @@ if (isset($_SESSION['id_perfil'])) {
               <td><?php echo($dato['apellidos']." ".$dato['nombres']); ?></td>
               <td><?php echo($dato['nomperfil']); ?></td>
               <td><?php echo($dato['nomsede']); ?></td>
+              
               <?php
                 
 			    if ($v_id_perfil_usua == 3) { ?>

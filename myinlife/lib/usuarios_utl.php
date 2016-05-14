@@ -79,7 +79,7 @@ function lista_usuarios ($connid, $tipo, $parametro,$id_sede,$filtro) {
 
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
-						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede
+						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede,
 					From segu_usuarios usua,
 						 conf_tipo_id  tpid,
 						 segu_perfil_x_usuario pfus,
@@ -107,7 +107,7 @@ function lista_clientes ($connid, $tipo, $parametro,$id_sede) {
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
 						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede,
-						 sede.id_sede
+						 sede.id_sede,usua.celular
 					From segu_usuarios usua,
 						 conf_tipo_id  tpid,
 						 segu_perfil_x_usuario pfus,
@@ -127,7 +127,7 @@ function lista_clientes ($connid, $tipo, $parametro,$id_sede) {
 			$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 							 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
 							 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede,
-							 sede.id_sede
+							 sede.id_sede,usua.celular
 						From segu_usuarios usua,
 							 conf_tipo_id  tpid,
 							 segu_perfil_x_usuario pfus,
@@ -145,7 +145,7 @@ function lista_clientes ($connid, $tipo, $parametro,$id_sede) {
 			$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 							 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
 							 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede,
-							 sede.id_sede
+							 sede.id_sede,usua.celular
 						From segu_usuarios usua,
 							 conf_tipo_id  tpid,
 							 segu_perfil_x_usuario pfus,
@@ -165,7 +165,7 @@ function lista_clientes ($connid, $tipo, $parametro,$id_sede) {
 		$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 						 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
 						 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede,
-						 sede.id_sede
+						 sede.id_sede,usua.celular
 					From segu_usuarios usua,
 						 conf_tipo_id  tpid,
 						 segu_perfil_x_usuario pfus,
@@ -186,7 +186,7 @@ function lista_clientes ($connid, $tipo, $parametro,$id_sede) {
 			$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 							 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
 							 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede,
-							 sede.id_sede
+							 sede.id_sede,usua.celular
 						From segu_usuarios usua,
 							 conf_tipo_id  tpid,
 							 segu_perfil_x_usuario pfus,
@@ -205,7 +205,7 @@ function lista_clientes ($connid, $tipo, $parametro,$id_sede) {
 			$query = "Select Distinct pfus.id_perf_unico, usua.nombres, usua.apellidos,
 							 tpid.abreviatura, usua.numero_id, usua.id_usuario, 
 							 pfus.id_perfil,   tppf.nombre nomperfil, sede.nombre nomsede,
-							 sede.id_sede
+							 sede.id_sede,usua.celular
 						From segu_usuarios usua,
 							 conf_tipo_id  tpid,
 							 segu_perfil_x_usuario pfus,

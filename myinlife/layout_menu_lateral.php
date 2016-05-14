@@ -22,7 +22,7 @@ if (isset($_SESSION['id_perfil'])) {
 				$t_opciones[7]['texto'] = 'Sedes';
 				$t_opciones[7]['url'] = 'sedes_lst.php';
 				break;	
-				//Layout lateral para Entrenador
+				//Layout lateral para Especialista
 			case 2:
 			
 				
