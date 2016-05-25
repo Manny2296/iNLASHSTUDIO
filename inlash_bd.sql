@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-05-2016 a las 21:48:37
+-- Tiempo de generación: 26-05-2016 a las 01:48:53
 -- Versión del servidor: 10.1.9-MariaDB
 -- Versión de PHP: 5.5.30
 
@@ -286,16 +286,11 @@ INSERT INTO `conf_parametros` (`id_parametro`, `id_tpparametro`, `codigo`, `desc
 (1, 1, 'SKIN', 'Tema y estilos de la aplicación', 'default'),
 (2, 1, 'HINI', 'Hora de apertura del Spa', '06:00'),
 (3, 1, 'HFIN', 'Hora de cierre del Spa', '21:00'),
-(4, 2, 'FAFA', 'Frecuencia de toma de medidas', '10'),
-(5, 5, 'PEPR', 'Permitir a los clientes programación de servicios', 'S'),
-(6, 5, 'PECA', 'Permitir a los clientes cancelar citas programadas', 'S'),
 (7, 2, 'TICA', 'Tiempo máximo requerido para una cancelación (Horas)', '6'),
 (8, 5, 'PEOB', 'Permitir a los clientes establecer sus propios objetivos de entrenamiento', 'N'),
 (9, 5, 'PEST', 'Activar el módulo de pestañas', 'S'),
 (10, 2, 'MNPE', 'Número de mantenimientos para pestañas', '4'),
-(11, 2, 'VIPA', 'Vigencia promedio de servicios prepagados (Días)', '45'),
 (12, 2, 'FRMN', 'Frecuencia de mantenimientos (dias)', '20'),
-(13, 2, 'TMCG', 'Tiempo máximo de congelación de servicios (en días)', '15'),
 (14, 2, 'COFA', 'Número actual de facturación', '3064');
 
 -- --------------------------------------------------------
@@ -547,97 +542,65 @@ CREATE TABLE `conf_tipo_pestana` (
 --
 
 INSERT INTO `conf_tipo_pestana` (`id_tipo_pestana`, `referencia`) VALUES
+(36, '3D-09-C'),
+(42, '3D-09-N'),
+(37, '3D-10-C'),
+(43, '3D-10-N'),
+(38, '3D-11-C'),
+(44, '3D-11-N'),
+(39, '3D-12-C'),
+(45, '3D-12-N'),
+(40, '3D-13-C'),
+(46, '3D-13-N'),
+(41, '3D-14-C'),
+(47, '3D-14-N'),
 (1, 'C-15-09-S-C'),
-(2, 'C-15-10-S-C'),
-(3, 'C-15-11-S-C'),
-(4, 'C-15-12-S-C'),
-(5, 'C-15-13-S-C'),
-(6, 'C-15-14-S-C'),
 (7, 'C-15-09-S-N'),
+(2, 'C-15-10-S-C'),
 (8, 'C-15-10-S-N'),
+(3, 'C-15-11-S-C'),
 (9, 'C-15-11-S-N'),
+(4, 'C-15-12-S-C'),
 (10, 'C-15-12-S-N'),
+(5, 'C-15-13-S-C'),
 (11, 'C-15-13-S-N'),
+(6, 'C-15-14-S-C'),
 (12, 'C-15-14-S-N'),
 (13, 'C-20-09-S-C'),
-(14, 'C-20-10-S-C'),
-(15, 'C-20-11-S-C'),
-(16, 'C-20-12-S-C'),
-(17, 'C-20-13-S-C'),
-(18, 'C-20-14-S-C'),
 (19, 'C-20-09-S-N'),
+(14, 'C-20-10-S-C'),
 (20, 'C-20-10-S-N'),
+(15, 'C-20-11-S-C'),
 (21, 'C-20-11-S-N'),
+(16, 'C-20-12-S-C'),
 (22, 'C-20-12-S-N'),
+(17, 'C-20-13-S-C'),
 (23, 'C-20-13-S-N'),
+(18, 'C-20-14-S-C'),
 (24, 'C-20-14-S-N'),
 (25, 'D-15-09-S-C'),
-(26, 'D-15-10-S-C'),
-(27, 'D-15-12-S-C'),
-(28, 'D-15-13-S-C'),
-(29, 'D-15-14-S-C'),
 (30, 'D-15-09-S-N'),
+(26, 'D-15-10-S-C'),
 (31, 'D-15-10-S-N'),
 (32, 'D-15-11-S-N'),
+(27, 'D-15-12-S-C'),
 (33, 'D-15-12-S-N'),
+(28, 'D-15-13-S-C'),
 (34, 'D-15-13-S-N'),
+(29, 'D-15-14-S-C'),
 (35, 'D-15-14-S-N'),
-(36, '3D-09-C'),
-(37, '3D-10-C'),
-(38, '3D-11-C'),
-(39, '3D-12-C'),
-(40, '3D-13-C'),
-(41, '3D-14-C'),
-(42, '3D-09-N'),
-(43, '3D-10-N'),
-(44, '3D-11-N'),
-(45, '3D-12-N'),
-(46, '3D-13-N'),
-(47, '3D-14-N'),
 (48, 'V-09-C'),
-(49, 'V-10-C'),
-(50, 'V-11-C'),
-(51, 'V-12-C'),
-(52, 'V-13-C'),
-(53, 'V-14-C'),
 (54, 'V-09-N'),
+(49, 'V-10-C'),
 (55, 'V-10-N'),
+(50, 'V-11-C'),
 (56, 'V-11-N'),
+(51, 'V-12-C'),
 (57, 'V-12-N'),
+(52, 'V-13-C'),
 (58, 'V-13-N'),
+(53, 'V-14-C'),
 (59, 'V-14-N');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 -- --------------------------------------------------------
 
@@ -972,7 +935,7 @@ CREATE TABLE `segu_usuarios` (
 --
 
 INSERT INTO `segu_usuarios` (`id_usuario`, `id_tipoid`, `numero_id`, `nombres`, `apellidos`, `telefono`, `celular`, `email`, `genero`, `fecha_nacimiento`, `id_eps`, `id_prepagada`, `descripcion`, `fecha_ingreso`, `login`, `pwd`, `notificar`, `multisede`) VALUES
-(1, 0, '0', 'Webmaster', 'Inlife Studio', 'N/A', NULL, 'notificaciones@inlifestudio.com', 'F', '2012-05-24', NULL, NULL, 'Webmaster del sistema de inlife Studio', '2012-05-24', 'webmaster', 'a8698009bce6d1b8c2128eddefc25aad', 'S', NULL),
+(1, 0, '0', 'Webmaster', 'iNlash & Co', 'N/A', NULL, 'notificaciones@inlifestudio.com', 'F', '2012-05-24', NULL, NULL, 'Webmaster del sistema de inlife Studio', '2012-05-24', 'webmaster', 'a8698009bce6d1b8c2128eddefc25aad', 'S', NULL),
 (3899, 1, '1018484513', 'Manuel', 'Admin Sed', '2136565', '3183771785', 'manuelfedss@hotmail.com', 'M', '1962-05-15', NULL, NULL, 'Nada', '2016-05-11', 'madmin', '827ccb0eea8a706c4c34a16891f84e7b', 'N', 'N'),
 (3900, 1, '79280440', 'Manuel', 'Cliente Pru', '2518095', '3183445551', 'manuelfedss@hotmail.com', 'M', '1969-05-20', 53, 15, NULL, '2016-05-11', 'mcliente', 'a6041e6f9ef9a2701177a6179e71e110', 'S', 'S');
 
@@ -1371,7 +1334,7 @@ ALTER TABLE `conf_sedes`
 -- AUTO_INCREMENT de la tabla `conf_servicios`
 --
 ALTER TABLE `conf_servicios`
-  MODIFY `id_servicio` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del servicio', AUTO_INCREMENT=13;
+  MODIFY `id_servicio` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del servicio', AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT de la tabla `conf_tabla_medidas`
 --
@@ -1396,12 +1359,12 @@ ALTER TABLE `conf_tipo_perfil`
 -- AUTO_INCREMENT de la tabla `conf_tipo_pestana`
 --
 ALTER TABLE `conf_tipo_pestana`
-  MODIFY `id_tipo_pestana` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del tipo de pestaña usada', AUTO_INCREMENT=25;
+  MODIFY `id_tipo_pestana` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del tipo de pestaña usada', AUTO_INCREMENT=60;
 --
 -- AUTO_INCREMENT de la tabla `fact_detalle`
 --
 ALTER TABLE `fact_detalle`
-  MODIFY `id_detalle` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del detalle', AUTO_INCREMENT=8543;
+  MODIFY `id_detalle` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del detalle';
 --
 -- AUTO_INCREMENT de la tabla `fact_facturacion`
 --
@@ -1411,7 +1374,7 @@ ALTER TABLE `fact_facturacion`
 -- AUTO_INCREMENT de la tabla `fact_productos`
 --
 ALTER TABLE `fact_productos`
-  MODIFY `id_producto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del producto', AUTO_INCREMENT=135;
+  MODIFY `id_producto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del producto', AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `segu_perfil_x_usuario`
 --
@@ -1431,7 +1394,7 @@ ALTER TABLE `segu_usuarios`
 -- AUTO_INCREMENT de la tabla `spa_programacion`
 --
 ALTER TABLE `spa_programacion`
-  MODIFY `id_programacion` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código de la programación', AUTO_INCREMENT=43561;
+  MODIFY `id_programacion` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código de la programación';
 --
 -- Restricciones para tablas volcadas
 --
