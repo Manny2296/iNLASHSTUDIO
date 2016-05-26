@@ -69,39 +69,43 @@ if (isset($_SESSION['id_perfil'])) {
               <option value="N" <?php if (!is_null($v_id_servicio) && $r_servicio['prepagado'] == "N") {echo("Selected"); } ?>>N</option>
               </select></td>
           </tr>
+          <!-- Modulo agendamiento por clien
+               se deja depreciado a peticion del cliente
           <tr>
       <th>Puede ser agendado directamente por el cliente:</th>
             <td><select name="p_programable" id="p_programable">
               <option value=""></option>
-              <option value="S" <?php if (!is_null($v_id_servicio) && $r_servicio['programable'] == "S") {echo("Selected"); } ?>>S</option>
-              <option value="N" <?php if (!is_null($v_id_servicio) && $r_servicio['programable'] == "N") {echo("Selected"); } ?>>N</option>
+              <option value="S" <?php //if (!is_null($v_id_servicio) && $r_servicio['programable'] == "S") {echo("Selected"); } ?>>S</option>
+              <option value="N" <?php //if (!is_null($v_id_servicio) && $r_servicio['programable'] == "N") {echo("Selected"); } ?>>N</option>
               </select></td>
-          </tr>
+          </tr>-->
+          <!-- Modulo se deja depreciado a peticion del cliente. 
           <tr>
       <th>Requiere Ficha Antropom&eacute;trica:</th>
             <td><select name="p_ficha_antrop" id="p_ficha_antrop">
               <option value=""></option>
-              <option value="S" <?php if (!is_null($v_id_servicio) && $r_servicio['ficha_antrop'] == "S") {echo("Selected"); } ?>>S</option>
-              <option value="N" <?php if (!is_null($v_id_servicio) && $r_servicio['ficha_antrop'] == "N") {echo("Selected"); } ?>>N</option>
+              <option value="S" <?php// if (!is_null($v_id_servicio) && $r_servicio['ficha_antrop'] == "S") {echo("Selected"); } ?>>S</option>
+              <option value="N" <?php// if (!is_null($v_id_servicio) && $r_servicio['ficha_antrop'] == "N") {echo("Selected"); } ?>>N</option>
               </select></td>
-          </tr>
+          </tr>-->
         <tr>
       <th>Duraci&oacute;n m&iacute;nima de una sesi&oacute;n (minutos):</th>
             <td><input type="text" name="p_sesion_minima" id="p_sesion_minima" size="4" maxlength="4" value="<?php if(!is_null($v_id_servicio)){echo($r_servicio['sesion_minima']);} ?>" /></td>
           </tr>
-          
+          <!--
           <tr>
       <th>Asociado al m&oacute;dulo de pesta&ntilde;as:</th>
             <td><select name="p_pestanas" id="p_pestanas">
               <option value=""></option>
-              <option value="S" <?php if (!is_null($v_id_servicio) && $r_servicio['modulo_pestanas'] == "S") {echo("Selected"); } ?>>S</option>
-              <option value="N" <?php if (!is_null($v_id_servicio) && $r_servicio['modulo_pestanas'] == "N") {echo("Selected"); } ?>>N</option>
+              <option value="S" <?php//if (!is_null($v_id_servicio) && $r_servicio['modulo_pestanas'] // "S") {echo("Selected"); } ?>>S</option>
+              <option value="N" <?php// if (!is_null($v_id_servicio) && $r_servicio['modulo_pestanas'] == "N") {echo("Selected"); } ?>>N</option>
               </select></td>
-          </tr>
+          </tr>-->
+          <!-- Modulo se deja depreciado a peticion del cliente. 
           <tr>
       <th>D&iacute;as antes del vencimiento para notificar al cliente:</th>
-            <td><input type="text" name="p_dias_venc" id="p_dias_venc" size="4" maxlength="4" value="<?php if(!is_null($v_id_servicio)){echo($r_servicio['dias_vencimiento']);} ?>" /></td>
-          </tr>
+            <td><input type="text" name="p_dias_venc" id="p_dias_venc" size="4" maxlength="4" value="<?php//f(!is_null($v_id_servicio)){echo($r_servicio['dias_vencimiento']);} ?>" /></td>
+          </tr>-->
           <tr>
       <th>D&iacute;as requeridos para agendar un mantenimiento:</th>
             <td><input type="text" name="p_dias_mant" id="p_dias_mant" size="4" maxlength="4" value="<?php if(!is_null($v_id_servicio)){echo($r_servicio['dias_mantenimiento']);} ?>" /></td>

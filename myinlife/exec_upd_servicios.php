@@ -19,12 +19,12 @@ if (isset($_SESSION['id_perfil'])) {
 		$v_precio_base = $_POST['p_precio_base'];
 		$v_impuesto = $_POST['p_impuesto'];
 		$v_prepagado = $_POST['p_prepagado'];
-		$v_programable = $_POST['p_programable'];
-		$v_ficha_antrop = $_POST['p_ficha_antrop'];
+		//$v_programable = $_POST['p_programable'];
+		//$v_ficha_antrop = $_POST['p_ficha_antrop'];
 		$v_sesion_minima = $_POST['p_sesion_minima'];
 		
-		$v_pestanas = $_POST['p_pestanas'];
-		$v_dias_venc = $_POST['p_dias_venc'];
+		//$v_pestanas = $_POST['p_pestanas'];
+		//$v_dias_venc = $_POST['p_dias_venc'];
 		$v_dias_mant = $_POST['p_dias_mant'];
 		
 		
@@ -35,10 +35,12 @@ if (isset($_SESSION['id_perfil'])) {
 					      $v_ficha_antrop, $v_sesion_minima, 
 						  $v_pestanas,	   $v_dias_venc,     $v_dias_mant);
 		} else {
+			//Se deja depreciado los atributos : v_programable v_ficha_antrop v_pestanas  v_dias_venc 
+			// se remplaza por los valores "" (VACIOS) para una futura imlementacion.
 			crea_servicio ($conn,              $v_nombre,       $v_descripcion, 
 						   $v_precio_base, 	   $v_impuesto,     $v_prepagado,
-						   $v_programable, 	   $v_ficha_antrop, $v_sesion_minima,
-						    $v_pestanas, $v_dias_venc,
+						   "", 	   "", $v_sesion_minima,
+						    "", "",
 						   $v_dias_mant);
 		}
 ?>

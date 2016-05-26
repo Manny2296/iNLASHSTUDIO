@@ -29,9 +29,9 @@ function crea_servicio ($connid,               $nombre,       $descripcion,
 				  modulo_pestanas, dias_vencimiento, dias_mantenimiento)
 				 Values
 				 ('".$nombre."', '".$descripcion."', ".$precio_base.",
-				  ".$impuesto.", '".$prepagado."', '".$programable."',
-				  '".$ficha_antrop."', ".$sesion_minima.",
-				  '".$pestanas."', ".$dias_venc.", ".$dias_mant.")";
+				  ".$impuesto.", '".$prepagado."', 'N',
+				  'N', ".$sesion_minima.",
+				  'S', ".$dias_venc.", ".$dias_mant.")";
 	$result = dbquery ($query, $connid);
 	return (true);
 }
