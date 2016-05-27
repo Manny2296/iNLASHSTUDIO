@@ -357,6 +357,8 @@ function lista_horas_prog($connid, $tipo, $id_servicio, $maquina, $fecha, $id_us
 	if ($tipo == "servicio") {
 		$query = "Select prog.id_programacion, prog.id_usuario, prog.hora_ini, prog.hora_fin,
 						 prog.maquina,         serv.nombre,     usua.nombres,  usua.apellidos
+
+					
 					From spa_programacion prog,
 					     conf_servicios   serv,
 						 segu_usuarios    usua,

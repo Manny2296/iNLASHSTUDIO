@@ -101,6 +101,7 @@ function lista_usuarios ($connid, $tipo, $parametro,$id_sede,$filtro) {
     $rset = dbresult($result);
 	return ($rset);
 }
+
 function lista_clientes ($connid, $tipo, $parametro,$id_sede) {
 	if(is_null($id_sede)){
 		if ($tipo == "nombre" ) {

@@ -121,6 +121,11 @@ function get_bloqueo(){
 			<th width="45%">Cliente:</th>
             <td><input type="text" size="30" maxlength="200" name="p_usuario" id="p_usuario" /></td>
           </tr>
+           <tr>
+			<th width="45%">Telefono:</th>
+			
+            <td ><input type="text" size="30" maxlength="200" name="p_phone" id="p_phone" /></td>
+          </tr>
           <tr>
 			<th width="45%">Servicio a programar:</th>
             <td><?php echo($r_servicio['nombre']); ?></td>
@@ -177,10 +182,13 @@ function get_bloqueo(){
 				callback: function (obj) { 
 
 					document.getElementById('p_id_usuario').value = obj.id;
-					
+			        document.getElementById('p_phone').value = obj.info;
 					verificar_ficha(obj.id); }
 			};
 			var as_json = new AutoSuggest('p_usuario', options);
+
+			
+			
 		</script>
 </body>
 <!-- InstanceEnd --></html>

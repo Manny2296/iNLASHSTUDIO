@@ -14,6 +14,8 @@ function lista_servicios ($connid){
     $rset = dbresult($result);
 	return ($rset);
 }
+
+
 function lista_servicios_x_sede ($connid, $id_sede)
 {
 	$query = "Select serv.id_servicio, serv.nombre, serv.descripcion, csps.id_sede,
@@ -75,6 +77,7 @@ function rest_horaria ($connid, $id_servicio) {
     $rset = dbresult($result);
 	return ($rset);
 }
+
 function lista_servicios_cliente ($connid, $id_usuario) {
 	$query = "Select svus.id_servicio, serv.nombre, svus.fecha,
 	                 svus.cantidad,    svus.continuidad, 
