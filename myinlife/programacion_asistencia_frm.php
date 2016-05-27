@@ -49,6 +49,10 @@ if (isset($_SESSION['id_perfil'])) {
 			<th>Cliente:</th>
             <td><?php echo($r_prog['nomcliente']); ?></td>
           </tr>
+               <tr>
+      <th>Telefono:</th>
+            <td><?php echo($r_prog['celular']); ?></td>
+          </tr>
            <tr>
       <th>Sede:</th>
             <td><?php echo($r_prog['snom']); ?></td>

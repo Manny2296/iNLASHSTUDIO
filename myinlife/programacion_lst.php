@@ -216,7 +216,7 @@ if (isset($_SESSION['id_perfil'])) {
           <br>Servicio a programar: <select name="p_id_servicio" id="p_id_servicio" onChange="refrescar();">
           <option value="n"><?php if(!is_array($t_servicios)){echo ("No hay Servicios Registrados para la Sede");}else{echo ("");}?></option>
           <?php foreach($t_servicios as $dato) { ?>
-            <option value="<?php echo($dato['id_servicio']); ?>" <?php if($dato['id_servicio'] == $v_id_servicio) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
+            <option  value="<?php echo($dato['id_servicio']); ?>" <?php if($dato['id_servicio'] == $v_id_servicio) { echo("Selected"); } ?>><?php echo($dato['nombre']); ?></option>
           <?php } ?>
           </select>
 
@@ -268,6 +268,10 @@ if (isset($_SESSION['id_perfil'])) {
 					 $v_pestanas = req_pestanas ($conn, $v_id_programacion);
 			   ?>
                <div id="hora"><?php echo($v_hora_act->format('h:i a')); ?></div>
+                <?php foreach($t_servicios as $dato) { ?>
+
+               <div style="font-size: 11; color: #d71a54;"id="servicio" ><?php if($dato['id_servicio'] == $v_id_servicio){ echo($dato['nombre']);} ?></div>
+                <?php } ?>
                <div id="disponible"><a href="javascript:detalle(<?php echo($t_programacion[$v_pos]['id_programacion']); ?>);"><?php echo($t_programacion[$v_pos]['nombres'].' '.$t_programacion[$v_pos]['apellidos']); ?></a><div id="espacio_botones"><?php if ($v_ficha_antro == "S") { ?>
                   <a href="javascript:ver_ficha('<?php echo($v_id_usuario); ?>');" class="button white nopad"><img src="skins/<?php echo($skin); ?>/icon_ficha.png" alt="Actualizar Ficha Antropom&eacute;trica" title="Actualizar Ficha Antropom&eacute;trica" border="0" /></a><?php } if ($v_pestanas) {?><a href="javascript:ver_pestanas('<?php echo($v_id_usuario); ?>');" class="button white nopad"><img src="skins/<?php echo($skin); ?>/icon_eye.png" alt="Diligenciar Informaci&oacute;n de pesta&ntilde;as" title="Diligenciar Informaci&oacute;n de pesta&ntilde;as" border="0" /></a><?php } ?></div></div>
             </td>

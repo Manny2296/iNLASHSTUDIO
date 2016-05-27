@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-05-2016 a las 01:48:53
+-- Tiempo de generación: 27-05-2016 a las 19:06:35
 -- Versión del servidor: 10.1.9-MariaDB
 -- Versión de PHP: 5.5.30
 
@@ -421,7 +421,8 @@ CREATE TABLE `conf_servicios_x_sede` (
 --
 
 INSERT INTO `conf_servicios_x_sede` (`id_sede`, `id_servicio`, `sesiones_simultaneas`) VALUES
-(1, 10, 2);
+(1, 10, 2),
+(1, 12, 2);
 
 -- --------------------------------------------------------
 
@@ -710,7 +711,8 @@ CREATE TABLE `segu_perfil_x_usuario` (
 INSERT INTO `segu_perfil_x_usuario` (`id_perf_unico`, `id_perfil`, `id_usuario`, `estado`, `fecha`, `login_mod`, `id_sede`) VALUES
 (1, 1, 1, 'A', '2015-06-10', 'webmaster', NULL),
 (3900, 4, 3899, 'A', '2016-05-14', 'webmaster', 1),
-(3901, 3, 3900, 'A', '2016-05-14', 'madmin', 1);
+(3901, 3, 3900, 'A', '2016-05-14', 'madmin', 1),
+(3902, 3, 3901, 'A', '2016-05-27', 'webmaster', 1);
 
 -- --------------------------------------------------------
 
@@ -937,7 +939,8 @@ CREATE TABLE `segu_usuarios` (
 INSERT INTO `segu_usuarios` (`id_usuario`, `id_tipoid`, `numero_id`, `nombres`, `apellidos`, `telefono`, `celular`, `email`, `genero`, `fecha_nacimiento`, `id_eps`, `id_prepagada`, `descripcion`, `fecha_ingreso`, `login`, `pwd`, `notificar`, `multisede`) VALUES
 (1, 0, '0', 'Webmaster', 'iNlash & Co', 'N/A', NULL, 'notificaciones@inlifestudio.com', 'F', '2012-05-24', NULL, NULL, 'Webmaster del sistema de inlife Studio', '2012-05-24', 'webmaster', 'a8698009bce6d1b8c2128eddefc25aad', 'S', NULL),
 (3899, 1, '1018484513', 'Manuel', 'Admin Sed', '2136565', '3183771785', 'manuelfedss@hotmail.com', 'M', '1962-05-15', NULL, NULL, 'Nada', '2016-05-11', 'madmin', '827ccb0eea8a706c4c34a16891f84e7b', 'N', 'N'),
-(3900, 1, '79280440', 'Manuel', 'Cliente Pru', '2518095', '3183445551', 'manuelfedss@hotmail.com', 'M', '1969-05-20', 53, 15, NULL, '2016-05-11', 'mcliente', 'a6041e6f9ef9a2701177a6179e71e110', 'S', 'S');
+(3900, 1, '79280440', 'Manuel', 'Cliente Pru', '2518095', '3183445551', 'manuelfedss@hotmail.com', 'M', '1969-05-20', 53, 15, NULL, '2016-05-11', 'mcliente', 'a6041e6f9ef9a2701177a6179e71e110', 'S', 'S'),
+(3901, 2, '9990655545', 'Manny Extranjero', 'Pru Rodney', '6586555', '3213523212', 'prurodneymanny@hotmail.com', 'M', '1974-05-15', 35, 1, 'This is a good practice ! ', '2016-05-26', 'mpru', 'faed5c0b71de0df00d174e549cef6275', 'S', 'S');
 
 -- --------------------------------------------------------
 
@@ -962,6 +965,15 @@ CREATE TABLE `spa_bloqueo_estacion` (
   `id_programacion` int(10) UNSIGNED NOT NULL COMMENT 'Código de la sesión programada (Ref. spa_programacion)',
   `maquina` int(3) UNSIGNED NOT NULL COMMENT 'número de estación bloquedad'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci COMMENT='Bloqueo de estaciones para servicios especiales';
+
+--
+-- Volcado de datos para la tabla `spa_bloqueo_estacion`
+--
+
+INSERT INTO `spa_bloqueo_estacion` (`id_programacion`, `maquina`) VALUES
+(1, 1),
+(2, 1),
+(3, 1);
 
 -- --------------------------------------------------------
 
@@ -1026,6 +1038,15 @@ CREATE TABLE `spa_programacion` (
   `id_sede` int(10) DEFAULT NULL,
   `id_servicio` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci COMMENT='Programación de servicios';
+
+--
+-- Volcado de datos para la tabla `spa_programacion`
+--
+
+INSERT INTO `spa_programacion` (`id_programacion`, `id_usuario`, `fecha`, `hora_ini`, `hora_fin`, `maquina`, `login_mod`, `asistencia`, `sesion_especial`, `comentarios`, `cortesia`, `id_sede`, `id_servicio`) VALUES
+(1, 3901, '2016-05-27', '10:00', '12:00', 1, 'webmaster', NULL, 'N', 'Mothefuck! ', 'S', 1, 10),
+(2, 3900, '2016-05-27', '12:00', '14:00', 1, 'webmaster', NULL, 'N', 'This is now!', 'S', 1, 10),
+(3, 3901, '2016-05-27', '07:00', '07:30', 1, 'webmaster', NULL, 'N', 'ffffff', 'S', 1, 12);
 
 -- --------------------------------------------------------
 
@@ -1334,7 +1355,7 @@ ALTER TABLE `conf_sedes`
 -- AUTO_INCREMENT de la tabla `conf_servicios`
 --
 ALTER TABLE `conf_servicios`
-  MODIFY `id_servicio` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del servicio', AUTO_INCREMENT=23;
+  MODIFY `id_servicio` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del servicio', AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `conf_tabla_medidas`
 --
@@ -1379,7 +1400,7 @@ ALTER TABLE `fact_productos`
 -- AUTO_INCREMENT de la tabla `segu_perfil_x_usuario`
 --
 ALTER TABLE `segu_perfil_x_usuario`
-  MODIFY `id_perf_unico` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código único de identificación del perfil del usuario', AUTO_INCREMENT=3902;
+  MODIFY `id_perf_unico` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código único de identificación del perfil del usuario', AUTO_INCREMENT=3903;
 --
 -- AUTO_INCREMENT de la tabla `segu_programas`
 --
@@ -1389,12 +1410,12 @@ ALTER TABLE `segu_programas`
 -- AUTO_INCREMENT de la tabla `segu_usuarios`
 --
 ALTER TABLE `segu_usuarios`
-  MODIFY `id_usuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del usuario', AUTO_INCREMENT=3901;
+  MODIFY `id_usuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del usuario', AUTO_INCREMENT=3902;
 --
 -- AUTO_INCREMENT de la tabla `spa_programacion`
 --
 ALTER TABLE `spa_programacion`
-  MODIFY `id_programacion` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código de la programación';
+  MODIFY `id_programacion` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código de la programación', AUTO_INCREMENT=4;
 --
 -- Restricciones para tablas volcadas
 --

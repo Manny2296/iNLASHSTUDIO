@@ -466,11 +466,11 @@ function get_id_usuario_prog ($connid, $id_programacion) {
 }
 function detalle_programacion($connid, $id_programacion) {
 	$query = "Select date_format(prog.fecha, '%d-%m-%Y') fecha, serv.nombre, 
-	                 usua.id_usuario, Concat(usua.nombres,' ',usua.apellidos) nomcliente,
+	                 usua.id_usuario, Concat(usua.nombres,' ',usua.apellidos) nomcliente, 
 					 prog.hora_ini, prog.hora_fin,
 					 ifNull(prog.asistencia, 'S') asistencia,
 					 prog.comentarios, prog.cortesia,sede.nombre snom, sede.direccion,
-					 sede.pais, sede.ciudad, sede.telefono
+					 sede.pais, sede.ciudad, sede.telefono,usua.celular
 	            From spa_programacion prog,
 				     segu_usuarios    usua,
 					 conf_servicios   serv,
