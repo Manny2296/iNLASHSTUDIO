@@ -3,6 +3,8 @@
  Libreria de utilidades para la obtención de datos de parametrizción del sistema
  Desarrollo: Ing. Carlos Augusto Abarca
              email: cabarca01@gmail.com
+  Desarrollo: Dev Manuel Felipe S.R 
+ 			manuel.sanchez-r@mail.escuelaing.edu.co
  Fecha     : 04/11/2010 04:30 p.m.
  Version   : 1.0
 */

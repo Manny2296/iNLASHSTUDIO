@@ -53,10 +53,20 @@ if (isset($_SESSION['id_perfil'])) {
 										  $v_prepagada,        $v_descripcion,	$v_fecha_nacimiento, $v_fecha_ingreso
 										  , $multi_sede);
 			$v_login = obtener_login($conn, $v_id_usuario);
-			$v_titulo = "Bienvenido(a) a MyInlife Studio";
-			$v_mensaje = "<p>".$v_nombres.": <p>Inlife Studio te da la bienvenida a su portal en Internet, por medio del cual podr&aacute;s mantenerte informado(a) sobre tu progreso y tendr&aacute;s la posibilidad de programar tus sesiones.";
-			$v_mensaje .= "<p>Para ingresar al sistema ingresa a la p&aacute;gina de Inlife haciendo clic <a href=\"http://www.inlifestudio.com\">Aqu&iacute;</a> y luego selecciona la opci&oacute;n My Inlife Studio.";
-			$v_mensaje .= "<p>Tus credenciales de acceso son:<p>Login: ".$v_login."<br>Contrase&ntilde;a: ".$v_numero_id;
+			$v_titulo = "Bienvenido(a) a iNlash & Co";
+			$v_mensaje = "<p>".$v_nombres.": <p>IiNLAsh & CO te da la bienvenida  a nuestra sede. Por este medio te mantendremos informada de servicios agendados y noticias importantes sobre los mismos.
+
+				Recibe un cordial saludo,";
+			$v_mensaje .= "<p>iNlash & Co
+							Sede Principal Cr 17A # 122 - 45, Bogotá D.C.
+							Sede Contador Cll 136 # 19 - 47, Bogotá D.C.
+							Sede Santa Ana Cr 11D # 118A - 95, Bogotá D.C.
+							Tels: 4785349 - 313 400 7364 - 3004553566
+
+							www.inlash.com.co email: contacto@inlash.com.co
+							Instagram: inlashpestanas
+							Facebook: InLash-Extensiones-de-Pestañas";
+			//$v_mensaje .= "<p>Tus credenciales de acceso son:<p>Login: ".$v_login."<br>Contrase&ntilde;a: ".$v_numero_id;
 				
 			notificar_email_usuario ($conn, $v_id_usuario, $v_titulo, $v_mensaje, "N");
 		} elseif ($v_existe != "U" && isset($_POST['p_id_usuario']) && $_POST['p_id_usuario'] != "" ) {

@@ -21,7 +21,7 @@ if (isset($_SESSION['id_perfil'])) {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>.:: MY INLIFE STUDIO - Administraci&oacute;n de productos ::.</title>
+<title>.:: iNLASH & Co - Administraci&oacute;n de productos ::.</title>
 <!-- InstanceEndEditable -->
 <link href="skins/<?php echo($skin); ?>/estilo.css"rel="stylesheet" type="text/css" />
 <link href="skins/<?php echo($skin); ?>/reset.css" rel="stylesheet" type="text/css" />
@@ -76,7 +76,7 @@ if (isset($_SESSION['id_perfil'])) {
      <?php include ($path."/layout_menu_lateral.php"); ?>
      <div id="contenido">
 	 <!-- InstanceBeginEditable name="contenido" -->
-     <div class="titulo">PRODUCTOS INLIFE</div>
+     <div class="titulo">PRODUCTOS iNLASH</div>
      <div id="contiene_tabla">
         <form action="#" name="forma" id="forma" method="post">
           <table border="0" cellpadding="0" cellspacing="0" width="80%">

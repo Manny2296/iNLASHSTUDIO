@@ -3,6 +3,8 @@
  Libreria de utilidades para la presentación de gráficos usando FlashChart
  Desarrollo: Ing. Carlos Augusto Abarca
              email: cabarca01@gmail.com
+  Desarrollo: Dev Manuel Felipe S.R 
+ 			manuel.sanchez-r@mail.escuelaing.edu.co
  Fecha     : 03/12/2010 11:40 a.m.
  Version   : 1.0
 */

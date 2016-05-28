@@ -2,7 +2,8 @@
 /* 
  Libreria de utilidades de seguridad y control de acceso
  Desarrollo: Ing. Carlos Augusto Abarca
-             email: cabarca01@gmail.com
+             email: cabarca01@gmail.com Desarrollo: Dev Manuel Felipe S.R 
+      manuel.sanchez-r@mail.escuelaing.edu.co
  Fecha     : 03/11/2010 08:00
  Version   : 1.0
 */

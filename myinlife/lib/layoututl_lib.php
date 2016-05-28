@@ -3,6 +3,8 @@
  Libreria de utilidades de control visual y layout
  Desarrollo: Ing. Carlos Augusto Abarca
              email: cabarca01@gmail.com
+  Desarrollo: Dev Manuel Felipe S.R 
+ 			manuel.sanchez-r@mail.escuelaing.edu.co
  Fecha     : 03/11/2010 08:00
  Version   : 1.0
 */

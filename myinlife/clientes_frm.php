@@ -153,7 +153,7 @@ if (isset($_SESSION['id_perfil'])) {
 			return;
 		}
 		if (myForm.p_fecha_ingreso.value == "") {
-			alert("Por favor ingrese la fecha de inscripción del usuario a InLife Studio");
+			alert("Por favor ingrese la fecha de inscripción del usuario a iNLASH & Co ");
 			myForm.p_fecha_ingreso.focus();
 			return;
 		}
@@ -174,7 +174,7 @@ if (isset($_SESSION['id_perfil'])) {
 <body>
   <div id="contenido">
   <!-- InstanceBeginEditable name="contenido" -->
-  <div class="titulo">DEFINICI&Oacute;N DE CLIENTES INLIFE</div>
+  <div class="titulo">DEFINICI&Oacute;N DE CLIENTES iNLASH</div>
      <div class="capa_form_sf">
         <form id="forma" name="forma" method="post" action="exec_upd_usuario.php">
         <input type="hidden" name="p_id_perfil" id="p_id_perfil" value="3" />

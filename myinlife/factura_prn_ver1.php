@@ -40,20 +40,18 @@ window.onload = function() {
 <body>
 <table>
 <tr>
-  <td colspan="3">Inlife Studio S.A.S</td>
+  <td colspan="3">Inlash & Co</td>
 </tr>
 <tr>
-  <td colspan="3">Nit. 900805347-0</td>
+  <td colspan="3">Nit. 526205738</td>
 </tr>
 <tr>
-  <td colspan="3">Dir. Cra 17A#122-45</td>
+  <td colspan="3">Dir. Cr 17A # 122 - 45</td>
 </tr>
 <tr>
-  <td class="separador" colspan="3">Tel. 3108001209</td>
+  <td class="separador" colspan="3">Tel.  313 400 7364</td>
 </tr>
-<tr>
-  <td colspan="3">RES 320001223737</td>
-</tr>
+
 <tr>
   <td colspan="3">Convenio de Prestación de Servicios</td>
 </tr>

@@ -3,6 +3,8 @@
  Libreria de funciones utilitarias del sistema
  Desarrollo: Ing. Carlos Augusto Abarca
              email: cabarca01@gmail.com
+  Desarrollo: Dev Manuel Felipe S.R 
+ 			manuel.sanchez-r@mail.escuelaing.edu.co
  Fecha     : 11/02/2010 11:30 a.m.
  Version   : 1.0
 */

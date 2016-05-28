@@ -17,7 +17,7 @@ $v_result = desactivar_notificaciones($conn, $v_email);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>.:: MY INLIFE STUDIO - Bloqueo de Notificaciones ::.</title>
+<title>.:: iNLASH & Co - Bloqueo de Notificaciones ::.</title>
 <link href="skins/<?php echo($skin); ?>/estilo.css"rel="stylesheet" type="text/css" />
 <link href="skins/<?php echo($skin); ?>/reset.css" rel="stylesheet" type="text/css" />
 </head>

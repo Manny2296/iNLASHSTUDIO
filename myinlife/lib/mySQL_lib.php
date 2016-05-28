@@ -3,6 +3,8 @@
  Libreria de conectividad y procesamiento de datos para sistemas MySQL.
  Desarrollo: Ing. Carlos Augusto Abarca
              email: cabarca@cibercolegios.com
+   Desarrollo: Dev Manuel Felipe S.R 
+ 			manuel.sanchez-r@mail.escuelaing.edu.co
  Fecha     : 02/07/2004 23:00
  Version   : 1.0
 */

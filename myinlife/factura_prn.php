@@ -29,12 +29,12 @@ class EPDF extends FPDF {
 		global $font_name;
 		global $font_size;
 		$this -> SetFont ($font_name, '', $font_size);
-		$this -> Cell(0,5,'Inlife Studio S.A.S',0,1,'L');
-		$this -> Cell(0,5,'Nit. 900805347-0',0,1,'L');
-		$this -> Cell(0,5,'Dir. Cra 17A#122-45',0,1,'L');
-		$this -> Cell(0,5,'Tel. 3108001209',0,1,'L');
+		$this -> Cell(0,5,'Inlash & Co',0,1,'L');
+		$this -> Cell(0,5,'Nit. 526205738',0,1,'L');
+		$this -> Cell(0,5,'Dir. Cr 17A # 122 - 45',0,1,'L');
+		$this -> Cell(0,5,'Tel. 313 400 7364',0,1,'L');
 		$this -> Cell(0,5,'----------------------------------------',0,1,'L');
-		$this -> Cell(0,5,'RES 320001223737',0,1,'L');
+		//$this -> Cell(0,5,'RES 320001223737',0,1,'L');
 		$this -> Cell(0,5,'----------------------------------------',0,1,'L');
 	}
 	function DatosFactura(){

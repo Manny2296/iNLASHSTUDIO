@@ -3,6 +3,8 @@
  Libreria de utilidades para la presentación de información relacionada con servicios ofrecidos por la compañía
  Desarrollo: Ing. Carlos Augusto Abarca
              email: cabarca01@gmail.com
+  Desarrollo: Dev Manuel Felipe S.R 
+ 			manuel.sanchez-r@mail.escuelaing.edu.co
  Fecha     : 05/11/2010 11:40 a.m.
  Version   : 1.0
 */

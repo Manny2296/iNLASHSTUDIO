@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.5.2
 -- http://www.phpmyadmin.net
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2016 a las 19:06:35
+-- Servidor: localhost
+-- Tiempo de generación: 28-05-2016 a las 05:30:03
 -- Versión del servidor: 10.1.9-MariaDB
--- Versión de PHP: 5.5.30
+-- Versión de PHP: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -370,9 +370,9 @@ CREATE TABLE `conf_sedes` (
 --
 
 INSERT INTO `conf_sedes` (`id_sede`, `nombre`, `pais`, `ciudad`, `direccion`, `telefono`, `domicilio`, `Num_factura`, `Pref_factura`, `Activa`) VALUES
-(1, 'sede Prueba 1 ', 'Cll94ANo 68B-41', 'Bogota', 'Cll94ANo 68B-41', '241111', 'S', 14, 'Pru1', 'S'),
-(2, 'Sede prueba 2', 'Cll 9 No 7', 'Bogota', 'Cll 9 No 7', '2', 'S', 25, 'Pru2', 'S'),
-(3, 'Sede prueba 3', 'Cll 85-48', 'Bogota', 'Cll 85-48', '2', 'S', 25, 'Pru3', 'S');
+(1, 'Sede Principal ', 'Colombia', 'Bogota', ' Cr 17A # 122 - 45', '478 53 49- 313 400 7364 - 300 455 3566', 'S', 11, 'princ', 'S'),
+(2, 'Sede Contador', 'Colombia', 'Bogota', 'Cll 136 # 19 - 47', '478 53 49- 313 400 7364 - 300 455 3566', 'S', 12, 'Contad', 'S'),
+(3, 'Sede Santa Ana', 'Colombia', 'Bogota', 'Cr 11D # 118A - 95', '478 53 49- 313 400 7364 - 300 455 3566', 'S', 13, 'SntAna', 'S');
 
 -- --------------------------------------------------------
 
@@ -422,7 +422,8 @@ CREATE TABLE `conf_servicios_x_sede` (
 
 INSERT INTO `conf_servicios_x_sede` (`id_sede`, `id_servicio`, `sesiones_simultaneas`) VALUES
 (1, 10, 2),
-(1, 12, 2);
+(2, 12, 2),
+(3, 11, 3);
 
 -- --------------------------------------------------------
 
@@ -622,6 +623,13 @@ CREATE TABLE `fact_detalle` (
   `total` float UNSIGNED NOT NULL COMMENT 'Total del producto o servicio adquirido'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci COMMENT='Detalle de items facturados';
 
+--
+-- Volcado de datos para la tabla `fact_detalle`
+--
+
+INSERT INTO `fact_detalle` (`id_detalle`, `id_factura`, `id_producto`, `id_servicio`, `cantidad`, `valor_unitario`, `iva`, `descuento`, `valor_descuento`, `total`) VALUES
+(1, 7236, NULL, 10, 1, 1, 0.01, 0, 0, 1.01);
+
 -- --------------------------------------------------------
 
 --
@@ -648,7 +656,7 @@ CREATE TABLE `fact_facturacion` (
 --
 
 INSERT INTO `fact_facturacion` (`id_factura`, `num_factura`, `id_usuario`, `fecha`, `descuento`, `total`, `pagado`, `fecha_ult_pago`, `estado`, `cajero`, `tipo_pago`, `id_sede`) VALUES
-(7236, NULL, 3900, '2016-05-14 14:42:00', 0, 0, 0, NULL, 'PRC', 3899, 'EF', 1);
+(7236, NULL, 3900, '2016-05-14 14:42:00', 0, 1.01, 0, NULL, 'PRC', 3899, 'EF', 1);
 
 -- --------------------------------------------------------
 
@@ -712,7 +720,8 @@ INSERT INTO `segu_perfil_x_usuario` (`id_perf_unico`, `id_perfil`, `id_usuario`,
 (1, 1, 1, 'A', '2015-06-10', 'webmaster', NULL),
 (3900, 4, 3899, 'A', '2016-05-14', 'webmaster', 1),
 (3901, 3, 3900, 'A', '2016-05-14', 'madmin', 1),
-(3902, 3, 3901, 'A', '2016-05-27', 'webmaster', 1);
+(3902, 3, 3901, 'A', '2016-05-27', 'webmaster', 1),
+(3903, 3, 3902, 'A', '2016-05-27', 'webmaster', 2);
 
 -- --------------------------------------------------------
 
@@ -940,7 +949,8 @@ INSERT INTO `segu_usuarios` (`id_usuario`, `id_tipoid`, `numero_id`, `nombres`, 
 (1, 0, '0', 'Webmaster', 'iNlash & Co', 'N/A', NULL, 'notificaciones@inlifestudio.com', 'F', '2012-05-24', NULL, NULL, 'Webmaster del sistema de inlife Studio', '2012-05-24', 'webmaster', 'a8698009bce6d1b8c2128eddefc25aad', 'S', NULL),
 (3899, 1, '1018484513', 'Manuel', 'Admin Sed', '2136565', '3183771785', 'manuelfedss@hotmail.com', 'M', '1962-05-15', NULL, NULL, 'Nada', '2016-05-11', 'madmin', '827ccb0eea8a706c4c34a16891f84e7b', 'N', 'N'),
 (3900, 1, '79280440', 'Manuel', 'Cliente Pru', '2518095', '3183445551', 'manuelfedss@hotmail.com', 'M', '1969-05-20', 53, 15, NULL, '2016-05-11', 'mcliente', 'a6041e6f9ef9a2701177a6179e71e110', 'S', 'S'),
-(3901, 2, '9990655545', 'Manny Extranjero', 'Pru Rodney', '6586555', '3213523212', 'prurodneymanny@hotmail.com', 'M', '1974-05-15', 35, 1, 'This is a good practice ! ', '2016-05-26', 'mpru', 'faed5c0b71de0df00d174e549cef6275', 'S', 'S');
+(3901, 1, '52077888', 'Manuel Developer', 'Fernandez RiaÃ±o', '2132323', '312322243', 'dev.manu@escuelaing.edu.co', 'M', '2016-05-02', 2, 1, 'Esta prueba me enseÃ±o a hacer un Autosuggest ! ', '2016-05-10', 'mfernandez', '7dfe9cd64f188c634c42922f484c3a13', 'S', 'S'),
+(3902, 1, '23432123', 'Manuel Felipe', 'Sanchez R', '2132323', '3173771756', 'manuelfelip-96@hotmail.com', 'M', '1995-03-22', 48, 13, 'Test 1 !', '2016-05-18', 'msanchez', 'dd13c2db96e407248f36e31d640af7b2', 'S', 'S');
 
 -- --------------------------------------------------------
 
@@ -971,9 +981,8 @@ CREATE TABLE `spa_bloqueo_estacion` (
 --
 
 INSERT INTO `spa_bloqueo_estacion` (`id_programacion`, `maquina`) VALUES
-(1, 1),
-(2, 1),
-(3, 1);
+(3, 1),
+(4, 1);
 
 -- --------------------------------------------------------
 
@@ -1044,9 +1053,8 @@ CREATE TABLE `spa_programacion` (
 --
 
 INSERT INTO `spa_programacion` (`id_programacion`, `id_usuario`, `fecha`, `hora_ini`, `hora_fin`, `maquina`, `login_mod`, `asistencia`, `sesion_especial`, `comentarios`, `cortesia`, `id_sede`, `id_servicio`) VALUES
-(1, 3901, '2016-05-27', '10:00', '12:00', 1, 'webmaster', NULL, 'N', 'Mothefuck! ', 'S', 1, 10),
-(2, 3900, '2016-05-27', '12:00', '14:00', 1, 'webmaster', NULL, 'N', 'This is now!', 'S', 1, 10),
-(3, 3901, '2016-05-27', '07:00', '07:30', 1, 'webmaster', NULL, 'N', 'ffffff', 'S', 1, 12);
+(3, 3901, '2016-05-27', '14:00', '16:00', 1, 'webmaster', NULL, 'N', 'Gracias', 'S', 1, 10),
+(4, 3902, '2016-05-27', '06:30', '07:00', 1, 'webmaster', NULL, 'N', 'Test prog Service 1 ! ', 'N', 2, 12);
 
 -- --------------------------------------------------------
 
@@ -1385,7 +1393,7 @@ ALTER TABLE `conf_tipo_pestana`
 -- AUTO_INCREMENT de la tabla `fact_detalle`
 --
 ALTER TABLE `fact_detalle`
-  MODIFY `id_detalle` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del detalle';
+  MODIFY `id_detalle` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del detalle', AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `fact_facturacion`
 --
@@ -1400,7 +1408,7 @@ ALTER TABLE `fact_productos`
 -- AUTO_INCREMENT de la tabla `segu_perfil_x_usuario`
 --
 ALTER TABLE `segu_perfil_x_usuario`
-  MODIFY `id_perf_unico` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código único de identificación del perfil del usuario', AUTO_INCREMENT=3903;
+  MODIFY `id_perf_unico` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código único de identificación del perfil del usuario', AUTO_INCREMENT=3904;
 --
 -- AUTO_INCREMENT de la tabla `segu_programas`
 --
@@ -1410,12 +1418,12 @@ ALTER TABLE `segu_programas`
 -- AUTO_INCREMENT de la tabla `segu_usuarios`
 --
 ALTER TABLE `segu_usuarios`
-  MODIFY `id_usuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del usuario', AUTO_INCREMENT=3902;
+  MODIFY `id_usuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código del usuario', AUTO_INCREMENT=3903;
 --
 -- AUTO_INCREMENT de la tabla `spa_programacion`
 --
 ALTER TABLE `spa_programacion`
-  MODIFY `id_programacion` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código de la programación', AUTO_INCREMENT=4;
+  MODIFY `id_programacion` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Código de la programación', AUTO_INCREMENT=5;
 --
 -- Restricciones para tablas volcadas
 --

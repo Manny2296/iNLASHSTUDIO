@@ -113,7 +113,7 @@ if (isset($_SESSION['id_perfil'])) {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>.:: MY INLIFE STUDIO - Programaci&oacute;n de clases por servicio ::.</title>
+<title>.:: iNLASH & Co - Programaci&oacute;n de clases por servicio ::.</title>
 <!-- InstanceEndEditable -->
 <link href="skins/<?php echo($skin); ?>/estilo.css"rel="stylesheet" type="text/css" />
 <link href="skins/<?php echo($skin); ?>/reset.css" rel="stylesheet" type="text/css" />

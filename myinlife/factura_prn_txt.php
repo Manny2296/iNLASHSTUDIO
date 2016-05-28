@@ -22,12 +22,12 @@ dbdisconn($conn);
 header('Content-Type: plain/text; charset=iso-8859-2');
 header('Content-Disposition: attachment; filename=factura_'.$r_factura['num_factura'].'.txt');
 ?>
-Inlife Studio S.A.S Sede: <?php echo($r_factura['nomsede']);  ?><?php echo("\r\n"); ?>
-Nit. 900805347-0<?php echo("\r\n"); ?>
+Inlash & Co Sede: <?php echo($r_factura['nomsede']);  ?><?php echo("\r\n"); ?>
+Nit. 526205738<?php echo("\r\n"); ?>
 Dir. <?php echo($r_factura['direccion']);  ?><?php echo("\r\n"); ?>
 Tel. <?php echo($r_factura['telefono']);  ?><?php echo("\r\n"); ?>
 ---------------------------------------<?php echo("\r\n"); ?>
-RES 320001223737<?php echo("\r\n"); ?>
+<?php echo("\r\n"); ?>
 <?php echo("\r\n"); ?>
 ---------------------------------------<?php echo("\r\n"); ?>
 Convenio de Prestación de Servicios <?php echo("\r\n"); ?>

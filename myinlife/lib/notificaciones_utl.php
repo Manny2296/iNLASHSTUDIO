@@ -3,6 +3,8 @@
  Libreria de utilidades para el env�o de notificaciones por email y SMS
  Desarrollo: Ing. Carlos Augusto Abarca
              email: cabarca01@gmail.com
+  Desarrollo: Dev Manuel Felipe S.R 
+ 			manuel.sanchez-r@mail.escuelaing.edu.co
  Fecha     : 10/12/2010 11:40 a.m.
  Version   : 1.0
 */

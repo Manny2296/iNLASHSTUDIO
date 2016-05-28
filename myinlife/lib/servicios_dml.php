@@ -3,6 +3,8 @@
  Libreria de servicios DML para la administración de servicios de la Compañía
  Desarrollo: Ing. Carlos Augusto Abarca
              email: cabarca01@gmail.com
+  Desarrollo: Dev Manuel Felipe S.R 
+ 			manuel.sanchez-r@mail.escuelaing.edu.co
  Fecha     : 10/02/2010 08:40 a.m.
  Version   : 1.1
 */
