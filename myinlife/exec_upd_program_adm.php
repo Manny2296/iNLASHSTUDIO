@@ -13,7 +13,7 @@ include ($path."/lib/programacion_dml.php");
 $conn  = dbconn ($db_host, $db_name, $db_user, $db_pwd);
 $skin  = obtener_skin ($conn);
 
-if (isset($_SESSION['id_perfil'])) {	
+if (isset($_SESSION['id_perfil'])) {
 	if ( validar_permisos ($conn, 'exec_upd_program_adm.php') ) {
 		$v_id_usuario = $_POST['p_id_usuario'];
 		$v_id_servicio = $_POST['p_id_servicio'];
@@ -33,13 +33,13 @@ if (isset($_SESSION['id_perfil'])) {
 		if (isset($_POST['p_maquinas']) && is_array($_POST['p_maquinas'])) {
 			$t_maquinas = $_POST['p_maquinas'];
 		}
-		
+
 		$hoy = new DateTime();
 		$hoy->setTime(0,0);
 		$v_manana = clone $hoy;
 		$v_manana->add(new DateInterval('P1D'));
 		$v_fecha_cita = DateTime::createFromFormat('d-m-Y', $v_fecha);
-		
+
 		if (isset($_POST['p_sesion_especial']) && $_POST['p_sesion_especial'] == "S") {
 			$v_sesion_especial = "S";
 		} else {
@@ -54,27 +54,34 @@ if (isset($_SESSION['id_perfil'])) {
 							   		   $v_fecha,    $v_hora,		    $v_hora_fin,
 									   $v_maquina,  $v_sesion_especial, $v_login_mod,
 									   $v_cortesia, $v_comentarios,     $t_maquinas, $v_id_sede);
-		
+
 		$v_diff = $hoy->diff($v_fecha_cita);
 		if ($t_result[0] && ($v_diff->format('%a') == 0 || $v_diff->format('%R%a') == 1 )){
-			$v_subject = "Inlife Studio - Cita Programada";
+			$v_subject = "iNlash & Co - Cita Programada";
 			if ($v_diff->format('%a') == 0) {
-				$v_msg = "<p>Inlife Studio te recuerda la cita que tienes programada para el d&iacute;a de hoy: </p>";
+				$v_msg = "<p>iNlash & Co te recuerda la cita que tienes programada para el d&iacute;a de hoy: </p>";
 			} else {
-				$v_msg = "<p>Inlife Studio te recuerda la cita que tienes programada para el d&iacute;a de ma&ntilde;ana: </p>";
+				$v_msg = "<p>iNlash & Co te recuerda la cita que tienes programada para el d&iacute;a de ma&ntilde;ana: </p>";
 			}
 			$r_cita = detalle_programacion($conn, $t_result[1]);
 			$v_hora_ini = DateTime::createFromFormat('d-m-Y H:i', $r_cita['fecha'].' '.$r_cita['hora_ini']);
 			$v_hora_fin = DateTime::createFromFormat('d-m-Y H:i', $r_cita['fecha'].' '.$r_cita['hora_fin']);
+			$v_msg .= "<p>En caso de no poder asistir por favor cancelar su cita con 3 horas de anticiación</p>";
 			$v_msg .= '<p><table border="0"><tr><td>Servicio:</td><td>'.$r_cita['nombre'].'</td></tr>';
 			$v_msg .= '<tr><td>Hora del servicio:</td><td>'.$v_hora_ini->format('h:i a').'</td></tr>';
 			$v_msg .= '<tr><td>Hora de finalizaci&oacute;n:</td><td>'.$v_hora_fin->format('h:i a').'</td></tr></table></p>';
 			$v_msg .= "<p>Te esperamos!</p>";
-			$v_msg .= '<p>Horario de atenci�n: lunes a viernes de 6:00 a.m. a 8:30 p.m.&nbsp;&nbsp;-&nbsp;&nbsp;S�bado de 8:00am a 2:00p.m.</p>';
-			$v_msg .= 'iNLASH & Co Sede '.$r_cita['snom'].'<br>'.$r_cita['direccion'].', '.$r_cita['ciudad'].'-'.$r_cita['pais'].'';
-			$v_msg .= '<br>Tel: '.$r_cita['telefono'].'<br><a href="www.inlifestudio.com">www.inlifestudio.com</a>';
-			$v_msg .= 'email: <a href="mailto:contacto@inlifestudio.com">contacto@inlifestudio.com</a></p>';
-		
+			$v_msg .= ' <p>Horario de atenci�n: lunes a sábado de 7:00 a.m. a 7:00 p.m.&nbsp;&nbsp;-&nbsp;&nbsp;S�bado de 8:00am a 2:00p.m.</p>';
+			$v_msg .= '<br> iNlash & Co';
+			$v_msg.= '<br>Sede Principal Cr 17A # 122 - 45, Bogotá D.C.
+									 <br>Sede Contador Cll 136 # 19 - 47, Bogotá D.C.
+									 <br>Sede Santa Ana Cr 11D # 118A - 95, Bogotá D.C.
+									 <br>Tels: 4785349 - 313 400 7364 - 3004553566<br>';
+			$v_msg .= '<br><a href="www.inlash.com.co">www.inlash.com.co</a>';
+			$v_msg .= '<br>email: <a href="mailto:contacto@inlash.com.co">contacto@inlash.com.co</a></span></p>';
+			$v_msg.= ' S&iacute;ganos a trav&eacute;s de <br> <a href="https://www.facebook.com/InLash-Extensiones-de-Pesta%C3%B1as-977194908981840/?ref=ts&fref=ts">Facebook: InLash-Extensiones-de-Pestañas</a>, ';
+			$v_msg .= '<br><a href="http://instagram.com/inlashpestanas">Instagram: inlashpestanas</a> ';
+
 			notificar_email_usuario ($conn, $v_id_usuario, $v_subject, $v_msg, 'N');
 		}
 ?>
@@ -94,22 +101,22 @@ if (isset($_SESSION['id_perfil'])) {
 <body>
   <div id="contenido">
   <!-- InstanceBeginEditable name="contenido" -->
-  <?php 
+  <?php
     if($t_result[0]) {
-  		mensaje(1, 'La sesi&oacute;n fue programada correctamente', 'javascript:top.refrescar();', '_self'); 
+  		mensaje(1, 'La sesi&oacute;n fue programada correctamente', 'javascript:top.refrescar();', '_self');
 	} else {
-		mensaje(2, $t_result[1], 'javascript:top.GB_hide();', '_self'); 
+		mensaje(2, $t_result[1], 'javascript:top.GB_hide();', '_self');
 	}
 	?>
   <!-- InstanceEndEditable -->
   </div>
 </body>
 <!-- InstanceEnd --></html>
-<?php	
+<?php
 	}
 	else {
 		mensaje(2, 'Usted no tiene permisos para acceder esta opci&oacute;n', 'javascript:history.go(-1);', '_self');
-	}      
+	}
 } else {
 	mensaje(2, 'Su sesi&oacute;n no est&aacute; activa.<br>Por favor ingrese al sistema nuevamente', $url_login, '_parent');
 }
