@@ -1,0 +1,94 @@
+html{color:#000;}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+li{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:”;}
+abbr,acronym {border:0;font-variant:normal;}
+sup {vertical-align:text-top;}
+sub {vertical-align:text-bottom;}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+input,textarea,select{*font-size:100%;}
+legend{color:#000;}
+
+body{	
+	background-image:url(../img/bkgrnd-pestanas.jpg);
+	background-repeat:no-repeat;
+	margin:0;
+	padding:0;
+	color:#000;
+}
+
+#login{
+	background-image:url(img/purple.png);
+	background-repeat:no-repeat;
+	width:512px;
+	height:512px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#login:hover{
+	background-image:url(img/green.png);
+}
+
+#title{
+	width:350px;
+	height:110px;
+	float:left;
+	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+	text-align:center;
+	margin-top:25px;
+	margin-bottom:50px;
+	margin-left:105px;
+	font-size:25px;
+	color:#FFF;
+}
+
+.color_site{
+	color:#11b4f8;
+}
+
+.item{
+	width:450px;
+	float:left;
+	font-size:25px;
+	margin-top:10px;
+	margin-left:30px;
+	margin-bottom:10px;
+	color:#666;
+	text-align:center;
+}
+.login{
+	width:450px;
+	float:left;
+	font-size:25px;
+	margin-top:30px;
+	margin-left:28px;
+	margin-bottom:10px;
+	color:#666;
+	text-align:center;
+}
+
+.input{
+	width:450px;
+	float:left;
+	font-size:25px;
+	margin-left:30px;
+	text-align:center;
+}
+
+.input input{
+	width:260px;
+	border:2px;
+	border-style:solid;
+	border-color:#4a96ca;
+	padding:4px;
+}
+
+.input input:hover{
+	border-color:#0C0;
+}
